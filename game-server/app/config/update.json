@@ -1,0 +1,47 @@
+{
+    "1.0.0.0": {
+        "newsTitle": "公告标题101",
+        "newsDigest": "公告摘要101",
+        "newsContent": "公告全文101",
+        "updatePath": "",
+        "appPath": "",
+        "MM": "false",
+        "forceUpdate": "false"
+    },
+	"2.0.0.0": {
+        "newsTitle": "公告标题101",
+        "newsDigest": "公告摘要101",
+        "newsContent": "公告全文101",
+        "updatePath": "",
+        "appPath": "",
+        "MM": "false",
+        "forceUpdate": "false"
+    },
+	"3.0.0.0": {
+        "newsTitle": "公告标题101",
+        "newsDigest": "公告摘要101",
+        "newsContent": "公告全文101",
+        "updatePath": "",
+        "appPath": "",
+        "MM": "false",
+        "forceUpdate": "false"
+    },
+	"4.0.0.0": {
+        "newsTitle": "公告标题101",
+        "newsDigest": "公告摘要101",
+        "newsContent": "公告全文101",
+        "updatePath": "",
+        "appPath": "",
+        "MM": "false",
+        "forceUpdate": "false"
+    },
+	"5.0.0.0": {
+        "newsTitle": "公告标题101",
+        "newsDigest": "公告摘要101",
+        "newsContent": "公告全文101",
+        "updatePath": "",
+        "appPath": "",
+        "MM": "false",
+        "forceUpdate": "false"
+    }
+}

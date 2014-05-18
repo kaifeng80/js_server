@@ -23,3 +23,7 @@ build/Release
 # Deployed apps should consider commenting this line out:
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
+game-server/node_modules
+web-server/node_modules
+gatling2.0.0/results
+gatling2.0.0/lib

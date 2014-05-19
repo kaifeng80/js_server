@@ -21,7 +21,8 @@ connector.prototype.createHttpServer = function() {
 		console.log("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
 		switch(req.method){
 			case 'GET':{
-                res.end();
+                var args = self.parseGet(req, res);
+                args && self.dispatchMessage(args[1], args[0], req, res);
 				break;
 			}
 			case 'POST':{
@@ -38,6 +39,16 @@ connector.prototype.createHttpServer = function() {
 	});
 	this.server.listen( this.port );
     console.log("server listen at " + this.port);
+};
+
+connector.prototype.parseGet = function(req, res){
+    var str = req.url;
+    if (str.indexOf('?') > -1) {
+        var arr = String.prototype.split.call(req.url, '?');
+        return [arr[0],qs.parse(arr[1])];
+    } else {
+        return [str, null];
+    }
 };
 
 connector.prototype.parsePost = function(req,res,cb){
@@ -60,6 +71,7 @@ connector.prototype.parsePost = function(req,res,cb){
 connector.prototype.dispatchMessage = function(data,url,req,res){
     if(url == "/test")
     {
+        console.log('api test');
         //  date for test
         data = qs.parse('msg={"context": "context", "msg_id": 2}&account=king_lee');
     }

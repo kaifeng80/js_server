@@ -4,7 +4,7 @@
 var pulser  = require('./test_event_emitter');
 var hello_world = require('../test/component/hello_world');
 var http_connectors = require('../../app/component/http_connectors');
-var express_connectors = require('../../app/component/express_connectors');
+var express_connectors = require('../component/express/express_connectors');
 var util = require('util');
 
 var test_event_emitter = function() {

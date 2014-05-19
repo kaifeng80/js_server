@@ -25,4 +25,8 @@ version_wrapper.prototype.get_update_info = function(version_id,cb) {
     });
 };
 
+version_wrapper.prototype.print = function() {
+    console.log('.............................................');
+};
+
 module.exports = version_wrapper;

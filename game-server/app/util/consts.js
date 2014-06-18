@@ -6,7 +6,7 @@ module.exports = {
     TYPE_MSG:{
         TYPE_MSG_BEGIN :1,
         TYPE_MSG_LOGIN:2,
-        TYPE_MSG_GET_UPDATE_INFO:3,
+        TYPE_MSG_GET_SRV_TIME:3,
         TYPE_MSG__END:100
     },
 

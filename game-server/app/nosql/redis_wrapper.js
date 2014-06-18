@@ -5,7 +5,6 @@
 var redis_pools = require("../nosql/redis_pools");
 var obj_user = require("../obj/obj_user");
 var h_user = 'h_user';
-var h_version = 'h_version';
 
 var redis_wrapper = module.exports;
 
@@ -51,28 +50,3 @@ redis_wrapper.save_user = function(user){
         });
     });
 };
-
-redis_wrapper.save_version_info = function(version_id,version_info){
-    redis_pools.execute('pool_1',function(client, release){
-        client.hset(h_version,version_id,JSON.stringify(version_info),function (err, reply){
-            if(err){
-                //  some thing log
-            }
-            release();
-        });
-    });
-};
-
-redis_wrapper.get_version_info = function(version_id,cb){
-    redis_pools.execute('pool_1',function(client, release){
-        client.hget(h_version,version_id,function (err, reply){
-            if(err){
-                //  some thing log
-            }
-            cb(reply);
-            release();
-        });
-    });
-};
-
-

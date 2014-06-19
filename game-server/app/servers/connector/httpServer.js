@@ -2,9 +2,13 @@ var http = require("http");
 var qs = require( 'querystring' );
 var handlerMgr = require('./handlerMgr');
 var session = require('../../util/session');
-var general = require('../../util/general');
 var pomelo = require('pomelo');
 
+/**
+ * construct function
+ * @param host
+ * @param port
+ */
 var connector = function(host,port) {
 	this.server = null;
 	this.host = host;
@@ -13,6 +17,9 @@ var connector = function(host,port) {
     this.session = null;
 };
 
+/**
+ * create a http server
+ */
 connector.prototype.createHttpServer = function() {
     var self = this;
 	this.server = http.createServer(function(req, res) {
@@ -27,7 +34,7 @@ connector.prototype.createHttpServer = function() {
 			}
 			case 'POST':{
                 self.parsePost(req,res,function(data){
-                    self.dispatchMessage2(data,url,req,res);
+                    self.dispatchMessage(data,url,req,res);
 				});
 				break;
 			}
@@ -41,6 +48,12 @@ connector.prototype.createHttpServer = function() {
     console.log("server listen at " + this.port);
 };
 
+/**
+ * paese data for http get
+ * @param req
+ * @param res
+ * @returns {*}
+ */
 connector.prototype.parseGet = function(req, res){
     var str = req.url;
     if (str.indexOf('?') > -1) {
@@ -51,6 +64,12 @@ connector.prototype.parseGet = function(req, res){
     }
 };
 
+/**
+ * parse data for http post
+ * @param req
+ * @param res
+ * @param cb
+ */
 connector.prototype.parsePost = function(req,res,cb){
 	var chunks = [];
     req.on('data', function(chunk) {
@@ -68,46 +87,21 @@ connector.prototype.parsePost = function(req,res,cb){
     });
 };
 
+/**
+ * dispatch message for the format : account=king_lee&account=king_lee
+ * @param data
+ * @param url
+ * @param req
+ * @param res
+ */
 connector.prototype.dispatchMessage = function(data,url,req,res){
     if(url == "/test")
     {
-        console.log('api test');
         //  date for test
         data = qs.parse('msg={"context": "context", "msg_id": 2}&account=king_lee');
     }
-
     var msg = JSON.parse(data.msg);
-    var account = data.account;
-    var uid = general.general_uid(account);
-    pomelo.app.get('connectors').load_user(uid,function(user){
-        this.session = new session();
-        pomelo.app.get('connectors').add(uid,this.session);
-        this.session.bind(uid);
-        this.session.set('user',user);
-        handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
-            console.log("after dispatchMessage ... %j", res_msg);
-            if(0){
-                //  by default the encoding is 'utf8'.
-                res.write(JSON.stringify(res_msg));
-                res.end();
-            }
-            else{
-                //  res.end:Finishes sending the request. If any parts of the body are unsent, it will flush them to the stream.
-                //  If the request is chunked, this will send the terminating '0\r\n\r\n'.
-                //  If data is specified, it is equivalent to calling request.write(data, encoding) followed by request.end().
-                res.end( JSON.stringify(res_msg));
-            }
-        });
-    });
-};
-
-connector.prototype.dispatchMessage2 = function(data,url,req,res){
-    if(url == "/test")
-    {
-        //  date for test
-        data = qs.parse('msg={"context": "context", "msg_id": 2}&account=king_lee');
-    }
-    var msg = data;
+    var token = data.token;
     handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
         console.log("after dispatchMessage ... %j", res_msg);
         if(0){
@@ -122,14 +116,6 @@ connector.prototype.dispatchMessage2 = function(data,url,req,res){
             res.end( JSON.stringify(res_msg));
         }
     });
-};
-
-connector.prototype.before = function(){
-
-};
-
-connector.prototype.after = function(){
-
 };
 
 module.exports = connector;

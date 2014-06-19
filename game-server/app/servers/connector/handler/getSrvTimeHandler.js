@@ -5,8 +5,6 @@
 var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_GET_SRV_TIME, function(msg, session, next) {
-    var ret_msg = {};
     var __date = new Date();
-    ret_msg.time = /*"Date: %s, %d %s %d %d:%d:%d GMT"*/__date.toGMTString();
-    next(null, {code: 200, msg: ret_msg});
+    next(null, {code: 0, msg_id : msg.msg_id, flowid : msg.flowid, time : __date.toGMTString()});
 });

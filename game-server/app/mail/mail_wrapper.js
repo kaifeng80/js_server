@@ -3,35 +3,58 @@
  * reference form https://github.com/andris9/Nodemailer
  */
 var nodemailer = require("nodemailer");
+var redis_mail_wrapper = require('../nosql/redis_mail_wrapper');
 
-var mail_wrapper = module.exports;
+var mail_wrapper = function(mail_config) {
+    this.service = mail_config.transport.service;
+    this.user = mail_config.transport.user;
+    this.pass = mail_config.transport.pass;
+    this.from = mail_config.mail.from;
+    this.to = mail_config.mail.to;
 
-mail_wrapper.send = function(){
-    var smtpTransport = nodemailer.createTransport("SMTP",{
-        service: "Gmail",
+    this.smtpTransport = nodemailer.createTransport("SMTP",{
+        service: this.service,
         auth: {
-            user: "yuyunliuhen@gmail.com",
-            pass: "Lee_Sophia_815"
+            user: this.user,
+            pass: this.pass
         }
     });
+    this.tick();
+};
+
+mail_wrapper.prototype.send = function(title,content){
+
     // setup e-mail data with unicode symbols
     var mailOptions = {
-        from: "King Lee ✔ <yuyunliuhen@gmail.com>", // sender address
-        to: "121020045@qq.com", // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world ✔", // plaintext body
-        html: "<b>Hello world ✔</b>" // html body
+        from: this.from, // sender address
+        to: this.to, // list of receivers
+        subject: title, // Subject line
+        text: content, // plaintext body
+        html: content // html body
     }
 
     // send mail with defined transport object
-    smtpTransport.sendMail(mailOptions, function(error, response){
+    this.smtpTransport.sendMail(mailOptions, function(error, response){
         if(error){
             console.log(error);
         }else{
             console.log("Message sent: " + response.message);
         }
-
         // if you don't want to use this transport object anymore, uncomment following line
         //smtpTransport.close(); // shut down the connection pool, no more messages
     });
 };
+
+mail_wrapper.prototype.tick = function(){
+    var self = this;
+    setInterval(function(){
+        redis_mail_wrapper.get_all_mail(function(reply){
+            for( var v in reply){
+                self.send(JSON.parse(reply[v]).title,JSON.parse(reply[v]).content);
+                redis_mail_wrapper.del_mail(v);
+            }
+        })
+    },1000*60*60);
+};
+
+module.exports = mail_wrapper;

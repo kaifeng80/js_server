@@ -8,5 +8,5 @@ module.exports = {
         TYPE_MSG_GET_SRV_TIME:3,
         TYPE_MSG_MAIL:4,
         TYPE_MSG__END:100
-    },
+    }
 };

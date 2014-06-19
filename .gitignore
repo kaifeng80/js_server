@@ -28,3 +28,4 @@ web-server/node_modules
 gatling2.0.0/results
 gatling2.0.0/lib
 .idea
+game-server/config/mail.json

@@ -1,0 +1,11 @@
+{
+    "transport":{
+        "service":"Gmail",
+        "user":"faterace2014@gmail.com",
+        "pass":"abcd.1234"
+    },
+    "mail":{
+        "from":"faterace2014@gmail.com",
+        "to":"faterace2014@gmail.com"
+    }
+}

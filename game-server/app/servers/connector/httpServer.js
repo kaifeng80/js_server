@@ -3,6 +3,8 @@ var qs = require( 'querystring' );
 var handlerMgr = require('./handlerMgr');
 var session = require('../../util/session');
 var pomelo = require('pomelo');
+var log4js = require('log4js');
+var logger = log4js.getLogger();
 
 /**
  * construct function
@@ -25,7 +27,7 @@ connector.prototype.createHttpServer = function() {
 	this.server = http.createServer(function(req, res) {
         var url = req.url;
 		var client_ip = req.connection.remoteAddress;
-		console.log("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
+        logger.debug("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
 		switch(req.method){
 			case 'GET':{
                 var args = self.parseGet(req, res);
@@ -45,7 +47,7 @@ connector.prototype.createHttpServer = function() {
 		}
 	});
 	this.server.listen( this.port );
-    console.log("server listen at " + this.port);
+    logger.debug("server listen at " + this.port);
 };
 
 /**
@@ -83,7 +85,7 @@ connector.prototype.parsePost = function(req,res,cb){
         cb(qs.parse(data));
     });
     req.on('error',function(err){
-        console.log('problem with request: ' + err.message);
+        logger.debug('problem with request: ' + err.message);
     });
 };
 

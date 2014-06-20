@@ -98,7 +98,9 @@
 
   "levels": {
     "rpc-log" : "ERROR",
-    "forward-log": "ERROR"
+    "forward-log": "ERROR",
+    "pomelo":"DEBUG",
+    "pomelo-admin":"DEBUG"
   },
 
   "replaceConsole": true,

@@ -9,7 +9,7 @@ var pomelo = require('pomelo');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_MAIL, function(msg, session, next) {
     var title = msg.title;
     var content = msg.content;
-    if(1){
+    if(0){
         pomelo.app.get('mail_wrapper').send(title,content);
     }
     else{

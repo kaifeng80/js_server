@@ -11,6 +11,9 @@ var mail_wrapper = function(mail_config) {
     this.pass = mail_config.transport.pass;
     this.from = mail_config.mail.from;
     this.to = mail_config.mail.to;
+    this.trigger_time_hour = mail_config.trigger_time_hour;
+    this.trigger_time_minutes = mail_config.trigger_time_minutes;
+    this.time_interval = 1000*mail_config.time_interval;
 
     this.smtpTransport = nodemailer.createTransport("SMTP",{
         service: this.service,
@@ -47,14 +50,21 @@ mail_wrapper.prototype.send = function(title,content){
 
 mail_wrapper.prototype.tick = function(){
     var self = this;
+
     setInterval(function(){
-        redis_mail_wrapper.get_all_mail(function(reply){
-            for( var v in reply){
-                self.send(JSON.parse(reply[v]).title,JSON.parse(reply[v]).content);
-                redis_mail_wrapper.del_mail(v);
-            }
-        })
-    },1000*60*60);
+        var date = new Date();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
+        {
+            redis_mail_wrapper.get_all_mail(function(reply){
+                for( var v in reply){
+                    self.send(JSON.parse(reply[v]).title,JSON.parse(reply[v]).content);
+                    redis_mail_wrapper.del_mail(v);
+                }
+            })
+        }
+    },this.time_interval);
 };
 
 module.exports = mail_wrapper;

@@ -9,11 +9,13 @@ var pomelo = require('pomelo');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_MAIL, function(msg, session, next) {
     var title = msg.title;
     var content = msg.content;
+    var channel = msg.channel;
+    var version = msg.version;
     if(0){
         pomelo.app.get('mail_wrapper').send(title,content);
     }
     else{
-        redis_mail_wrapper.add_mail(title,content);
+        redis_mail_wrapper.add_mail(title,content,channel,version);
     }
     next(null, {code: 0, msg_id : msg.msg_id});
 });

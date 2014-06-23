@@ -10,5 +10,6 @@
     },
     "trigger_time_hour":9,
     "trigger_time_minutes":0,
-    "time_interval":59
+    "time_interval":59,
+    "send_directly":0
 }

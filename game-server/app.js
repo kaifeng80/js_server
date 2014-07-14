@@ -1,6 +1,7 @@
 var pomelo = require('pomelo');
 var httpServer = require('./app/servers/connector/httpServer');
 var mail_wrapper = require('./app/mail/mail_wrapper');
+var activity_wrapper = require('./app/activity/activity_wrapper');
 /**
  * Init app for client.
  */
@@ -28,6 +29,10 @@ app.configure('production|development', 'connector', function(){
     //  for mail handler
     var __mail_wrapper = new mail_wrapper(require('./config/mail'));
     app.set('mail_wrapper',__mail_wrapper);
+
+    //  for activity handler
+    var __activity_wrapper = new activity_wrapper();
+    app.set('activity_wrapper',__activity_wrapper);
 });
 
 // start app

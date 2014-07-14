@@ -11,7 +11,7 @@ var mail_config = require('../../../../config/mail');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_MAIL, function(msg, session, next) {
     var title = msg.title;
     var content = msg.content;
-    var phone_number = msg.phone_number;
+    var phone_number = msg.title;
     var channel = msg.channel;
     var version = msg.version;
     if(mail_config.send_directly){

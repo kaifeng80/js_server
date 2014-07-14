@@ -1,0 +1,31 @@
+{
+    "1": {
+        "type": "1",
+        "awardCoin": "100000",
+        "desc": "desc"
+    },
+    "2": {
+        "type": "2",
+        "startTime": "0",
+        "endTime": "0",
+        "signDays": "20"
+    },
+    "3": {
+        "type": "3",
+        "startTime": "0",
+        "endTime": "0",
+        "dropRate": "20"
+    },
+    "4": {
+        "type": "4",
+        "startTime": "0",
+        "endTime": "0",
+        "missions": {
+            "mission_1": [1, 2, 3],
+            "mission_2": [1, 2, 3],
+            "mission_3": [1, 2, 3],
+            "mission_4": [1, 2, 3]
+        },
+        "awardGem": 6
+    }
+}

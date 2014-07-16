@@ -13,7 +13,7 @@ var activity_wrapper = function() {
 };
 
 activity_wrapper.prototype.init = function(activity_template){
-    redis_activity_wrapper.add_activity('template','template',activity_template);
+    redis_activity_wrapper.add_activity('template','0.0.0',activity_template);
     redis_activity_wrapper.add_activity('qihu360','1.2.2',activity_template);
 };
 
@@ -22,7 +22,7 @@ activity_wrapper.prototype.get = function(channel,version,cb){
         if(reply){
             cb(JSON.parse(reply));
         }else{
-            redis_activity_wrapper.get_activity('template','template',function(reply){
+            redis_activity_wrapper.get_activity('template','0.0.0',function(reply){
                 if(reply) {
                     cb(JSON.parse(reply));
                 }

@@ -94,7 +94,7 @@ mail_wrapper.prototype.tick = function(){
                     var all_mails = [];
                     for( var v in reply){
                         all_mails.push(JSON.parse(reply[v]));
-                        redis_mail_wrapper.del_mail(v);
+                        //  redis_mail_wrapper.del_mail(v);
                     }
                     self.batch_send(JSON.stringify(all_mails));
                 }

@@ -6,7 +6,7 @@ var redis_activity_wrapper = require('../nosql/redis_activity_wrapper');
 
 var activity_wrapper = function() {
     //  init once
-    if(1)
+    if(0)
     {
         this.init(activity_templete);
     }

@@ -2,8 +2,8 @@
     "1": {
         "type": "1",
         "switch":"1",
-        "startTime": "1405405793",
-        "endTime": "1405664993",
+        "startTime": "2014/7/19",
+        "endTime": "2014/7/30",
         "signDays": "3",
         "awardCoin": "100000",
         "desc": "desc"
@@ -11,16 +11,16 @@
     "2": {
         "type": "2",
         "switch":"1",
-        "startTime": "0",
-        "endTime": "0",
+        "startTime": "2014/7/19",
+        "endTime": "2014/7/30",
         "dropRate": "20",
         "dropNumRate": "20"
     },
     "3": {
         "type": "3",
         "switch":"1",
-        "startTime": "0",
-        "endTime": "0",
+        "startTime": "2014/7/19",
+        "endTime": "2014/7/30",
         "missions": [
             {"mission": "0"},
             {"mission": "1|4|3"},

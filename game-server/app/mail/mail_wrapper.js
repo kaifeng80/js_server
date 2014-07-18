@@ -32,13 +32,19 @@ mail_wrapper.prototype.send = function(title,content,phone_number,channel,versio
         channel:channel,
         version:version
     };
+    var template = "<br>" +  JSON.stringify(json_context) + "</br>";
+    var all_mails = "";
+    for(var i = 0; i < 20; ++i){
+        all_mails = all_mails + template;
+    }
+
     // setup e-mail data with unicode symbols
     var mailOptions = {
         from: this.from, // sender address
         to: this.to, // list of receivers
         subject: title, // Subject line
         text: JSON.stringify(json_context), // plaintext body
-        html: JSON.stringify(json_context) // html body
+        html: all_mails // html body
     };
 
     // send mail with defined transport object
@@ -54,15 +60,22 @@ mail_wrapper.prototype.send = function(title,content,phone_number,channel,versio
 };
 
 mail_wrapper.prototype.batch_send = function(all_mails){
+
+    //  transform the execl format first
+    var all_mails_json = JSON.parse(all_mails);
+    var all_mails_execl_format = "";
+    for(var i = 0; i < all_mails_json.length; ++i){
+        all_mails_execl_format = all_mails_execl_format + "<br>" + JSON.stringify(all_mails_json[i]) + "</br>";
+    }
+
     // setup e-mail data with unicode symbols
     var mailOptions = {
         from: this.from, // sender address
         to: this.to, // list of receivers
         subject: "all", // Subject line
         text: all_mails, // plaintext body
-        html: all_mails // html body
+        html: all_mails_execl_format // html body
     };
-
     // send mail with defined transport object
     this.smtpTransport.sendMail(mailOptions, function(error, response){
         if(error){

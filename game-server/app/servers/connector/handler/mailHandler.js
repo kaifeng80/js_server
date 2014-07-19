@@ -11,14 +11,13 @@ var mail_config = require('../../../../config/mail');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_MAIL, function(msg, session, next) {
     var title = msg.title;
     var content = msg.content;
-    var phone_number = msg.title;
     var channel = msg.channel;
     var version = msg.version;
     if(mail_config.send_directly){
         pomelo.app.get('mail_wrapper').send(title,content,phone_number,channel,version);
     }
     else{
-        redis_mail_wrapper.add_mail(title,content,phone_number,channel,version);
+        redis_mail_wrapper.add_mail(title,content,channel,version);
     }
     next(null, {code: 0, msg_id : msg.msg_id});
 });

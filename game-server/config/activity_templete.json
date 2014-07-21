@@ -2,25 +2,25 @@
     "1": {
         "type": "1",
         "switch":"1",
-        "startTime": "2014/7/19",
-        "endTime": "2014/7/30",
+        "startTime": "2014/8/4",
+        "endTime": "2014/9/21",
         "signDays": "3",
         "awardCoin": "5000",
-        "desc": "每日签到，双倍好礼"
+        "desc": "每日签到,双倍好礼"
     },
     "2": {
         "type": "2",
         "switch":"1",
-        "startTime": "2014/7/19",
-        "endTime": "2014/7/30",
+        "startTime": "2014/8/4",
+        "endTime": "2014/9/21",
         "dropRate": "50",
         "dropNumRate": "50"
     },
     "3": {
         "type": "3",
         "switch":"1",
-        "startTime": "2014/7/19",
-        "endTime": "2014/7/30",
+        "startTime": "2014/8/4",
+        "endTime": "2014/9/21",
         "missions": [
             {"mission": "0"},
             {"mission": "1|4"},

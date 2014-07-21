@@ -17,6 +17,10 @@ var connector = function(host,port) {
 	this.port = port;
     //  a temp variable
     this.session = null;
+    this.requests_in_all = 0;
+    this.requests_per_day = 0;
+    this.requests_per_hour = 0;
+    this.requests_per_minute = 0;
 };
 
 /**
@@ -104,6 +108,10 @@ connector.prototype.dispatchMessage = function(data,url,req,res){
     }
     var msg = JSON.parse(data.msg);
     var token = data.token;
+    ++this.requests_in_all;
+    ++this.requests_per_day;
+    ++this.requests_per_hour;
+    ++this.requests_per_minute;
     handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
         console.log("after dispatchMessage ... %j", res_msg);
         if(0){
@@ -120,4 +128,31 @@ connector.prototype.dispatchMessage = function(data,url,req,res){
     });
 };
 
+connector.prototype.requestsInAll = function() {
+    return this.requests_in_all;
+};
+
+connector.prototype.requestsPerDay = function() {
+    return this.requests_per_day;
+};
+
+connector.prototype.requestsPerDayClear = function() {
+    this.requests_per_day = 0;
+};
+
+connector.prototype.requestsPerHour = function() {
+    return this.requests_per_hour;
+};
+
+connector.prototype.requestsPerHourClear = function() {
+    this.requests_per_hour = 0;
+};
+
+connector.prototype.requestsPerMinute = function() {
+    return this.requests_per_minute;
+};
+
+connector.prototype.requestsPerMiniuteClear = function() {
+    this.requests_per_minute = 0;
+};
 module.exports = connector;

@@ -2,6 +2,7 @@ var pomelo = require('pomelo');
 var httpServer = require('./app/servers/connector/httpServer');
 var mail_wrapper = require('./app/mail/mail_wrapper');
 var activity_wrapper = require('./app/activity/activity_wrapper');
+var statistics_wrapper = require('./app/statistics/statistics_wrapper');
 /**
  * Init app for client.
  */
@@ -33,6 +34,10 @@ app.configure('production|development', 'connector', function(){
     //  for activity handler
     var __activity_wrapper = new activity_wrapper();
     app.set('activity_wrapper',__activity_wrapper);
+
+    //  for statistics handler
+    var __statistics_wrapper = new statistics_wrapper();
+    app.set('statistics_wrapper',__statistics_wrapper);
 });
 
 // start app

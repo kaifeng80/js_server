@@ -14,7 +14,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_MSG_MAIL, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
     if(mail_config.send_directly){
-        pomelo.app.get('mail_wrapper').send(title,content,phone_number,channel,version);
+        pomelo.app.get('mail_wrapper').send(title,content,channel,version);
     }
     else{
         redis_mail_wrapper.add_mail(title,content,channel,version);

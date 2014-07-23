@@ -13,7 +13,7 @@ var activity_wrapper = function() {
 };
 
 activity_wrapper.prototype.init = function(activity_template){
-    redis_activity_wrapper.add_activity('template','1.2.4',activity_template);
+    redis_activity_wrapper.init_activity('template','1.2.4',activity_template);
 };
 
 activity_wrapper.prototype.get = function(channel,version,cb){

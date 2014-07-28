@@ -25,6 +25,9 @@ activity_wrapper.prototype.get = function(channel,version,cb){
                 if(reply) {
                     cb(JSON.parse(reply));
                 }
+                else{
+                    cb(activity_templete);
+                }
             });
         }
     });

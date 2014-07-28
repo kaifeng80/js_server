@@ -114,7 +114,7 @@ mail_wrapper.prototype.tick = function(){
                 if(0){
                     for( var v in reply){
                         var json_reply = JSON.parse(reply[v]);
-                        self.send(json_reply.title,json_reply.content,json_reply.phone_number,json_reply.channel,json_reply.version);
+                        self.send(json_reply.title,json_reply.content,json_reply.channel,json_reply.version);
                         redis_mail_wrapper.del_mail(v);
                     }
                 }else{

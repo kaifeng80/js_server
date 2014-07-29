@@ -2,7 +2,7 @@
   "appenders": [
      {
       "type": "file",
-      "filename": "./logs/http-logger,log",
+      "filename": "./logs/http-logger.log",
       "maxLogSize": 20480,
       "backups": 3,
       "category": "http-logger"

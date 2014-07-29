@@ -4,8 +4,9 @@ var handlerMgr = require('./handlerMgr');
 var session = require('../../util/session');
 var pomelo = require('pomelo');
 var log4js = require('log4js');
-var logger = log4js.getLogger();
-
+var log_json = require('../../../config/log.json');
+log4js.configure(log_json);
+var http_logger = log4js.getLogger('http-logger');
 /**
  * construct function
  * @param host
@@ -31,7 +32,7 @@ connector.prototype.createHttpServer = function() {
 	this.server = http.createServer(function(req, res) {
         var url = req.url;
 		var client_ip = req.connection.remoteAddress;
-        logger.debug("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
+        http_logger.debug("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
 		switch(req.method){
 			case 'GET':{
                 var args = self.parseGet(req, res);
@@ -51,7 +52,7 @@ connector.prototype.createHttpServer = function() {
 		}
 	});
 	this.server.listen( this.port );
-    logger.debug("server listen at " + this.port);
+    http_logger.debug("server listen at " + this.port);
 };
 
 /**
@@ -89,7 +90,7 @@ connector.prototype.parsePost = function(req,res,cb){
         cb(qs.parse(data));
     });
     req.on('error',function(err){
-        logger.debug('problem with request: ' + err.message);
+        http_logger.debug('problem with request: ' + err.message);
     });
 };
 
@@ -113,7 +114,7 @@ connector.prototype.dispatchMessage = function(data,url,req,res){
     ++this.requests_per_hour;
     ++this.requests_per_minute;
     handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
-        console.log("after dispatchMessage ... %j", res_msg);
+        http_logger.debug("after dispatchMessage ... %j", res_msg);
         if(0){
             //  by default the encoding is 'utf8'.
             res.write(JSON.stringify(res_msg));

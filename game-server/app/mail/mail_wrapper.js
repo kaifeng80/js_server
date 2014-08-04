@@ -108,7 +108,7 @@ mail_wrapper.prototype.tick = function(){
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();
-        if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
+        //if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
         {
             redis_mail_wrapper.get_all_mail(function(reply){
                 if(0){
@@ -123,7 +123,9 @@ mail_wrapper.prototype.tick = function(){
                         all_mails.push(JSON.parse(reply[v]));
                         redis_mail_wrapper.del_mail(v);
                     }
-                    self.batch_send(JSON.stringify(all_mails));
+                    if(0 != all_mails.length){
+                        self.batch_send(JSON.stringify(all_mails));
+                    }
                 }
             })
         }

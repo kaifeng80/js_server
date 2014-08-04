@@ -108,7 +108,7 @@ mail_wrapper.prototype.tick = function(){
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();
-        //if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
+        if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
         {
             redis_mail_wrapper.get_all_mail(function(reply){
                 if(0){

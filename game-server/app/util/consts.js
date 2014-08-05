@@ -8,6 +8,7 @@ module.exports = {
         TYPE_MSG_GET_SRV_TIME:3,
         TYPE_MSG_MAIL:4,
         TYPE_GET_ACTIVITY:5,
+        TYPE_GET_NOTICE:6,
         TYPE_MSG_END:100
     },
     TYPE_ACTIVITY:{

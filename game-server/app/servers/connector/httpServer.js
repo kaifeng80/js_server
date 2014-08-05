@@ -22,6 +22,7 @@ var connector = function(host,port) {
     this.requests_per_day = 0;
     this.requests_per_hour = 0;
     this.requests_per_minute = 0;
+    this.requests_sign_in_all = 0;
 };
 
 /**
@@ -155,5 +156,13 @@ connector.prototype.requestsPerMinute = function() {
 
 connector.prototype.requestsPerMiniuteClear = function() {
     this.requests_per_minute = 0;
+};
+
+connector.prototype.requestsSignInAll = function() {
+    return this.requests_sign_in_all;
+};
+
+connector.prototype.requestsSignInAllInc = function() {
+    ++this.requests_sign_in_all;
 };
 module.exports = connector;

@@ -21,6 +21,8 @@ statistics_wrapper.prototype.tick = function(){
         {
             //  in all & per day
             redis_statistics_wrapper.set("requests_in_all",pomelo.app.get("httpServer").requestsInAll());
+            redis_statistics_wrapper.set("requests_sign_in_all",pomelo.app.get("httpServer").requestsSignInAll());
+
             redis_statistics_wrapper.set("requests_per_day",pomelo.app.get("httpServer").requestsPerDay());
             pomelo.app.get("httpServer").requestsPerDayClear();
         }

@@ -9,6 +9,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
     var channel = msg.channel;
     var version = msg.version;
     var type = msg.activity_type;
+    //  record sign days
+    if(1 == type){
+        pomelo.app.get('httpServer').requestsSignInAllInc();
+    }
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
     activity_wrapper.get(channel,version,function(activity_json){

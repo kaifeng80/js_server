@@ -26,4 +26,5 @@ node_modules
 game-server/node_modules
 gatling-charts-highcharts-2.0.0-RC1/results
 gatling-charts-highcharts-2.0.0-RC1/lib
+gatling-charts-highcharts-2.0.0-RC1/target
 .idea

@@ -24,7 +24,6 @@ build/Release
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
 game-server/node_modules
-web-server/node_modules
-gatling2.0.0/results
-gatling2.0.0/lib
+gatling-charts-highcharts-2.0.0-RC1/results
+gatling-charts-highcharts-2.0.0-RC1/lib
 .idea

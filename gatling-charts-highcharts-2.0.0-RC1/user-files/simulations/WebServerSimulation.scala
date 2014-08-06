@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class RecordedSimulation extends Simulation {
+class WebServerSimulation extends Simulation {
 
 	val httpProtocol = http
 		.baseURL("http://192.168.22.61:20001")
@@ -34,7 +34,7 @@ class RecordedSimulation extends Simulation {
 
     val uri1 = """http://192.168.22.61:20001"""
 
-	val scn = scenario("RecordedSimulation")
+	val scn = scenario("WebServerSimulation")
 		.exec(http("request_0")
 			.get("""/""")
 			.headers(headers_0)
@@ -107,5 +107,5 @@ class RecordedSimulation extends Simulation {
 			.formParam("""version""", """1.2.4""")
 			.formParam("""channel""", """template"""))
 
-	setUp(scn.inject(atOnceUsers(500))).protocols(httpProtocol)
+	setUp(scn.inject(atOnceUsers(10))).protocols(httpProtocol)
 }

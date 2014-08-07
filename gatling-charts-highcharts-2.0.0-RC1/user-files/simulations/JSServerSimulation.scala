@@ -69,9 +69,20 @@ class JSServerSimulation extends Simulation {
 			return Json.build(cmd).toString;
 		}
 	}
-	
+
+	object get_notice {
+    		def msg( ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->6);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
 	val httpProtocol = http
-		.baseURL("http://192.168.22.61:20000")
+		.baseURL("http://192.168.1.73:20000")
 		.inferHtmlResources()
 		
 		val scn = scenario("Scenario name")
@@ -91,6 +102,14 @@ class JSServerSimulation extends Simulation {
                     .check(status.is(200))
 				)
 			.pause(1)
+			.exec(
+                http("get_notice")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_notice.msg())
+                    .check(status.is(200))
+				)
+			.pause(1)
 
-	setUp(scn.inject(atOnceUsers(100))).protocols(httpProtocol)
+	setUp(scn.inject(atOnceUsers(800))).protocols(httpProtocol)
 }

@@ -3,7 +3,7 @@
  */
 var redis_pools = require("../nosql/redis_pools");
 var h_mail = 'h_mail';
-var h_mail_phone = "h_mail_phone";
+var h_mail_backup = "h_mail_backup";
 
 var redis_mail_wrapper = module.exports;
 
@@ -17,7 +17,7 @@ redis_mail_wrapper.add_mail = function(title,content,channel,version){
         });
     });
     redis_pools.execute('pool_1',function(client, release){
-        client.hset(h_mail_phone,title,JSON.stringify({title : title,content:content,channel:channel,version:version}),function (err, reply){
+        client.hset(h_mail_backup,Date.now(),JSON.stringify({title : title,content:content,channel:channel,version:version}),function (err, reply){
             if(err){
                 //  some thing log
             }

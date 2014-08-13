@@ -4,6 +4,8 @@ var mail_wrapper = require('./app/mail/mail_wrapper');
 var activity_wrapper = require('./app/activity/activity_wrapper');
 var notice_wrapper = require('./app/notice/notice_wrapper');
 var statistics_wrapper = require('./app/statistics/statistics_wrapper');
+var rank_wrapper = require('./app/rank/rank_wrapper');
+
 /**
  * Init app for client.
  */
@@ -43,6 +45,10 @@ app.configure('production|development', 'connector', function(){
     //  for statistics handler
     var __statistics_wrapper = new statistics_wrapper();
     app.set('statistics_wrapper',__statistics_wrapper);
+
+    //  for rank handler
+    var __rank_wrapper = new rank_wrapper();
+    app.set('rank_wrapper',__rank_wrapper);
 });
 
 // start app

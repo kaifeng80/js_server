@@ -9,6 +9,8 @@ module.exports = {
         TYPE_MSG_MAIL:4,
         TYPE_GET_ACTIVITY:5,
         TYPE_GET_NOTICE:6,
+        TYPE_UPLOAD_RACE_TIME:7,
+        TYPE_GET_RACE_RANK:8,
         TYPE_MSG_END:100
     },
     TYPE_ACTIVITY:{

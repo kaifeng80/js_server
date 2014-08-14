@@ -9,7 +9,7 @@ var pomelo = require('pomelo');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME, function(msg, session, next) {
     var race_time = msg.race_time;
     var device_guid = msg.deviceid;
-    var championship_id = msg.championshipid;
+    var championship_id = msg.championship_id;
     var rank_info = {
         channel:msg.channel,
         version:msg.version,
@@ -28,7 +28,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME, function(msg, session,
                 msg_id: msg.msg_id,
                 flowid: msg.flowid,
                 championship_id:championship_id,
-                rank:reply,
+                rank:reply ? parseInt(reply) + 1: reply,
                 time: Math.floor(Date.now() / 1000)
             });
         });

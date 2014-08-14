@@ -102,7 +102,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("driver" -> 3);
     			cmd += ("driver_level" -> 4);
     			cmd += ("phone_number" -> "18510384228");
-    			cmd += ("championshipid" -> 5);
+    			cmd += ("championship_id" -> 5);
     			return Json.build(cmd).toString;
     		}
     	}
@@ -115,7 +115,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("channel" -> "000023");
     			cmd += ("version" -> "1.2.4");
     			cmd += ("deviceid" -> random.nextInt(seed));
-    			cmd += ("championshipid" -> 5);
+    			cmd += ("championship_id" -> 5);
     			return Json.build(cmd).toString;
     		}
     	}

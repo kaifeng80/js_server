@@ -16,7 +16,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RACE_RANK, function(msg, session, ne
             code: 0,
             msg_id: msg.msg_id,
             flowid: msg.flowid,
-            rank:reply ? parseInt(reply) + 1: reply,
+            rank:reply != null ? parseInt(reply) + 1: reply,
             time: Math.floor(Date.now() / 1000)
         });
     });

@@ -28,5 +28,11 @@
             {"mission": "1,2|3"}
         ],
         "awardGem": 2
+    },
+    "4": {
+        "type": "4",
+        "switch": "1",
+        "startTime": "2014/9/1",
+        "endTime": "2014/10/8"
     }
 }

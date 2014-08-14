@@ -9,14 +9,14 @@ import scala.util.Random
 	
 class JSServerSimulation extends Simulation {
 	println("Hello, JSServerSimulation!")
-
 	var seed = 1000;
-	val random = new Random()
+	val random = new Random(System.currentTimeMillis)
+	/*
 	println(random.nextInt(seed))
 	println(random.nextInt(seed))
 	println(random.nextInt(seed))
 	println(random.nextInt(seed))
-    /*
+
 	var capital = Map("US"->"Washington", "France" -> "Paris") 
 	capital += ("Japan" -> "Tokyo") 
 	println(capital("France"))
@@ -108,13 +108,13 @@ class JSServerSimulation extends Simulation {
     	}
 
 	object get_rank {
-    		def msg( ) : String = {
+    		def msg( deviceid : Int ) : String = {
     			var cmd = Map[Any,Any]();
     			cmd += ("msg_id"->8);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
     			cmd += ("version" -> "1.2.4");
-    			cmd += ("deviceid" -> random.nextInt(seed));
+    			cmd += ("deviceid" -> deviceid);
     			cmd += ("championship_id" -> 5);
     			return Json.build(cmd).toString;
     		}
@@ -160,7 +160,7 @@ class JSServerSimulation extends Simulation {
                 http("get_rank")
                     .post("/")
                     .formParam("token", "1234567788")
-                    .formParam("msg",get_rank.msg())
+                    .formParam("msg",get_rank.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
 			.pause(1)

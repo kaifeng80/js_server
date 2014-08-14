@@ -29,7 +29,10 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
                     });
                 });
             }
-            cb(reply);
+            else {
+                cb(reply);
+                release();
+            }
         });
     });
 };

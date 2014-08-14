@@ -5,12 +5,16 @@ var activity_wrapper = require('./app/activity/activity_wrapper');
 var notice_wrapper = require('./app/notice/notice_wrapper');
 var statistics_wrapper = require('./app/statistics/statistics_wrapper');
 var rank_wrapper = require('./app/rank/rank_wrapper');
-
+var http_connectors = require('./app/component/http_connectors');
 /**
  * Init app for client.
  */
 var app = pomelo.createApp();
 app.set('name', 'srv');
+
+app.configure('production|development', 'connector', function() {
+    app.load(http_connectors, {host:app.get('curServer').host,port: app.get('curServer').httpClientPort});
+});
 
 // app configuration
 app.configure('production|development', 'connector', function(){
@@ -25,11 +29,12 @@ app.configure('production|development', 'connector', function(){
     console.log("config load for redis  %s", app.getBase() + '/config/redis.json');
     require('./app/nosql/redis_pools').configure(app.get('redis'));
 
+/*
     //  create http server
     var http = new httpServer(app.get('curServer').host,app.get('curServer').httpClientPort);
     http.createHttpServer();
     app.set('httpServer',http);
-
+*/
     //  for mail handler
     var __mail_wrapper = new mail_wrapper(require('./config/mail'));
     app.set('mail_wrapper',__mail_wrapper);

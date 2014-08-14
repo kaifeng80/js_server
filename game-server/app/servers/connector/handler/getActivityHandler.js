@@ -9,9 +9,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
     var channel = msg.channel;
     var version = msg.version;
     var type = msg.activity_type;
+
     //  record sign days
     if(1 == type){
-        pomelo.app.get('httpServer').requestsSignInAllInc();
+        pomelo.app.get('statistics_wrapper').requestsSignInAllInc();
+        pomelo.app.get('statistics_wrapper').requestsSignPerDayInc();
     }
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');

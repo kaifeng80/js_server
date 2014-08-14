@@ -1,16 +1,22 @@
 
 import scala.concurrent.duration._
-
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 import json._
-
+import scala.util.Random
 
 	
 class JSServerSimulation extends Simulation {
 	println("Hello, JSServerSimulation!")
-	/*
+
+	var seed = 1000;
+	val random = new Random()
+	println(random.nextInt(seed))
+	println(random.nextInt(seed))
+	println(random.nextInt(seed))
+	println(random.nextInt(seed))
+    /*
 	var capital = Map("US"->"Washington", "France" -> "Paris") 
 	capital += ("Japan" -> "Tokyo") 
 	println(capital("France"))
@@ -57,7 +63,8 @@ class JSServerSimulation extends Simulation {
 			cmd += ("flowid" -> 88888888);
 			return Json.build(cmd).toString;
 		}
-	}	
+	}
+
 	object get_activity {	
 		def msg( ) : String = {
 			var cmd = Map[Any,Any]();
@@ -81,8 +88,39 @@ class JSServerSimulation extends Simulation {
     		}
     	}
 
+	object upload_race_time {
+    		def msg( ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->7);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> random.nextInt(seed));
+    			cmd += ("race_time" -> random.nextInt(seed));
+    			cmd += ("car" -> 1);
+    			cmd += ("car_level" -> 2);
+    			cmd += ("driver" -> 3);
+    			cmd += ("driver_level" -> 4);
+    			cmd += ("phone_number" -> "18510384228");
+    			cmd += ("championshipid" -> 5);
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
+	object get_rank {
+    		def msg( ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->8);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> random.nextInt(seed));
+    			cmd += ("championshipid" -> 5);
+    			return Json.build(cmd).toString;
+    		}
+    	}
 	val httpProtocol = http
-		.baseURL("http://192.168.1.73:20000")
+		.baseURL("http://192.168.22.61:20000")
 		.inferHtmlResources()
 		
 		val scn = scenario("Scenario name")
@@ -110,6 +148,21 @@ class JSServerSimulation extends Simulation {
                     .check(status.is(200))
 				)
 			.pause(1)
-
-	setUp(scn.inject(atOnceUsers(800))).protocols(httpProtocol)
+			.exec(
+                http("upload_race_time")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",upload_race_time.msg())
+                    .check(status.is(200))
+				)
+			.pause(1)
+			.exec(
+                http("get_rank")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_rank.msg())
+                    .check(status.is(200))
+				)
+			.pause(1)
+	setUp(scn.inject(atOnceUsers(200))).protocols(httpProtocol)
 }

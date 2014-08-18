@@ -3,6 +3,7 @@
  */
 var redis_statistics_wrapper = require('../nosql/redis_statistics_wrapper');
 var pomelo = require('pomelo');
+var cluster = require('cluster');
 
 var statistics_wrapper = function() {
     this.time_interval = 1000*60;
@@ -23,25 +24,31 @@ statistics_wrapper.prototype.tick = function(){
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();
+        var work_id = 0;
+        if (cluster.isMaster) {
+            work_id = 0;
+        } else if (cluster.isWorker) {
+            work_id = cluster.worker.id;
+        }
         if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
         {
             //  in all & per day
-            redis_statistics_wrapper.set("requests_in_all",self.requests_in_all);
-            redis_statistics_wrapper.set("requests_sign_in_all",self.requests_sign_in_all);
+            redis_statistics_wrapper.set("requests_in_all" +  ":" + work_id,self.requests_in_all);
+            redis_statistics_wrapper.set("requests_sign_in_all"+  ":" + work_id,self.requests_sign_in_all);
 
-            redis_statistics_wrapper.set("requests_per_day",self.requests_per_day);
+            redis_statistics_wrapper.set("requests_per_day"+  ":" + work_id,self.requests_per_day);
             self.requestsPerDayClear();
 
-            redis_statistics_wrapper.set("requests_sign_per_day",self.requests_sign_per_day);
+            redis_statistics_wrapper.set("requests_sign_per_day"+  ":" + work_id,self.requests_sign_per_day);
             self.requestsSignPerDayClear();
         }
         if(minutes == self.trigger_time_minutes)
         {
             //  per hour
-            redis_statistics_wrapper.set("requests_per_hour",self.requests_per_hour);
+            redis_statistics_wrapper.set("requests_per_hour"+  ":" + work_id,self.requests_per_hour);
             self.requestsPerHourClear();
         }
-        redis_statistics_wrapper.set("requests_per_minute",self.requests_per_minute);
+        redis_statistics_wrapper.set("requests_per_minute"+  ":" + work_id,self.requests_per_minute);
         self.requestsPerMiniuteClear();
     },this.time_interval);
 };

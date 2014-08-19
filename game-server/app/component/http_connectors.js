@@ -133,6 +133,7 @@ http_connectors.prototype.dispatchMessage = function(data,url,req,res){
     statistics_wrapper.requestsPerDayInc();
     statistics_wrapper.requestsPerHourInc();
     statistics_wrapper.requestsPerMinuteInc();
+    http_logger.debug("before dispatchMessage ... %j", msg);
     handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
         http_logger.debug("after dispatchMessage ... %j", res_msg);
         if(0){

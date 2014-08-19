@@ -28,8 +28,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME, function(msg, session,
                 msg_id: msg.msg_id,
                 flowid: msg.flowid,
                 championship_id:championship_id,
-                rank:reply[0] != null ? parseInt(reply[0]) + 1: parseInt(reply[0]),
-                score:reply[1] != null ? parseInt(reply[1]) + 1: parseInt(reply[1]),
+                rank:reply[0] != null ? parseInt(reply[0]) + 1: reply[0],
+                score:reply[1] != null ? parseInt(reply[1]): reply[1],
                 time: Math.floor(Date.now() / 1000)
             });
         });

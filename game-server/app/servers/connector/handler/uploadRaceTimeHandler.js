@@ -13,12 +13,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME, function(msg, session,
     var rank_info = {
         channel:msg.channel,
         version:msg.version,
-        car:msg.car | 1,
-        car_level:msg.car_level | 2,
-        driver:msg.driver | 3,
-        driver_level:msg.driver_level | 4,
-        phone_number:msg.phone_number | "18510384228",
-        championship_id:championship_id | 5
+        car:msg.car,
+        car_level:msg.car_level,
+        driver:msg.driver,
+        driver_level:msg.driver_level,
+        phone_number:msg.phone_number,
+        championship_id:championship_id
     };
     var rank_wrapper = pomelo.app.get('rank_wrapper');
     rank_wrapper.add_rank_info(championship_id,device_guid,race_time,rank_info,function(reply){
@@ -28,7 +28,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME, function(msg, session,
                 msg_id: msg.msg_id,
                 flowid: msg.flowid,
                 championship_id:championship_id,
-                rank:reply != null ? parseInt(reply) + 1: reply,
+                rank:reply[0] != null ? parseInt(reply[0]) + 1: parseInt(reply[0]),
+                score:reply[1] != null ? parseInt(reply[1]) + 1: parseInt(reply[1]),
                 time: Math.floor(Date.now() / 1000)
             });
         });

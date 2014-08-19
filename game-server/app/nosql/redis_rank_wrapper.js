@@ -1,6 +1,7 @@
 /**
  * Created by King Lee on 2014/8/11.
  */
+var async = require('async');
 var redis_pools = require("../nosql/redis_pools");
 var z_rank = 'z_rank';
 var h_rank = 'h_rank';
@@ -51,14 +52,37 @@ redis_rank_wrapper.get_rank_time = function(championship_id,device_guid,cb){
 };
 
 redis_rank_wrapper.get_rank = function(championship_id,device_guid,cb){
-    redis_pools.execute('pool_1',function(client, release){
-        client.zrank(z_rank + ":" + championship_id,device_guid,function (err, reply){
-            if(err){
-                //  some thing log
-                console.error(err);
+    async.parallel([
+            function(callback){
+                redis_pools.execute('pool_1',function(client, release){
+                    client.zrank(z_rank + ":" + championship_id,device_guid,function (err, reply){
+                        if(err){
+                            //  some thing log
+                            console.error(err);
+                        }
+                        callback(null, reply);
+                        release();
+                    });
+                });
+            },
+            function(callback){
+                redis_pools.execute('pool_1',function(client, release){
+                    client.zscore(z_rank + ":" + championship_id,device_guid,function (err, reply){
+                        if(err){
+                            //  some thing log
+                            console.error(err);
+                        }
+                        callback(null, reply);
+                        release();
+                    });
+                });
             }
-            cb(reply);
-            release();
+        ],
+        // optional callback
+        function(err, results){
+            // the results array will equal ['one','two'] even though
+            // the second function had a shorter timeout.
+            cb(results);
         });
-    });
+
 };

@@ -9,6 +9,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
     var channel = msg.channel;
     var version = msg.version;
     var type = msg.activity_type;
+    var user_data = msg.user_data;
 
     //  record sign days
     if(1 == type){
@@ -27,6 +28,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
             code: 0,
             msg_id : msg.msg_id,
             flowid : msg.flowid,
+            user_data : msg.user_data,
             time:Math.floor(Date.now()/1000),
             activity:activity
         });

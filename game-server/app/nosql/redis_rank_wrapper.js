@@ -11,7 +11,7 @@ var redis_rank_wrapper = module.exports;
 redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_time,rank_info,cb){
     redis_rank_wrapper.get_rank_time(championship_id,device_guid,function(reply){
         redis_pools.execute('pool_1',function(client, release) {
-            if (!reply || (reply && reply > race_time)) {
+            if (!reply || (parseInt(reply) && parseInt(reply) > parseInt(race_time))) {
                 client.zadd(z_rank + ":" + championship_id, race_time, device_guid, function (err, reply) {
                     if (err) {
                         //  some thing log

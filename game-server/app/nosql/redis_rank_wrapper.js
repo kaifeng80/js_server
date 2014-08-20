@@ -20,20 +20,20 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
                     cb(reply);
                     release();
                 });
-                redis_pools.execute('pool_1',function(client, release) {
-                    client.hset(h_rank + ":" + championship_id, device_guid, JSON.stringify(rank_info), function (err, reply) {
-                        if (err) {
-                            //  some thing log
-                            console.error(err);
-                        }
-                        release();
-                    });
-                });
             }
             else {
                 cb(reply);
                 release();
             }
+        });
+    });
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank + ":" + championship_id, device_guid, JSON.stringify(rank_info), function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            release();
         });
     });
 };

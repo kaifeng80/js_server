@@ -15,6 +15,8 @@ var statistics_wrapper = function() {
     this.requests_per_minute = 0;
     this.requests_sign_in_all = 0;
     this.requests_sign_per_day = 0;
+    this.requests_rank_in_all = 0;
+    this.requests_rank_per_day = 0;
     this.tick();
 };
 
@@ -35,12 +37,16 @@ statistics_wrapper.prototype.tick = function(){
             //  in all & per day
             redis_statistics_wrapper.set("requests_in_all" +  ":" + work_id,self.requests_in_all);
             redis_statistics_wrapper.set("requests_sign_in_all"+  ":" + work_id,self.requests_sign_in_all);
+            redis_statistics_wrapper.set("requests_rank_in_all"+  ":" + work_id,self.requests_rank_in_all);
 
             redis_statistics_wrapper.set("requests_per_day"+  ":" + work_id,self.requests_per_day);
             self.requestsPerDayClear();
 
             redis_statistics_wrapper.set("requests_sign_per_day"+  ":" + work_id,self.requests_sign_per_day);
             self.requestsSignPerDayClear();
+
+            redis_statistics_wrapper.set("requests_rank_per_day"+  ":" + work_id,self.requests_rank_per_day);
+            self.requestsRankPerDayClear();
         }
         if(minutes == self.trigger_time_minutes)
         {
@@ -116,4 +122,15 @@ statistics_wrapper.prototype.requestsSignPerDayClear = function() {
     this.requests_sign_per_day = 0;
 };
 
+statistics_wrapper.prototype.requestsRankInAllInc = function() {
+    ++this.requests_rank_in_all;
+};
+
+statistics_wrapper.prototype.requestsRankPerDayInc = function() {
+    ++this.requests_rank_per_day;
+};
+
+statistics_wrapper.prototype.requestsRankPerDayClear = function() {
+    this.requests_rank_per_day = 0;
+};
 module.exports = statistics_wrapper;

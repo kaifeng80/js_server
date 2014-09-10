@@ -11,6 +11,10 @@ module.exports = {
         TYPE_GET_NOTICE:6,
         TYPE_UPLOAD_RACE_TIME:7,
         TYPE_GET_RACE_RANK:8,
+        TYPE_GET_UPLOAD_PLAYER_SCORES:9,
+        TYPE_GET_OPPONENT_INFO:10,
+        TYPE_NAMING:11,
+        TYPE_GET_PLAYER_INFO:12,
         TYPE_MSG_END:100
     },
     TYPE_ACTIVITY:{

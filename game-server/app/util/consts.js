@@ -17,5 +17,13 @@ module.exports = {
         TYPE_DAILY_SIGN:1, 	    //// 每日签到
         TYPE_DROP_ITEM:2,		//// 物品掉落
         TYPE_TASK:3			    //// 每日任务
+    },
+    TYPE_MISSION:{
+        MISSION_TYPE_GEM :0,
+        MISSION_TYPE_EASY :1,
+        MISSION_TYPE_NORMAL:2,
+        MISSION_TYPE_HARD:3,
+        MISSION_TYPE_EVENT:4,
+        MISSION_TYPE_NUM:5
     }
 };

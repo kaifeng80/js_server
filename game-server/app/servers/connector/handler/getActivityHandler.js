@@ -46,18 +46,29 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
             for(var i = 0; i < missions.length; ++i){
                 //  random mission
                 var mission = missions[i].mission;
-                var mission_array = mission.split('|');
-                var mission_to_be_random = [];
-                for(var j = 0; j < mission_array.length; ++j){
+                var mission_info = mission.split(',');
+                var mission_rank = mission_info[0];
+                var mission_type = mission_info[1];
+                var mission_rank_array = mission_rank.split('|');
+                var mission_rank_to_be_random = [];
+                for(var j = 0; j < mission_rank_array.length; ++j){
                     for(var v in mission_json){
-                        if(mission_array[j] == mission_string_2_type(mission_json[v].mission_type)){
-                            mission_to_be_random.push(mission_json[v]);
+                        if(parseInt(mission_rank_array[j]) == mission_json[v].rank){
+                            mission_rank_to_be_random.push(mission_json[v]);
                         }
                     }
                 }
-                console.log(mission_to_be_random.length);
-                var random_mission_index = Math.floor(Math.random()*mission_to_be_random.length);
-                activity.missions.push(mission_to_be_random[random_mission_index]);
+                var mission_type_array = mission_type.split('|');
+                var mission_type_to_be_random = [];
+                for(var j = 0; j < mission_type_array.length; ++j){
+                    for(var v in mission_rank_to_be_random){
+                        if(mission_type_array[j] == mission_string_2_type(mission_rank_to_be_random[v].mission_type)){
+                            mission_type_to_be_random.push(mission_rank_to_be_random[v]);
+                        }
+                    }
+                }
+                var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                activity.missions.push(mission_type_to_be_random[random_mission_index]);
             }
         }
         next(null, {

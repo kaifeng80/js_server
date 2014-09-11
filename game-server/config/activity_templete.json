@@ -25,10 +25,10 @@
         "reward_rate_start_time":"2014/8/4",
         "reward_rate_end_time":"2014/9/21",
         "missions": [
-            {"mission": "0"},
-            {"mission": "1|4"},
-            {"mission": "1|2"},
-            {"mission": "1|2|3"}
+            {"mission": "5,1|2|3|4|5"},
+            {"mission": "1|4,1|2|3|4|5"},
+            {"mission": "1|2,1|2|3|4|5"},
+            {"mission": "1|2|3,1|2|3|4|5"}
         ],
         "awardGem": 2
     },

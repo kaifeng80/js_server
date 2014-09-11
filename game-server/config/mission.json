@@ -12,7 +12,8 @@
 	"reward_type": "GEM",
 	"reward_data": 0,
 	"reward_number": 2,
-	"reward_unit": "G"
+	"reward_unit": "G",
+	"rank": 5
 },
 {
 	"id": 2,
@@ -28,7 +29,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 3,
@@ -44,7 +46,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 4,
@@ -60,7 +63,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 5,
@@ -76,7 +80,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 6,
@@ -92,7 +97,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 7,
@@ -108,7 +114,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 8,
@@ -124,7 +131,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 9,
@@ -140,7 +148,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 10,
@@ -156,7 +165,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 11,
@@ -172,7 +182,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 12,
@@ -188,7 +199,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 13,
@@ -204,7 +216,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 14,
@@ -220,7 +233,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 15,
@@ -236,7 +250,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 16,
@@ -252,7 +267,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 17,
@@ -268,7 +284,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 18,
@@ -284,7 +301,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 19,
@@ -300,7 +318,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 20,
@@ -316,7 +335,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 21,
@@ -332,7 +352,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 22,
@@ -348,7 +369,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 2000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 1
 },
 {
 	"id": 23,
@@ -364,7 +386,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 24,
@@ -380,7 +403,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 25,
@@ -395,8 +419,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 26,
@@ -412,7 +437,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 27,
@@ -428,7 +454,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 28,
@@ -443,8 +470,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 29,
@@ -460,7 +488,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 30,
@@ -475,8 +504,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 31,
@@ -491,8 +521,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 33,
@@ -508,7 +539,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 34,
@@ -524,7 +556,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 35,
@@ -540,7 +573,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 36,
@@ -555,8 +589,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 37,
@@ -572,7 +607,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 38,
@@ -587,8 +623,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 39,
@@ -603,8 +640,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 40,
@@ -620,7 +658,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 41,
@@ -635,8 +674,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 42,
@@ -651,8 +691,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 43,
@@ -668,7 +709,8 @@
 	"reward_type": "COIN",
 	"reward_data": 0,
 	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_unit": "C",
+	"rank": 2
 },
 {
 	"id": 44,
@@ -683,8 +725,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 3000,
-	"reward_unit": "C"
+	"reward_number": 4000,
+	"reward_unit": "C",
+	"rank": 3
 },
 {
 	"id": 45,
@@ -699,8 +742,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 46,
@@ -715,8 +759,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 47,
@@ -731,8 +776,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 48,
@@ -747,8 +793,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 49,
@@ -763,8 +810,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 50,
@@ -779,8 +827,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 51,
@@ -795,8 +844,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 52,
@@ -811,8 +861,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 53,
@@ -827,8 +878,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 54,
@@ -843,8 +895,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 55,
@@ -859,8 +912,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 56,
@@ -875,8 +929,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 57,
@@ -891,8 +946,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 58,
@@ -907,8 +963,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 59,
@@ -923,8 +980,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 60,
@@ -939,8 +997,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 6000,
+	"reward_unit": "C",
+	"rank": 4
 },
 {
 	"id": 61,
@@ -955,8 +1014,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 62,
@@ -971,8 +1031,9 @@
 	"reward_desc": "",
 	"reward_type": "COIN",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "C"
+	"reward_number": 8000,
+	"reward_unit": "C",
+	"rank": 5
 },
 {
 	"id": 63,
@@ -987,8 +1048,9 @@
 	"reward_desc": "",
 	"reward_type": "CP",
 	"reward_data": 0,
-	"reward_number": 2500,
-	"reward_unit": "c"
+	"reward_number": 3500,
+	"reward_unit": "c",
+	"rank": 3
 },
 {
 	"id": 64,
@@ -1004,7 +1066,8 @@
 	"reward_type": "CP",
 	"reward_data": 0,
 	"reward_number": 2500,
-	"reward_unit": "c"
+	"reward_unit": "c",
+	"rank": 1
 },
 {
 	"id": 65,
@@ -1019,8 +1082,9 @@
 	"reward_desc": "",
 	"reward_type": "CP",
 	"reward_data": 0,
-	"reward_number": 5000,
-	"reward_unit": "c"
+	"reward_number": 7500,
+	"reward_unit": "c",
+	"rank": 5
 },
 {
 	"id": 66,
@@ -1036,7 +1100,8 @@
 	"reward_type": "SPARK",
 	"reward_data": 0,
 	"reward_number": 200,
-	"reward_unit": "S"
+	"reward_unit": "S",
+	"rank": 3
 },
 {
 	"id": 67,
@@ -1051,8 +1116,9 @@
 	"reward_desc": "",
 	"reward_type": "SPARK",
 	"reward_data": 0,
-	"reward_number": 100,
-	"reward_unit": "S"
+	"reward_number": 200,
+	"reward_unit": "S",
+	"rank": 1
 },
 {
 	"id": 68,
@@ -1067,8 +1133,9 @@
 	"reward_desc": "",
 	"reward_type": "SPARK",
 	"reward_data": 0,
-	"reward_number": 200,
-	"reward_unit": "S"
+	"reward_number": 400,
+	"reward_unit": "S",
+	"rank": 5
 },
 {
 	"id": 69,
@@ -1083,8 +1150,9 @@
 	"reward_desc": "",
 	"reward_type": "SPARK",
 	"reward_data": 0,
-	"reward_number": 200,
-	"reward_unit": "S"
+	"reward_number": 300,
+	"reward_unit": "S",
+	"rank": 3
 },
 {
 	"id": 70,
@@ -1099,6 +1167,7 @@
 	"reward_desc": "",
 	"reward_type": "SPARK",
 	"reward_data": 0,
-	"reward_number": 200,
-	"reward_unit": "S"
+	"reward_number": 400,
+	"reward_unit": "S",
+	"rank": 5
 }]

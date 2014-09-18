@@ -6,6 +6,7 @@ var notice_wrapper = require('./app/notice/notice_wrapper');
 var statistics_wrapper = require('./app/statistics/statistics_wrapper');
 var rank_wrapper = require('./app/rank/rank_wrapper');
 var http_connectors = require('./app/component/http_connectors');
+var random_prize_wrapper = require('./app/random_prize/random_prize_wrapper');
 /**
  * Init app for client.
  */
@@ -54,6 +55,10 @@ app.configure('production|development', 'connector', function(){
     //  for rank handler
     var __rank_wrapper = new rank_wrapper();
     app.set('rank_wrapper',__rank_wrapper);
+
+    //  for random prize
+    var __random_prize_wrapper = new random_prize_wrapper();
+    app.set('random_prize_wrapper',__random_prize_wrapper);
 });
 
 // start app

@@ -40,7 +40,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 activity = activity_json[v];
             }
         }
-        if(3 == type){
+        //  for mission
+        if(consts.TYPE_ACTIVITY.TYPE_TASK == type){
             var missions = activity.missions;
             activity.missions = [];
             for(var i = 0; i < missions.length; ++i){
@@ -70,6 +71,30 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
                 activity.missions.push(mission_type_to_be_random[random_mission_index]);
             }
+        }
+        //  for random prize
+        else if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type){
+            pomelo.app.get('random_prize_wrapper').get(msg.deviceid,function(reply){
+                if(null != reply){
+                    var current_card = JSON.parse(reply).current_card;
+                    activity.current_card = ++current_card;
+                    activity.is_first = 0;
+                }else{
+                    activity.current_card = 0;
+                    activity.is_first = 1;
+                }
+                next(null, {
+                    code: 0,
+                    msg_id : msg.msg_id,
+                    flowid : msg.flowid,
+                    user_data : msg.user_data,
+                    time:Math.floor(Date.now()/1000),
+                    activity:activity
+                });
+            });
+        }
+        if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type){
+            return;
         }
         next(null, {
             code: 0,

@@ -44,5 +44,18 @@
         "startTime": "2014/10/20",
         "endTime": "2014/11/30",
         "rate": "1"
+    },
+    "6": {
+        "type": "6",
+        "switch": "1",
+        "startTime": "2014/8/20",
+        "endTime": "2014/11/30",
+        "total_card":20,
+        "single_gacha_cost":15,
+        "multi_gacha_cost":150,
+        "single_gacha_unit":"G",
+        "multi_gacha_unit":"G",
+        "reward_car":44,
+        "combo_count":12
     }
 }

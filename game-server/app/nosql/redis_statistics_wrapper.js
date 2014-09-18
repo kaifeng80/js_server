@@ -12,6 +12,7 @@ redis_h_statistics_wrapper.set = function(key,value){
         client.hset(h_statistics,key,value,function (err, reply){
             if(err){
                 //  some thing log
+                console.error(err);
             }
             release();
         });

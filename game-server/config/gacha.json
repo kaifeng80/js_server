@@ -1,0 +1,18 @@
+[
+	{"id":1,"type":"GEM","number":1,"data":"","rate":1,"icon":"G"},
+	{"id":2,"type":"COIN","number":500,"data":"","rate":300,"icon":"C"},
+	{"id":3,"type":"COIN","number":1000,"data":"","rate":300,"icon":"C"},
+	{"id":4,"type":"COIN","number":2000,"data":"","rate":80,"icon":"C"},
+	{"id":5,"type":"COIN","number":3000,"data":"","rate":12,"icon":"C"},
+	{"id":6,"type":"COIN","number":5000,"data":"","rate":5,"icon":"C"},
+	{"id":7,"type":"COIN","number":10000,"data":"","rate":2,"icon":"C"},
+	{"id":8,"type":"ITEM","number":1,"data":"4","rate":100,"icon":"Z"},
+	{"id":9,"type":"ITEM","number":1,"data":"5","rate":100,"icon":"X"},
+	{"id":10,"type":"ITEM","number":1,"data":"6","rate":100,"icon":"Y"},
+	{"id":11,"type":"TICKET","number":1,"data":"","rate":1000,"icon":"T","rare":"1"},
+	{"id":12,"type":"CP","number":1,"data":"","rate":1,"icon":"c"},
+	{"id":13,"type":"SPARK","number":1,"data":"1","rate":1,"icon":"g"},
+	{"id":14,"type":"SPARK","number":1,"data":"2","rate":1,"icon":"p"},
+	{"id":15,"type":"SPARK","number":1,"data":"3","rate":1,"icon":"r"},
+	{"id":16,"type":"SPARK","number":1,"data":"4","rate":1,"icon":"y"}
+]

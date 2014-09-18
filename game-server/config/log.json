@@ -3,14 +3,14 @@
      {
       "type": "file",
       "filename": "./logs/http-logger.log",
-      "maxLogSize": 20480,
+      "maxLogSize": 204800,
       "backups": 3,
       "category": "http-logger"
     },
     {
       "type": "file",
       "filename": "./logs/relative-logger.log",
-      "maxLogSize": 20480,
+      "maxLogSize": 204800,
       "backups": 3,
       "category": "relative-logger"
     },
@@ -18,7 +18,7 @@
       "type": "file",
       "absolute": true,
       "filename": "./logs/absolute-logger.log",
-      "maxLogSize": 20480,
+      "maxLogSize": 204800,
       "backups": 10,
       "category": "absolute-logger"          
     }

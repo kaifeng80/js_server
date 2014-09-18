@@ -4,7 +4,7 @@
 var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
-
+var gacha_json = require('../../../../config/gacha.json');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, next) {
     var channel = msg.channel;
@@ -40,7 +40,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
             }
             for(var i = 0; i < count; ++i){
                 var gacha_array = new Array();
-                for(var j = 0; j < 10; ++j){
+                for(var j = 0; j < activity.gacha_random_num; ++j){
+                    //  random a card when first
+                    if(0 == current_card){
+                        ++current_card;
+                        gacha_array.push(gacha_json[0]);
+                        continue;
+                    }
                     var prize = random_prize_wrapper.random();
                     if(prize.type == "TICKET"){
                         //  if the current card is more than total_card, give something instead of card
@@ -51,9 +57,14 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                                 reward_car = activity.reward_car;
                             }
                         }else{
-                            // give something other
+                            // give something other(use 4,5,6 instead 1,2,3)
+                            prize = gacha_json[prize.id + 2];
                         }
                     }
+                    gacha_array.push(prize);
+                }
+                for(var j = 0; j < activity.gacha2_random_num; ++j){
+                    var prize = random_prize_wrapper.random2();
                     gacha_array.push(prize);
                 }
                 gacha_result.push(gacha_array);
@@ -68,8 +79,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                 time:Math.floor(Date.now()/1000),
                 gacha_result : gacha_result,
                 current_card : current_card,
-                reward_car : reward_car,
-                "ad_url":""
+                reward_car : reward_car
             });
         });
 

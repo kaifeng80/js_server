@@ -56,6 +56,10 @@
         "single_gacha_unit":"G",
         "multi_gacha_unit":"G",
         "reward_car":44,
-        "combo_count":12
+        "single_count":1,
+        "combo_count":12,
+        "gacha_random_num":4,
+        "gacha2_random_num":6,
+        "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140918a.png"
     }
 }

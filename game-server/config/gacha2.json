@@ -1,0 +1,10 @@
+[
+	{"id":1,"type":"ITEM","number":3,"data":"4","rate":100,"icon":"X"},
+	{"id":2,"type":"ITEM","number":5,"data":"5","rate":100,"icon":"Y"},
+	{"id":3,"type":"ITEM","number":5,"data":"6","rate":100,"icon":"Z"},
+	{"id":4,"type":"CP","number":3000,"data":"","rate":100,"icon":"c"},
+	{"id":5,"type":"SPARK","number":5,"data":"1","rate":50,"icon":"g"},
+	{"id":6,"type":"SPARK","number":5,"data":"2","rate":50,"icon":"p"},
+	{"id":7,"type":"SPARK","number":5,"data":"3","rate":50,"icon":"r"},
+	{"id":8,"type":"SPARK","number":200,"data":"4","rate":50,"icon":"y"}
+]

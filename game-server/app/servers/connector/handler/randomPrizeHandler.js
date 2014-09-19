@@ -43,7 +43,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                 for(var j = 0; j < activity.gacha_random_num; ++j){
                     //  random a card when first
                     if(0 == current_card){
-                        ++current_card;
+                        current_card += gacha_json[0].number;
                         gacha_array.push(gacha_json[0]);
                         continue;
                     }
@@ -51,7 +51,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                     if(prize.type == "TICKET"){
                         //  if the current card is more than total_card, give something instead of card
                         if(current_card < activity.total_card){
-                            ++current_card;
+                            current_card += prize.number;
+                            if(current_card > activity.total_card){
+                                current_card = activity.total_card;
+                            }
                             //  then the current card is equal total_card,give a car as award
                             if(current_card == activity.total_card){
                                 reward_car = activity.reward_car;

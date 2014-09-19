@@ -1,7 +1,7 @@
 [
-	{"id":1,"type":"TICKET","number":1,"data":"","rate":5000,"icon":"T","rare":"1"},
-	{"id":2,"type":"TICKET","number":2,"data":"","rate":2000,"icon":"T","rare":"1"},
-	{"id":3,"type":"TICKET","number":5,"data":"","rate":1000,"icon":"T","rare":"1"},
+	{"id":1,"type":"TICKET","number":1,"data":"","rate":5,"icon":"T","rare":"1"},
+	{"id":2,"type":"TICKET","number":2,"data":"","rate":2,"icon":"T","rare":"1"},
+	{"id":3,"type":"TICKET","number":5,"data":"","rate":1,"icon":"T","rare":"1"},
 	{"id":4,"type":"GEM","number":1,"data":"","rate":5000,"icon":"G"},
 	{"id":5,"type":"GEM","number":2,"data":"","rate":2500,"icon":"G"},
 	{"id":6,"type":"GEM","number":5,"data":"","rate":1000,"icon":"G"},

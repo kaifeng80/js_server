@@ -5,6 +5,7 @@ var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
 var gacha_json = require('../../../../config/gacha.json');
+var gacha_replace_json = require('../../../../config/gacha_replace.json');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, next) {
     var channel = msg.channel;
@@ -60,8 +61,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                                 reward_car = activity.reward_car;
                             }
                         }else{
-                            // give something other(use 4,5,6 instead 1,2,3)
-                            prize = gacha_json[prize.id + 2];
+                            // give something other(use gacha_replace_json 1,2,3 instead gacha_json 1,2,3)
+                            prize = gacha_replace_json[prize.id];
                         }
                     }
                     gacha_array.push(prize);

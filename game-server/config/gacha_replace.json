@@ -1,0 +1,5 @@
+[
+    {"id":1,"type":"GEM","number":15,"data":"","rate":50,"icon":"G"},
+    {"id":2,"type":"GEM","number":30,"data":"","rate":20,"icon":"G"},
+    {"id":3,"type":"GEM","number":45,"data":"","rate":1,"icon":"G"}
+]

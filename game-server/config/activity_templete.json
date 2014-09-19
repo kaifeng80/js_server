@@ -2,8 +2,8 @@
     "1": {
         "type": "1",
         "switch":"1",
-        "startTime": "2014/8/4",
-        "endTime": "2014/9/21",
+        "startTime": "2014/10/21",
+        "endTime": "2014/11/30",
         "signDays": "20",
         "awardCoin": "5000",
         "desc": "每日签到,双倍好礼"
@@ -35,20 +35,20 @@
     "4": {
         "type": "4",
         "switch": "1",
-        "startTime": "2014/9/1",
-        "endTime": "2014/10/8"
+        "startTime": "2014/10/21",
+        "endTime": "2014/11/11"
     },
     "5": {
         "type": "5",
         "switch": "1",
-        "startTime": "2014/10/20",
-        "endTime": "2014/11/30",
+        "startTime": "2014/10/21",
+        "endTime": "2099/11/30",
         "rate": "1"
     },
     "6": {
         "type": "6",
         "switch": "1",
-        "startTime": "2014/8/20",
+        "startTime": "2014/10/21",
         "endTime": "2014/11/30",
         "total_card":20,
         "single_gacha_cost":15,

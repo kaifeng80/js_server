@@ -74,7 +74,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         }
         //  for random prize
         else if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type){
-            pomelo.app.get('random_prize_wrapper').get(msg.deviceid,function(reply){
+            pomelo.app.get('random_prize_wrapper').get(msg.player_guid,function(reply){
                 if(null != reply){
                     var current_card = JSON.parse(reply).current_card;
                     activity.current_card = current_card;

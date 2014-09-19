@@ -1,5 +1,5 @@
 [
-    {"id":1,"type":"COIN","number":10000,"data":"","rate":50,"icon":"G"},
-    {"id":2,"type":"COIN","number":20000,"data":"","rate":20,"icon":"G"},
+    {"id":1,"type":"COIN","number":10000,"data":"","rate":50,"icon":"C"},
+    {"id":2,"type":"COIN","number":20000,"data":"","rate":20,"icon":"C"},
     {"id":3,"type":"GEM","number":20,"data":"","rate":1,"icon":"G"}
 ]

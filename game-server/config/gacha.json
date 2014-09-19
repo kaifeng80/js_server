@@ -16,5 +16,5 @@
 	{"id":15,"type":"COIN","number":2000,"data":"","rate":6000,"icon":"C"},
 	{"id":16,"type":"COIN","number":3000,"data":"","rate":4000,"icon":"C"},
 	{"id":17,"type":"COIN","number":5000,"data":"","rate":2500,"icon":"C"},
-	{"id":18,"type":"COIN","number":10000,"data":"","rate":1000,"icon":"C"},
+	{"id":18,"type":"COIN","number":10000,"data":"","rate":1000,"icon":"C"}
 ]

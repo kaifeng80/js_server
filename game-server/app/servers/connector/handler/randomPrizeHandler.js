@@ -10,7 +10,7 @@ var gacha_replace_json = require('../../../../config/gacha_replace.json');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
     var single_gacha = msg.single_gacha;
     var random_prize_wrapper = pomelo.app.get('random_prize_wrapper');
     var count = 0;

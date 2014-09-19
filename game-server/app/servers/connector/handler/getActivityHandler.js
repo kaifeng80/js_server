@@ -77,7 +77,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
             pomelo.app.get('random_prize_wrapper').get(msg.deviceid,function(reply){
                 if(null != reply){
                     var current_card = JSON.parse(reply).current_card;
-                    activity.current_card = ++current_card;
+                    activity.current_card = current_card;
                     activity.is_first = 0;
                 }else{
                     activity.current_card = 0;

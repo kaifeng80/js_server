@@ -11,39 +11,42 @@
     "2": {
         "type": "2",
         "switch":"1",
-        "startTime": "2014/8/4",
-        "endTime": "2014/9/21",
-        "dropRate": "50",
-        "dropNumRate": "50"
+        "startTime": "2014/10/21",
+        "endTime": "2099/11/30",
+        "rate": "1",
+        "desc":"绝地重生"
     },
     "3": {
         "type": "3",
         "switch":"1",
-        "startTime": "2014/8/4",
-        "endTime": "2014/9/21",
+        "startTime": "2014/10/21",
+        "endTime": "2014/11/30",
         "reward_rate":"1",
-        "reward_rate_start_time":"2014/8/4",
-        "reward_rate_end_time":"2014/9/21",
+        "reward_rate_start_time":"2014/10/21",
+        "reward_rate_end_time":"2014/11/30",
         "missions": [
             {"mission": "1|2,1|2"},
             {"mission": "2|3,1|2|3"},
             {"mission": "3|4|5,1|2|3|4"},
             {"mission": "5,0"}
         ],
-        "awardGem": 2
+        "awardGem": 2,
+        "desc":"每日任务"
     },
     "4": {
         "type": "4",
         "switch": "1",
         "startTime": "2014/10/21",
-        "endTime": "2014/11/11"
+        "endTime": "2014/11/11",
+        "desc":"挑战赛"
     },
     "5": {
         "type": "5",
         "switch": "1",
         "startTime": "2014/10/21",
         "endTime": "2099/11/30",
-        "rate": "1"
+        "rate": "1",
+        "desc":"秋名山"
     },
     "6": {
         "type": "6",
@@ -60,6 +63,7 @@
         "combo_count":12,
         "gacha_random_num":4,
         "gacha2_random_num":6,
-        "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140918a.png"
+        "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140918a.png",
+        "desc":"抽奖"
     }
 }

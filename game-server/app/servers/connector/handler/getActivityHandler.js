@@ -21,6 +21,34 @@ var mission_string_2_type = function(mission_string){
     }
     return type;
 };
+
+var cur_version_major = 1;
+var cur_version_minor = 2;
+var cur_version_fix = 8;
+var get_version_major = function(version){
+    var version_array = version.split('.');
+    if(3 != version_array.length){
+        return cur_version_major;
+    }
+    return parseInt(version_array[0]);
+};
+
+var get_version_minor = function(version){
+    var version_array = version.split('.');
+    if(3 != version_array.length){
+        return cur_version_minor;
+    }
+    return parseInt(version_array[1]);
+};
+
+var get_version_fix = function(version){
+    var version_array = version.split('.');
+    if(3 != version_array.length){
+        return cur_version_fix;
+    }
+    return parseInt(version_array[2]);
+};
+
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
@@ -32,6 +60,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         pomelo.app.get('statistics_wrapper').requestsSignInAllInc();
         pomelo.app.get('statistics_wrapper').requestsSignPerDayInc();
     }
+    var version_fix = get_version_fix(version);
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
     activity_wrapper.get(channel,version,function(activity_json){
@@ -42,54 +71,56 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         }
         //  for mission
         if(consts.TYPE_ACTIVITY.TYPE_TASK == type){
-            var missions = activity.missions;
-            activity.missions = [];
-            for(var i = 0; i < missions.length; ++i){
-                //  random mission
-                var mission = missions[i].mission;
-                var mission_info = mission.split(',');
-                var mission_rank = mission_info[0];
-                var mission_type = mission_info[1];
-                var mission_rank_array = mission_rank.split('|');
-                var mission_rank_to_be_random = [];
-                for(var j = 0; j < mission_rank_array.length; ++j){
-                    for(var v in mission_json){
-                        if(parseInt(mission_rank_array[j]) == mission_json[v].rank){
-                            mission_rank_to_be_random.push(mission_json[v]);
+            if(version_fix >= cur_version_fix){
+                var missions = activity.missions;
+                activity.missions = [];
+                for(var i = 0; i < missions.length; ++i){
+                    //  random mission
+                    var mission = missions[i].mission;
+                    var mission_info = mission.split(',');
+                    var mission_rank = mission_info[0];
+                    var mission_type = mission_info[1];
+                    var mission_rank_array = mission_rank.split('|');
+                    var mission_rank_to_be_random = [];
+                    for(var j = 0; j < mission_rank_array.length; ++j){
+                        for(var v in mission_json){
+                            if(parseInt(mission_rank_array[j]) == mission_json[v].rank){
+                                mission_rank_to_be_random.push(mission_json[v]);
+                            }
                         }
                     }
-                }
-                var mission_type_array = mission_type.split('|');
-                var mission_type_to_be_random = [];
-                for(var j = 0; j < mission_type_array.length; ++j){
-                    for(var v in mission_rank_to_be_random){
-                        if(mission_type_array[j] == mission_string_2_type(mission_rank_to_be_random[v].mission_type)){
-                            mission_type_to_be_random.push(mission_rank_to_be_random[v]);
+                    var mission_type_array = mission_type.split('|');
+                    var mission_type_to_be_random = [];
+                    for(var j = 0; j < mission_type_array.length; ++j){
+                        for(var v in mission_rank_to_be_random){
+                            if(mission_type_array[j] == mission_string_2_type(mission_rank_to_be_random[v].mission_type)){
+                                mission_type_to_be_random.push(mission_rank_to_be_random[v]);
+                            }
                         }
                     }
-                }
-                //  check the mission which to be random is similar, if so, random again
-                var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
-                var similar = true;
-                while(similar){
-                    var find = false;
-                    for(var v = 0; v < activity.missions.length; ++v){
-                        if(activity.missions[v].mission_type == mission_type_to_be_random[random_mission_index].mission_type &&
-                            activity.missions[v].condition_type == mission_type_to_be_random[random_mission_index].condition_type &&
-                            activity.missions[v].data == mission_type_to_be_random[random_mission_index].data){
-                            find = true;
-                            random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                    //  check the mission which to be random is similar, if so, random again
+                    var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                    var similar = true;
+                    while(similar){
+                        var find = false;
+                        for(var v = 0; v < activity.missions.length; ++v){
+                            if(activity.missions[v].mission_type == mission_type_to_be_random[random_mission_index].mission_type &&
+                                activity.missions[v].condition_type == mission_type_to_be_random[random_mission_index].condition_type &&
+                                activity.missions[v].data == mission_type_to_be_random[random_mission_index].data){
+                                find = true;
+                                random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                                break;
+                            }
+                        }
+                        if(find){
+                            similar = true;
+                        }else{
+                            similar = false;
                             break;
                         }
                     }
-                    if(find){
-                        similar = true;
-                    }else{
-                        similar = false;
-                        break;
-                    }
+                    activity.missions.push(mission_type_to_be_random[random_mission_index]);
                 }
-                activity.missions.push(mission_type_to_be_random[random_mission_index]);
             }
         }
         //  for random prize

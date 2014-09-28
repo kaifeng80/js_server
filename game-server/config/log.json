@@ -24,7 +24,7 @@
     }
   ],
   "levels": {
-	"http-logger" : "DEBUG",
+	"http-logger" : "ERROR",
     "relative-logger" : "DEBUG",
 	"absolute-logger" : "ERROR"
   }

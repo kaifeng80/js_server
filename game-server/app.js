@@ -7,6 +7,8 @@ var statistics_wrapper = require('./app/statistics/statistics_wrapper');
 var rank_wrapper = require('./app/rank/rank_wrapper');
 var http_connectors = require('./app/component/http_connectors');
 var random_prize_wrapper = require('./app/random_prize/random_prize_wrapper');
+var fly_flow_wrapper = require('./app/pay_for/fly_flow_wrapper');
+
 /**
  * Init app for client.
  */
@@ -59,6 +61,10 @@ app.configure('production|development', 'connector', function(){
     //  for random prize
     var __random_prize_wrapper = new random_prize_wrapper();
     app.set('random_prize_wrapper',__random_prize_wrapper);
+
+    //  pay for
+    var __fly_flow_wrapper = new fly_flow_wrapper();
+    app.set('fly_flow_wrapper',__fly_flow_wrapper);
 });
 
 // start app

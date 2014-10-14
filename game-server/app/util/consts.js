@@ -12,6 +12,7 @@ module.exports = {
         TYPE_UPLOAD_RACE_TIME:7,
         TYPE_GET_RACE_RANK:8,
         TYPE_RANDOM_PRIZE:13,
+        TYPE_PAY_FOR_FLY_FLOW:14,
         TYPE_MSG_END:100
     },
     TYPE_ACTIVITY:{

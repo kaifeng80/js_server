@@ -65,5 +65,108 @@
         "gacha2_random_num":6,
         "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140925.png",
         "desc":"抽奖"
+    },
+    "7": {
+        "type": "7",
+        "normal_energy":1,
+        "boss_rate":0.25,
+        "boss_energy":1,
+        "rivals":3,
+        "rival_offset":10,
+        "score1=":300,
+        "score2":200,
+        "score3":100,
+        "score4":0,
+        "score1_boss":600,
+        "score2_boss":400,
+        "score3_boss":200,
+        "score4_boss":0,
+        "akina_1" : {
+            "item1":{"res":"car_370z","rate":1},
+            "item2":{"res":"car_beetle","rate":0.5},
+            "item3":{"res":"car_beetle_s","rate":0.5},
+            "item4":{"res":"car_camaro","rate":1},
+            "item5":{"res":"car_evoque","rate":1},
+            "item6":{"res":"car_fordgt","rate":1},
+            "item7":{"res":"car_gtr","rate":1},
+            "item8":{"res":"car_mini","rate":1},
+            "item9":{"res":"car_tricycle","rate":1},
+            "item10":{"res":"car_viper_3","rate":0.5},
+            "item11":{"res":"car_viper_4","rate":0.5},
+            "item12":{"res":"car_z4","rate":1},
+            "item13":{"res":"car_mp4","rate":1},
+            "item14":{"res":"car_sls","rate":1},
+            "item15":{"res":"car_tricycle","rate":1}
+        },
+        "seoul" : {
+            "item1":{"res":"car_370z","rate":1},
+            "item2":{"res":"car_beetle","rate":0.5},
+            "item3":{"res":"car_beetle_s","rate":0.5},
+            "item4":{"res":"car_camaro","rate":1},
+            "item5":{"res":"car_evoque","rate":1},
+            "item6":{"res":"car_fordgt","rate":1},
+            "item7":{"res":"car_gtr","rate":1},
+            "item8":{"res":"car_mini","rate":1},
+            "item9":{"res":"car_viper_3","rate":0.5},
+            "item10":{"res":"car_viper_4","rate":0.5},
+            "item11":{"res":"car_z4","rate":1},
+            "item12":{"res":"car_mp4","rate":1},
+            "item13":{"res":"car_sls","rate":1},
+            "item14":{"res":"car_tricycle","rate":1}
+        },
+        "seoul_boss" : {
+            "item1":{"res":"car_370z_s","rate":1},
+            "item2":{"res":"car_911","rate":0.5},
+            "item3":{"res":"car_911_s","rate":0.5},
+            "item4":{"res":"car_camaro_s","rate":1},
+            "item5":{"res":"car_fordgt_s","rate":1},
+            "item6":{"res":"car_gtr_s","rate":1},
+            "item7":{"res":"car_mini_s","rate":1},
+            "item8":{"res":"car_viper_s","rate":1},
+            "item9":{"res":"car_z4_s","rate":1},
+            "item10":{"res":"car_mp4_s","rate":1},
+            "item11":{"res":"car_sls_s","rate":1}
+        },
+        "boss_id_seoul" : {
+            "item1":{"res":"1","rate":1},
+            "item2":{"res":"2","rate":1},
+            "item3":{"res":"3","rate":1},
+            "item4":{"res":"4","rate":1},
+            "item5":{"res":"5","rate":1},
+            "item6":{"res":"6","rate":1},
+            "item7":{"res":"7","rate":1}
+        },
+        "award":{
+            "1-1" :{
+                "item1":{"type":"GEM","data":"","number":200},
+                "item2":{"type":"COIN","data":"","number":1000000},
+                "item3":{"type":"ITEM","data":"4","number":20},
+                "item4":{"type":"ITEM","data":"5","number":20},
+                "item5":{"type":"ITEM","data":"6","number":20}
+            },
+            "2-10" : {
+                "item1":{"type":"GEM","data":"","number":500},
+                "item2":{"type":"COIN","data":"","number":500000},
+                "item3":{"type":"ITEM","data":"4","number":20},
+                "item4":{"type":"ITEM","data":"5","number":20},
+                "item5":{"type":"ITEM","data":"6","number":20}
+            },
+            "11-100" : {
+                "item1":{"type":"COIN","data":"","number":100000},
+                "item2":{"type":"ITEM","data":"4","number":10},
+                "item3":{"type":"ITEM","data":"5","number":10},
+                "item4":{"type":"ITEM","data":"6","number":10}
+            },
+            "101-1000" : {
+                "item1":{"type":"COIN","data":"","number":50000},
+                "item2":{"type":"ITEM","data":"4","number":10},
+                "item3":{"type":"ITEM","data":"5","number":10},
+                "item4":{"type":"ITEM","data":"6","number":10}
+            },
+            "1001-100000000" : {
+                "item":{"type":"COIN","data":"","number":2000}
+            }
+        },
+        "desc":"running man 挑战赛"
     }
 }

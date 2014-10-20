@@ -6,7 +6,6 @@ import io.gatling.jdbc.Predef._
 import json._
 import scala.util.Random
 
-	
 class JSServerSimulation extends Simulation {
 	println("Hello, JSServerSimulation!")
 	var seed = 1000;
@@ -120,7 +119,7 @@ class JSServerSimulation extends Simulation {
     		}
     	}
 	val httpProtocol = http
-		.baseURL("http://192.168.22.61:20000")
+		.baseURL("http://192.168.1.74:20000")
 		.inferHtmlResources()
 		
 		val scn = scenario("Scenario name")
@@ -164,5 +163,6 @@ class JSServerSimulation extends Simulation {
                     .check(status.is(200))
 				)
 			.pause(1)
-	setUp(scn.inject(atOnceUsers(200))).protocols(httpProtocol)
+	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
+	setUp(scn.inject(rampUsers(100000) over (500 seconds))).protocols(httpProtocol)
 }

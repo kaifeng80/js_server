@@ -68,6 +68,9 @@
     },
     "7": {
         "type": "7",
+        "switch":"1",
+        "startTime": "2014/11/14",
+        "endTime": "2015/11/30",
         "normal_energy":1,
         "boss_rate":0.25,
         "boss_energy":1,

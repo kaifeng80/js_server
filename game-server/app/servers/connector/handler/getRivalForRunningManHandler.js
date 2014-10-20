@@ -28,6 +28,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 //  come cross boss at first time
                 level = 1;
                 boss_info = rank_running_man_wrapper.get_rival_seoul_boss(activity,level);
+                //  use client data
+                boss_info.bossid_real = boss_id;
             }
             else{
                 //  get boss info from client

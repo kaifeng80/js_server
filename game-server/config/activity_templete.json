@@ -76,14 +76,8 @@
         "boss_energy":1,
         "rivals":3,
         "rival_offset":10,
-        "score1=":300,
-        "score2":200,
-        "score3":100,
-        "score4":0,
-        "score1_boss":600,
-        "score2_boss":400,
-        "score3_boss":200,
-        "score4_boss":0,
+        "rival_score":[300,200,100,0],
+        "rival_score_boss":[600,400,200,0],
         "akina_1" : {
             "item1":{"res":"car_370z","rate":1},
             "item2":{"res":"car_beetle","rate":0.5},
@@ -140,7 +134,7 @@
             "item7":{"res":"7","rate":1}
         },
         "award":{
-            "1-1" :{
+            "1-2" :{
                 "item1":{"type":"GEM","data":"","number":200},
                 "item2":{"type":"COIN","data":"","number":1000000},
                 "item3":{"type":"ITEM","data":"4","number":20},
@@ -154,19 +148,19 @@
                 "item4":{"type":"ITEM","data":"5","number":20},
                 "item5":{"type":"ITEM","data":"6","number":20}
             },
-            "11-100" : {
+            "10-100" : {
                 "item1":{"type":"COIN","data":"","number":100000},
                 "item2":{"type":"ITEM","data":"4","number":10},
                 "item3":{"type":"ITEM","data":"5","number":10},
                 "item4":{"type":"ITEM","data":"6","number":10}
             },
-            "101-1000" : {
+            "100-1000" : {
                 "item1":{"type":"COIN","data":"","number":50000},
                 "item2":{"type":"ITEM","data":"4","number":10},
                 "item3":{"type":"ITEM","data":"5","number":10},
                 "item4":{"type":"ITEM","data":"6","number":10}
             },
-            "1001-100000000" : {
+            "1000-100000000" : {
                 "item":{"type":"COIN","data":"","number":2000}
             }
         },

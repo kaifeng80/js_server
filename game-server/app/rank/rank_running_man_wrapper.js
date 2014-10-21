@@ -4,13 +4,51 @@
 var redis_rank_running_man_wrapper = require('../nosql/redis_rank_running_man_wrapper');
 var rival_seoul_json = require('../../config/rival_seoul');
 var rival_seoul_boss_json = require('../../config/rival_seoul_boss');
+var cluster = require('cluster');
+var util = require('../util/util');
+var consts = require("../util/consts");
+var pomelo = require('pomelo');
+var async = require('async');
+var log4js = require('log4js');
+var log_json = require('../../config/log.json');
+log4js.configure(log_json);
+var rank_logger = log4js.getLogger('rank-logger');
 
 var rank_running_man_wrapper = function() {
+    this.time_interval = 1000*60;
+    this.trigger_time_hour = 0;
+    this.trigger_time_minutes = 0;
+    this.championship_id = util.getWeek(new Date());
+    this.tick();
+};
 
+rank_running_man_wrapper.prototype.tick = function() {
+    var self = this;
+    setInterval(function(){
+        var date = new Date();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        //if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
+        {
+            if (cluster.isMaster) {
+                var championship_id_now = util.getWeek(new Date());
+                //if(self.championship_id != championship_id_now)
+                {
+                    //  give award
+                    self.calc_rival_seoul_award(self.championship_id);
+                    self.championship_id = championship_id_now;
+                }
+            }
+        }
+    },self.time_interval);
 };
 
 rank_running_man_wrapper.prototype.add_rank_info = function(championship_id,device_guid,race_time,rank_info,cb){
     redis_rank_running_man_wrapper.add_rank_info(championship_id,device_guid,race_time,rank_info,cb);
+};
+
+rank_running_man_wrapper.prototype.get_all_rank_info = function(championship_id,cb){
+    redis_rank_running_man_wrapper.get_all_rank_info(championship_id,cb);
 };
 
 rank_running_man_wrapper.prototype.get_rank = function(championship_id,device_guid,db){
@@ -23,6 +61,14 @@ rank_running_man_wrapper.prototype.increase_level = function(championship_id,dev
 
 rank_running_man_wrapper.prototype.get_level = function(championship_id,device_guid,cb){
     redis_rank_running_man_wrapper.get_level(championship_id,device_guid,cb);
+};
+
+rank_running_man_wrapper.prototype.set_award = function(device_guid,award_info){
+    redis_rank_running_man_wrapper.set_award(device_guid,award_info);
+};
+
+rank_running_man_wrapper.prototype.get_award = function(device_guid,cb){
+    redis_rank_running_man_wrapper.get_award(device_guid,cb);
 };
 
 rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level){
@@ -139,5 +185,91 @@ rank_running_man_wrapper.prototype.composs_rival_seoul_boss = function(activity,
         rival_seoul.bossid_real = boss_id;
     }
     return rival_seoul;
+};
+
+//  calc award at the end of championship
+rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championship_id){
+    var activity_wrapper = pomelo.app.get('activity_wrapper');
+    var rank_running_man_wrapper = pomelo.app.get('rank_running_man_wrapper');
+    //  1   get version and channel first
+    this.get_all_rank_info(championship_id,function(reply){
+        var rank_joiner_list = reply;
+        var device_version_channel_list = [];
+        for(var v in rank_joiner_list){
+            if(rank_joiner_list[v]){
+                var rank_joiner = JSON.parse(rank_joiner_list[v]);
+                if(rank_joiner){
+                    var version = rank_joiner.version;
+                    var channel = rank_joiner.channel;
+                    device_version_channel_list.push({"device_guid":v,"version":version,"channel":channel});
+                }
+            }
+        }
+        var count = 0;
+        async.whilst(
+            function () { return count < device_version_channel_list.length; },
+            function (callback) {
+                //  2   get activity
+                var activity = {};
+                async.waterfall([
+                        function(callback){
+                            activity_wrapper.get(device_version_channel_list[count - 1].channel,device_version_channel_list[count - 1].version,function(activity_json) {
+                                for (var w in activity_json) {
+                                    if (consts.TYPE_ACTIVITY.RIVAL_SEOUL == parseInt(activity_json[w].type)) {
+                                        activity = activity_json[w];
+                                        callback(null,device_version_channel_list[count - 1].device_guid,activity);
+                                    }
+                                }
+                            });
+                        },
+                        function(device_guid,activity,callback){
+                            //  3  get rank info
+                            rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){
+                                var rank = reply[0] != null ? parseInt(reply[0]) + 1: reply[0];
+                                var award = activity.award;
+                                var rank_award;
+                                for(var w in award){
+                                    var range = w;
+                                    var range_array = range.split('-');
+                                    var range_low = parseInt(range_array[0]);
+                                    var range_high = parseInt(range_array[1]);
+                                    if(rank >= range_low && rank < range_high){
+                                        rank_award = award[w];
+                                        callback(null,device_guid,championship_id,rank,rank_award);
+                                        break;
+                                    }
+                                }
+                            });
+                        },
+                        function(device_guid,championship_id,rank,rank_award,callback){
+                            if(1){
+                                rank_logger.debug(rank);
+                            }
+                            //  4   set award data
+                            var award_info = {};
+                            award_info.championship_id = championship_id;
+                            award_info.rank = rank;
+                            award_info.rank_award = rank_award;
+                            rank_running_man_wrapper.set_award(device_guid,award_info);
+                            callback(null);
+                        }
+                    ],
+                    // optional callback
+                    function(err){
+                        if(err){
+                            rank_logger.error(err);
+                        }
+                    });
+                ++count;
+                setTimeout(callback, 100);
+            },
+            function (err) {
+                //  whilst end,do nothing
+                if(err){
+                    rank_logger.error(err);
+                }
+            }
+        );
+    });
 };
 module.exports = rank_running_man_wrapper;

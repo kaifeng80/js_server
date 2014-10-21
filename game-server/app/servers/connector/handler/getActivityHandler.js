@@ -22,9 +22,11 @@ var mission_string_2_type = function(mission_string){
     return type;
 };
 
+//  for protocol adaptive,do not change
 var cur_version_major = 1;
 var cur_version_minor = 2;
 var cur_version_fix = 8;
+
 var get_version_major = function(version){
     var version_array = version.split('.');
     if(3 != version_array.length){
@@ -60,6 +62,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         pomelo.app.get('statistics_wrapper').requestsSignInAllInc();
         pomelo.app.get('statistics_wrapper').requestsSignPerDayInc();
     }
+    var version_major = get_version_major(version);
+    var version_minor = get_version_minor(version);
     var version_fix = get_version_fix(version);
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
@@ -71,7 +75,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         }
         //  for mission
         if(consts.TYPE_ACTIVITY.TYPE_TASK == type){
-            if(version_fix >= cur_version_fix){
+            if(version_major*100 + version_minor*10 + version_fix >= cur_version_major*100 + cur_version_minor*10 + cur_version_fix){
                 var missions = activity.missions;
                 activity.missions = [];
                 for(var i = 0; i < missions.length; ++i){

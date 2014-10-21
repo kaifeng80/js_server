@@ -29,6 +29,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RACE_RANK_FOR_RUNNING_MAN, function(
                         score:reply[1] != null ? parseInt(reply[1]): 0,
                         normal_energy:activity.normal_energy,
                         boss_energy:activity.boss_energy,
+                        rival_score:activity.rival_score,
+                        rival_score_boss:activity.rival_score_boss,
                         time: Math.floor(Date.now() / 1000)
                     });
                 });

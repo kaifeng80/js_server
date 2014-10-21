@@ -8,6 +8,13 @@
       "category": "http-logger"
     },
     {
+          "type": "file",
+          "filename": "./logs/rank-logger.log",
+          "maxLogSize": 204800,
+          "backups": 3,
+          "category": "rank-logger"
+      },
+    {
       "type": "file",
       "filename": "./logs/relative-logger.log",
       "maxLogSize": 204800,
@@ -25,6 +32,7 @@
   ],
   "levels": {
 	"http-logger" : "ERROR",
+	"rank-logger" : "DEBUG",
     "relative-logger" : "DEBUG",
 	"absolute-logger" : "ERROR"
   }

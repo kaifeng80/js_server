@@ -4,6 +4,7 @@
 var redis_pools = require("../nosql/redis_pools");
 var pomelo = require('pomelo');
 var h_statistics = 'h_statistics';
+var h_statistics_detail = 'h_statistics_detail';
 
 var redis_h_statistics_wrapper = module.exports;
 

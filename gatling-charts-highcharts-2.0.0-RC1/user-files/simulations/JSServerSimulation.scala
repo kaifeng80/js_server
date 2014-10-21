@@ -119,7 +119,8 @@ class JSServerSimulation extends Simulation {
     		}
     	}
 	val httpProtocol = http
-		.baseURL("http://192.168.1.74:20000")
+		//.baseURL("http://192.168.1.74:20000")
+		.baseURL("http://117.121.32.94:20000")
 		.inferHtmlResources()
 		
 		val scn = scenario("Scenario name")
@@ -164,5 +165,6 @@ class JSServerSimulation extends Simulation {
 				)
 			.pause(1)
 	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
-	setUp(scn.inject(rampUsers(100000) over (500 seconds))).protocols(httpProtocol)
+	//setUp(scn.inject(rampUsers(100000) over (500 seconds))).protocols(httpProtocol)   //  8 cpu
+	setUp(scn.inject(rampUsers(40000) over (1000 seconds))).protocols(httpProtocol)        //  2 cpu
 }

@@ -6,6 +6,7 @@ var redis_pools = require("../nosql/redis_pools");
 var z_rank_running_man = 'z_rank_running_man';
 var z_level_running_man = 'z_level_running_man';
 var h_rank_running_man = 'h_rank_running_man';
+var h_award_running_man = 'h_award_running_man';
 
 var redis_rank_running_man_wrapper = module.exports;
 
@@ -34,6 +35,19 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
                 //  some thing log
                 console.error(err);
             }
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.get_all_rank_info = function(championship_id,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hgetall(h_rank_running_man + ":" + championship_id,function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
             release();
         });
     });
@@ -102,6 +116,31 @@ redis_rank_running_man_wrapper.increase_level = function(championship_id,device_
 redis_rank_running_man_wrapper.get_level = function(championship_id,device_guid,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.zscore(z_level_running_man + ":" + championship_id,device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.set_award = function(device_guid,award_info){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_award_running_man,device_guid, JSON.stringify(award_info),function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.get_award = function(device_guid,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hget(h_award_running_man,device_guid,function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);

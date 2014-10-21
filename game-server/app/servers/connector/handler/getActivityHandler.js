@@ -70,6 +70,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 }
                 var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
                 activity.missions.push(mission_type_to_be_random[random_mission_index]);
+                console.log(activity.missions.length);
             }
         }
         //  for random prize

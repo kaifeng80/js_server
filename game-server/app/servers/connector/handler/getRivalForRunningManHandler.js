@@ -32,15 +32,16 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 //  use client data
                 boss_info.bossid_real = boss_id;
                 boss_info.res_real = boss_res;
-                rivals = rivals - 1;
             }
             else{
                 //  get boss info from client
                 level = parseInt(level);
                 if(0 != boss_id){
                     boss_info = rank_running_man_wrapper.composs_rival_seoul_boss(activity,level,boss_id,boss_res);
-                    rivals = rivals - 1;
                 }
+            }
+            if(boss_info){
+                rivals = rivals - 1;
             }
             var rival_seoul_array = rank_running_man_wrapper.get_rival_seoul(activity,level,rivals);
             var boss_info_next;

@@ -15,7 +15,7 @@ var app = pomelo.createApp();
 app.set('name', 'srv');
 
 app.configure('production|development', 'connector', function() {
-    app.load(http_connectors, {host:app.get('curServer').host,port: app.get('curServer').httpClientPort});
+    app.load(http_connectors, {host:app.get('curServer').host,port: app.get('curServer').httpClientPort,cluster:app.get('curServer').cluster});
 });
 
 // app configuration

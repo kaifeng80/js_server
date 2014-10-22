@@ -245,7 +245,7 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                             });
                         },
                         function(device_guid,championship_id,rank,rank_award,callback){
-                            if(1){
+                            if(0){
                                 rank_logger.debug(rank);
                             }
                             //  4   set award data

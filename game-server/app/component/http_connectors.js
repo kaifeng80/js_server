@@ -23,6 +23,7 @@ var http_connectors = function(app, opts) {
     this.server = null;
     this.port = opts.port | DEFAULT_PORT;
     this.host = opts.host;
+    this.cluster = opts.cluster;
     //  a temp variable
     this.session = null;
 };
@@ -30,45 +31,53 @@ var http_connectors = function(app, opts) {
 http_connectors.name = '__http_connectors__';
 
 http_connectors.prototype.start = function(cb) {
-    var self = this;
     var cpu_num = require('os').cpus().length;
-    if (/*cluster.isMaster*/false) {
-        // Fork workers.
-        for (var i = 0; i < cpu_num; i++) {
-            cluster.fork();
-        }
-
-        cluster.on('exit', function(worker, code, signal) {
-            http_logger.debug('worker ' + worker.process.pid + ' died');
-        });
-    }
-    else{
-        this.server = http.createServer(function(req, res) {
-            var url = req.url;
-            var client_ip = req.connection.remoteAddress;
-            http_logger.debug("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
-            switch(req.method){
-                case 'GET':{
-                    var args = self.parseGet(req, res);
-                    args && self.dispatchMessage(args[1], args[0], req, res);
-                    break;
-                }
-                case 'POST':{
-                    self.parsePost(req,res,function(data){
-                        self.dispatchMessage(data,url,req,res);
-                    });
-                    break;
-                }
-                default:{
-                    res.end();
-                    break;
-                }
+    if(this.cluster){
+        if (cluster.isMaster) {
+            // Fork workers.
+            for (var i = 0; i < cpu_num; i++) {
+                cluster.fork();
             }
-        });
-        this.server.listen( this.port );
-        http_logger.debug("server listen at " + this.port + " as a component!");
-        process.nextTick(cb);
+
+            cluster.on('exit', function(worker, code, signal) {
+                http_logger.debug('worker ' + worker.process.pid + ' died');
+            });
+        }
+        else{
+            this.startHttpServer(cb);
+        }
+    }else{
+        this.startHttpServer(cb);
     }
+};
+
+http_connectors.prototype.startHttpServer = function(cb){
+    var self = this;
+    this.server = http.createServer(function(req, res) {
+        var url = req.url;
+        var client_ip = req.connection.remoteAddress;
+        http_logger.debug("new client coming ip:" + client_ip + " method:" + req.method + " url:" + url);
+        switch(req.method){
+            case 'GET':{
+                var args = self.parseGet(req, res);
+                args && self.dispatchMessage(args[1], args[0], req, res);
+                break;
+            }
+            case 'POST':{
+                self.parsePost(req,res,function(data){
+                    self.dispatchMessage(data,url,req,res);
+                });
+                break;
+            }
+            default:{
+                res.end();
+                break;
+            }
+        }
+    });
+    this.server.listen( this.port );
+    http_logger.debug("server listen at " + this.port + " as a component!");
+    process.nextTick(cb);
 };
 
 http_connectors.prototype.afterStart = function (cb) {

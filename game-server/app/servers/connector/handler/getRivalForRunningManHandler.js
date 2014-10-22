@@ -28,7 +28,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
             if(null == level){
                 //  come cross boss at first time
                 level = 1;
-                boss_info = rank_running_man_wrapper.get_rival_seoul_boss(activity,level);
+                boss_info = rank_running_man_wrapper.get_rival_seoul_boss(activity,level,-1);
                 //  use client data
                 boss_info.bossid_real = boss_id;
                 boss_info.res_real = boss_res;
@@ -47,7 +47,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
             var boss_info_next;
             var boss_come_cross_random_value = Math.floor(Math.random()*100);
             if(boss_come_cross_random_value <= activity.boss_rate * 100){
-                boss_info_next = rank_running_man_wrapper.get_rival_seoul_boss(activity,level);
+                boss_info_next = rank_running_man_wrapper.get_rival_seoul_boss(activity,level,boss_info.level);
             }
             next(null, {
                 code: 0,

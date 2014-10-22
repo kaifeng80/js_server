@@ -113,9 +113,37 @@ rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,riv
     return rival_seoul_array;
 };
 
-rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,level){
+/**
+ * get the boss config index which is different invalid_index
+ * @param level
+ * @param rival_offset
+ * @param invalid_index
+ * @returns {*}
+ */
+rank_running_man_wrapper.prototype.random_rival_seoul_boss = function(level,rival_offset,invalid_index){
+    var rival_seoul_random_index = level;
+    var max_loop_count = rival_offset * 5;
+    var current_loop_count = 0;
+    do{
+        rival_seoul_random_index = Math.floor(parseInt(level) + Math.random() * (rival_offset/*level + rival_offset - level*/));
+        ++current_loop_count;
+        if(current_loop_count >= max_loop_count){
+            break;
+        }
+    }while(invalid_index == rival_seoul_random_index);
+    return rival_seoul_random_index;
+};
+
+/**
+ * get boss info by rule of random,
+ * @param activity
+ * @param level
+ * @param invalid_index the random index which can not be used, to avoid change the old value for object reference
+ * @returns {*}
+ */
+rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,level,invalid_index){
     var rival_offset = parseInt(activity.rival_offset);
-    var rival_seoul_random_index = Math.floor(parseInt(level) + Math.random() * (rival_offset/*level + rival_offset - level*/));
+    var rival_seoul_random_index = this.random_rival_seoul_boss(level,rival_offset,invalid_index);/*Math.floor(parseInt(level) + Math.random() * (rival_offset));*/
     var rival_seoul = rival_seoul_boss_json[rival_seoul_random_index - 1];
     if (rival_seoul) {
         var wight_total_rate = 0;

@@ -10,6 +10,7 @@ class JSServerSimulation extends Simulation {
 	println("Hello, JSServerSimulation!")
 	var seed = 1000;
 	val random = new Random(System.currentTimeMillis)
+	var sleep_time = 0;
 	/*
 	println(random.nextInt(seed))
 	println(random.nextInt(seed))
@@ -118,11 +119,67 @@ class JSServerSimulation extends Simulation {
     			return Json.build(cmd).toString;
     		}
     	}
+
+	object upload_race_time_for_running_man {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->15);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> deviceid);
+    			cmd += ("boss_rank" -> 2);
+    			cmd += ("my_rank" -> 1);
+    			cmd += ("is_increase_level" -> 1);
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
+	object get_rival_for_running_man {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->16);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> deviceid);
+    			cmd += ("boss_res" -> "res");
+    			cmd += ("boss_id" -> "2");
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
+	object get_race_rank_for_running_man {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->17);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> deviceid);
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
+	object get_award_rank_for_running_man {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->18);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "1.2.4");
+    			cmd += ("deviceid" -> deviceid);
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
 	val httpProtocol = http
 		//.baseURL("http://192.168.1.74:20000")
-		.baseURL("http://117.121.32.94:20000")
+		//.baseURL("http://117.121.32.94:20000")
+		//.baseURL("http://192.168.22.61:20000")
+		.baseURL("http://192.168.1.74:20000")
 		.inferHtmlResources()
-		
+
 		val scn = scenario("Scenario name")
             .exec(
                 http("get_time")
@@ -131,7 +188,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_time.msg())
                     .check(status.is(200))
 				)
-			.pause(1)
+			.pause(sleep_time)
 			.exec(
                 http("get_activity")
                     .post("/")
@@ -139,7 +196,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_activity.msg())
                     .check(status.is(200))
 				)
-			.pause(1)
+			.pause(sleep_time)
 			.exec(
                 http("get_notice")
                     .post("/")
@@ -147,7 +204,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_notice.msg())
                     .check(status.is(200))
 				)
-			.pause(1)
+			.pause(sleep_time)
 			.exec(
                 http("upload_race_time")
                     .post("/")
@@ -155,7 +212,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",upload_race_time.msg())
                     .check(status.is(200))
 				)
-			.pause(1)
+			.pause(sleep_time)
 			.exec(
                 http("get_rank")
                     .post("/")
@@ -163,8 +220,40 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_rank.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(1)
+			.pause(sleep_time)
+			.exec(
+                http("upload_race_time_for_running_man")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",upload_race_time_for_running_man.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(sleep_time)
+			.exec(
+                http("get_rival_for_running_man")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_rival_for_running_man.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(sleep_time)
+			.exec(
+                http("get_race_rank_for_running_man")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_race_rank_for_running_man.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(sleep_time)
+			.exec(
+                http("get_award_rank_for_running_man")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_award_rank_for_running_man.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(sleep_time)
 	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
-	//setUp(scn.inject(rampUsers(100000) over (500 seconds))).protocols(httpProtocol)   //  8 cpu
-	setUp(scn.inject(rampUsers(20000) over (1000 seconds))).protocols(httpProtocol)        //  2 cpu
+	setUp(scn.inject(rampUsers(1000000) over (9000 seconds))).protocols(httpProtocol)   //  8 cpu
+	//setUp(scn.inject(rampUsers(1000) over (9 seconds))).protocols(httpProtocol)        //  2 cpu
 }

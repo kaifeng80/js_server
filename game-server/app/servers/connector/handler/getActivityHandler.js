@@ -68,9 +68,28 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                         }
                     }
                 }
+                //  check the mission which to be random is similar, if so, random again
                 var random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                var similar = true;
+                while(similar){
+                    var find = false;
+                    for(var v = 0; v < activity.missions.length; ++v){
+                        if(activity.missions[v].mission_type == mission_type_to_be_random[random_mission_index].mission_type &&
+                            activity.missions[v].condition_type == mission_type_to_be_random[random_mission_index].condition_type &&
+                            activity.missions[v].data == mission_type_to_be_random[random_mission_index].data){
+                            find = true;
+                            random_mission_index = Math.floor(Math.random()*mission_type_to_be_random.length);
+                            break;
+                        }
+                    }
+                    if(find){
+                        similar = true;
+                    }else{
+                        similar = false;
+                        break;
+                    }
+                }
                 activity.missions.push(mission_type_to_be_random[random_mission_index]);
-                console.log(activity.missions.length);
             }
         }
         //  for random prize

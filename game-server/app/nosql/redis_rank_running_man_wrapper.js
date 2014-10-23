@@ -35,6 +35,48 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
             release();
         });
     });
+
+    //  for statistics
+    var date = new Date();
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, finally_score, function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+
+    redis_pools.execute('pool_1',function(client, release) {
+        client.zincrby(z_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), 1,device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hget(h_rank_running_man + "_times_statistics", device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            var times = reply ? parseInt(reply) + 1 : 1;
+            redis_pools.execute('pool_1',function(client, release) {
+                client.hset(h_rank_running_man + "_times_statistics", device_guid, times, function (err, reply) {
+                    if (err) {
+                        //  some thing log
+                        console.error(err);
+                    }
+                    release();
+                });
+            });
+            release();
+        });
+    });
 };
 
 redis_rank_running_man_wrapper.get_all_rank_info = function(championship_id,cb){

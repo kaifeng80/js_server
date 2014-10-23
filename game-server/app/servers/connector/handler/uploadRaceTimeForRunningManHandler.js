@@ -18,13 +18,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
     var rank_info = {
         channel:channel,
         version:version,
-        car:msg.car,
-        car_level:msg.car_level,
-        driver:msg.driver,
-        driver_level:msg.driver_level,
-        phone_number:msg.phone_number,
-        championship_id:championship_id,
-        date:{year:date_now.getFullYear(),month:date_now.getMonth() + 1,date:date_now.getDate(),local_time:date_now.toLocaleTimeString()}
+        championship_id:championship_id
     };
     pomelo.app.get('statistics_wrapper').requestsRankInAllIncForRunningMan();
     pomelo.app.get('statistics_wrapper').requestsRankPerDayIncForRunningMan();

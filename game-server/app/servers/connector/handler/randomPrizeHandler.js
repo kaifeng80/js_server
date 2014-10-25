@@ -50,7 +50,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                     }
                     var prize = random_prize_wrapper.random();
                     if(!prize){
-                        break;
+                        continue;
                     }
                     if(prize.type == "TICKET"){
                         //  if the current card is more than total_card, give something instead of card

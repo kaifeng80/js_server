@@ -49,6 +49,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                         continue;
                     }
                     var prize = random_prize_wrapper.random();
+                    if(!prize){
+                        break;
+                    }
                     if(prize.type == "TICKET"){
                         //  if the current card is more than total_card, give something instead of card
                         if(current_card < activity.total_card){
@@ -62,14 +65,16 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                             }
                         }else{
                             // give something other(use gacha_replace_json 1,2,3 instead gacha_json 1,2,3)
-                            prize = gacha_replace_json[prize.id];
+                            prize = gacha_replace_json[prize.id - 1];
                         }
                     }
                     gacha_array.push(prize);
                 }
                 for(var j = 0; j < activity.gacha2_random_num; ++j){
                     var prize = random_prize_wrapper.random2();
-                    gacha_array.push(prize);
+                    if(prize){
+                        gacha_array.push(prize);
+                    }
                 }
                 gacha_result.push(gacha_array);
             }

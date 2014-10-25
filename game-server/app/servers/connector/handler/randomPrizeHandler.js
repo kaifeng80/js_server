@@ -81,6 +81,16 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
             if(current_card <= activity.total_card && last_current_card != current_card){
                 random_prize_wrapper.set(device_guid,current_card);
             }
+            //  test code
+            if(0){
+                var gacha_result_string = JSON.stringify(gacha_result);
+                try{
+                    JSON.parse(gacha_result_string);
+                }
+                catch (e){
+                    console.log(e.name  + ":" +  e.message);
+                }
+            }
             next(null, {
                 code: 0,
                 msg_id : msg.msg_id,

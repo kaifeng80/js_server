@@ -31,7 +31,7 @@
     }
   ],
   "levels": {
-	"http-logger" : "ERROR",
+	"http-logger" : "DEBUG",
 	"rank-logger" : "DEBUG",
     "relative-logger" : "DEBUG",
 	"absolute-logger" : "ERROR"

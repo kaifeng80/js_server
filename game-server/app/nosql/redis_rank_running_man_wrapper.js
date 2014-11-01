@@ -109,7 +109,7 @@ redis_rank_running_man_wrapper.get_rank = function(championship_id,device_guid,c
     async.parallel([
             function(callback){
                 redis_pools.execute('pool_1',function(client, release){
-                    client.zrank(z_rank_running_man + ":" + championship_id,device_guid,function (err, reply){
+                    client.zrevrank(z_rank_running_man + ":" + championship_id,device_guid,function (err, reply){
                         if(err){
                             //  some thing log
                             console.error(err);

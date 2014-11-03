@@ -67,4 +67,9 @@ random_prize_wrapper.prototype.get = function(device_guid,cb){
     redis_random_prize_wrapper.get(device_guid,cb);
 };
 
+random_prize_wrapper.prototype.statistics_for_participant = function(device_guid){
+    redis_random_prize_wrapper.statistics_for_participant(device_guid);
+};
+
+
 module.exports = random_prize_wrapper;

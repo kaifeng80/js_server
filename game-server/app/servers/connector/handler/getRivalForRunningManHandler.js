@@ -36,7 +36,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
             else{
                 //  get boss info from client
                 level = parseInt(level);
-                if(0 != boss_id){
+                if("0" != boss_id){
                     boss_info = rank_running_man_wrapper.composs_rival_seoul_boss(activity,level,boss_id,boss_res);
                 }
             }

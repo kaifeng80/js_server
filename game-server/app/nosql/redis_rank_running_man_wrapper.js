@@ -10,23 +10,20 @@ var h_award_running_man = 'h_award_running_man';
 
 var redis_rank_running_man_wrapper = module.exports;
 
-redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_guid,race_time,rank_info,cb){
+redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_guid,finally_score,rank_info,cb){
     redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
         redis_pools.execute('pool_1',function(client, release) {
-            if (!reply || (parseInt(reply) && parseInt(reply) > parseInt(race_time))) {
-                client.zadd(z_rank_running_man + ":" + championship_id, race_time, device_guid, function (err, reply) {
-                    if (err) {
-                        //  some thing log
-                        console.error(err);
-                    }
-                    cb(reply);
-                    release();
-                });
+            if (reply) {
+                finally_score = finally_score + parseInt(reply);
             }
-            else {
+            client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    console.error(err);
+                }
                 cb(reply);
                 release();
-            }
+            });
         });
     });
     redis_pools.execute('pool_1',function(client, release) {
@@ -146,6 +143,18 @@ redis_rank_running_man_wrapper.get_award = function(device_guid,cb){
                 console.error(err);
             }
             cb(reply);
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.del_award = function(device_guid){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hdel(h_award_running_man,device_guid,function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
             release();
         });
     });

@@ -28,11 +28,11 @@ rank_running_man_wrapper.prototype.tick = function() {
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();
-        //if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
+        if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
         {
             if (cluster.isMaster) {
                 var championship_id_now = util.getWeek(new Date());
-                //if(self.championship_id != championship_id_now)
+                if(self.championship_id != championship_id_now)
                 {
                     //  give award
                     self.calc_rival_seoul_award(self.championship_id);
@@ -43,8 +43,8 @@ rank_running_man_wrapper.prototype.tick = function() {
     },self.time_interval);
 };
 
-rank_running_man_wrapper.prototype.add_rank_info = function(championship_id,device_guid,race_time,rank_info,cb){
-    redis_rank_running_man_wrapper.add_rank_info(championship_id,device_guid,race_time,rank_info,cb);
+rank_running_man_wrapper.prototype.add_rank_info = function(championship_id,device_guid,finally_score,rank_info,cb){
+    redis_rank_running_man_wrapper.add_rank_info(championship_id,device_guid,finally_score,rank_info,cb);
 };
 
 rank_running_man_wrapper.prototype.get_all_rank_info = function(championship_id,cb){
@@ -71,8 +71,11 @@ rank_running_man_wrapper.prototype.get_award = function(device_guid,cb){
     redis_rank_running_man_wrapper.get_award(device_guid,cb);
 };
 
-rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level){
-    var rivals = activity.rivals - 1;
+rank_running_man_wrapper.prototype.del_award = function(device_guid){
+    redis_rank_running_man_wrapper.del_award(device_guid);
+};
+
+rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,rivals){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_array = new Array();
     for(var i = 0 ; i < rivals; ++i){

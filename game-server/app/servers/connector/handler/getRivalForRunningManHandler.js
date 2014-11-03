@@ -24,20 +24,25 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
         var rank_running_man_wrapper = pomelo.app.get('rank_running_man_wrapper');
         rank_running_man_wrapper.get_level(championship_id,device_guid,function(level){
             var boss_info;
+            var rivals = activity.rivals;
             if(null == level){
                 //  come cross boss at first time
                 level = 1;
                 boss_info = rank_running_man_wrapper.get_rival_seoul_boss(activity,level);
                 //  use client data
                 boss_info.bossid_real = boss_id;
+                boss_info.res_real = boss_res;
+                rivals = rivals - 1;
             }
             else{
                 //  get boss info from client
+                level = parseInt(level);
                 if(0 != boss_id){
                     boss_info = rank_running_man_wrapper.composs_rival_seoul_boss(activity,level,boss_id,boss_res);
+                    rivals = rivals - 1;
                 }
             }
-            var rival_seoul_array = rank_running_man_wrapper.get_rival_seoul(activity,level);
+            var rival_seoul_array = rank_running_man_wrapper.get_rival_seoul(activity,level,rivals);
             var boss_info_next;
             var boss_come_cross_random_value = Math.floor(Math.random()*100);
             if(boss_come_cross_random_value <= activity.boss_rate * 100){
@@ -50,7 +55,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 time:Math.floor(Date.now()/1000),
                 rival_list:rival_seoul_array,
                 boss_info:boss_info,
-                boss_id:boss_info_next?boss_info_next.bossid_real:"0",
+                boss_id:boss_info_next?boss_info_next.bossid_real:0,
                 boss_res:boss_info_next?boss_info_next.res_real:""
             });
         });

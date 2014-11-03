@@ -78,6 +78,7 @@
         "rival_offset":10,
         "rival_score":[300,200,100,0],
         "rival_score_boss":[600,400,200,0],
+        "phone_number_option":1,
         "akina_1" : {
             "item1":{"res":"car_370z","rate":1},
             "item2":{"res":"car_beetle","rate":0.5},
@@ -138,9 +139,9 @@
                 "item1":{"type":"RM_KEY","data":"","number":50,"icon":"K"},
                 "item2":{"type":"GEM","data":"","number":200,"icon":"G"},
                 "item3":{"type":"COIN","data":"","number":1000000,"icon":"C"},
-                "item4":{"type":"ITEM","data":"4","number":20,"icon":"X"},
-                "item5":{"type":"ITEM","data":"5","number":20,"icon":"Y"},
-                "item6":{"type":"ITEM","data":"6","number":20,"icon":"Z"}
+                "item4":{"type":"ITEM","data":"4","number":30,"icon":"X"},
+                "item5":{"type":"ITEM","data":"5","number":30,"icon":"Y"},
+                "item6":{"type":"ITEM","data":"6","number":30,"icon":"Z"}
             },
             "2-10" : {
                 "item1":{"type":"RM_KEY","data":"","number":30,"icon":"K"},
@@ -150,9 +151,16 @@
                 "item5":{"type":"ITEM","data":"5","number":20,"icon":"Y"},
                 "item6":{"type":"ITEM","data":"6","number":20,"icon":"Z"}
             },
-            "10-100" : {
+            "10-50" : {
                 "item1":{"type":"RM_KEY","data":"","number":20,"icon":"K"},
                 "item2":{"type":"COIN","data":"","number":100000,"icon":"C"},
+                "item3":{"type":"ITEM","data":"4","number":10,"icon":"X"},
+                "item4":{"type":"ITEM","data":"5","number":10,"icon":"Y"},
+                "item5":{"type":"ITEM","data":"6","number":10,"icon":"Z"}
+            },
+            "50-100" : {
+                "item1":{"type":"RM_KEY","data":"","number":15,"icon":"K"},
+                "item2":{"type":"COIN","data":"","number":800000,"icon":"C"},
                 "item3":{"type":"ITEM","data":"4","number":10,"icon":"X"},
                 "item4":{"type":"ITEM","data":"5","number":10,"icon":"Y"},
                 "item5":{"type":"ITEM","data":"6","number":10,"icon":"Z"}
@@ -160,13 +168,13 @@
             "100-1000" : {
                 "item1":{"type":"RM_KEY","data":"","number":10,"icon":"K"},
                 "item2":{"type":"COIN","data":"","number":50000,"icon":"X"},
-                "item3":{"type":"ITEM","data":"4","number":10,"icon":"X"},
-                "item4":{"type":"ITEM","data":"5","number":10,"icon":"Y"},
-                "item5":{"type":"ITEM","data":"6","number":10,"icon":"Z"}
+                "item3":{"type":"ITEM","data":"4","number":5,"icon":"X"},
+                "item4":{"type":"ITEM","data":"5","number":5,"icon":"Y"},
+                "item5":{"type":"ITEM","data":"6","number":5,"icon":"Z"}
             },
             "1000-100000000" : {
                 "item1":{"type":"RM_KEY","data":"","number":3,"icon":"K"},
-                "item2":{"type":"COIN","data":"","number":2000,"icon":"C"}
+                "item2":{"type":"COIN","data":"","number":20000,"icon":"C"}
             }
         },
         "desc":"running man 挑战赛"

@@ -41,11 +41,12 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
     /*
      1、每日参与玩家数量
      2、每日开启比赛的局数
-     3、每个玩家参与的局数分布
+     3、每日每个玩家参与的局数分布
      */
     var date = new Date();
+    //  for 1
     redis_pools.execute('pool_1',function(client, release) {
-        client.hset(h_rank + "_statistics:" + date.getFullYear() + ":" + (date.getMonth() + 1) + ":" + date.getDate(), device_guid, race_time, function (err, reply) {
+        client.hset(h_rank + "_statistics:" + date.getFullYear() + ":" + (date.getMonth() + 1) + ":" + date.getDate(), device_guid, race_time/*useless data*/, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);
@@ -53,7 +54,7 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
             release();
         });
     });
-
+    //  for 2
     redis_pools.execute('pool_1',function(client, release) {
         client.zincrby(z_rank + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), 1,device_guid, function (err, reply) {
             if (err) {
@@ -64,15 +65,16 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
         });
     });
 
+    //  for 3
     redis_pools.execute('pool_1',function(client, release) {
-        client.hget(h_rank + "_times_statistics", device_guid, function (err, reply) {
+        client.hget(h_rank + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);
             }
             var times = reply ? parseInt(reply) + 1 : 1;
             redis_pools.execute('pool_1',function(client, release) {
-                client.hset(h_rank + "_times_statistics", device_guid, times, function (err, reply) {
+                client.hset(h_rank + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, times, function (err, reply) {
                     if (err) {
                         //  some thing log
                         console.error(err);

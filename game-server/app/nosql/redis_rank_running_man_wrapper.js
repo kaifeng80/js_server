@@ -10,20 +10,22 @@ var h_award_running_man = 'h_award_running_man';
 
 var redis_rank_running_man_wrapper = module.exports;
 
-redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_guid,finally_score,rank_info,cb){
+redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_guid,is_add_score,finally_score,rank_info,cb){
     redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
         redis_pools.execute('pool_1',function(client, release) {
             if (reply) {
                 finally_score = finally_score + parseInt(reply);
             }
-            client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
-                if (err) {
-                    //  some thing log
-                    console.error(err);
-                }
-                cb(reply);
-                release();
-            });
+            if("true" == is_add_score){
+                client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
+                    if (err) {
+                        //  some thing log
+                        console.error(err);
+                    }
+                    cb(reply);
+                    release();
+                });
+            }
         });
     });
     redis_pools.execute('pool_1',function(client, release) {
@@ -37,9 +39,15 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
     });
 
     //  for statistics
+    /*
+     1、可按日期统计“首尔撕牌大战”的参与玩家人数
+     2、可按日期统计“首尔撕牌大战”每个玩家的参与次数
+     3、“首尔撕牌大战”积分排行榜
+     */
     var date = new Date();
+    //  for 1
     redis_pools.execute('pool_1',function(client, release) {
-        client.hset(h_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, finally_score, function (err, reply) {
+        client.hset(h_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, finally_score/*useless data*/, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);
@@ -58,15 +66,16 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
         });
     });
 
+    //  for 2
     redis_pools.execute('pool_1',function(client, release) {
-        client.hget(h_rank_running_man + "_times_statistics", device_guid, function (err, reply) {
+        client.hget(h_rank_running_man + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);
             }
             var times = reply ? parseInt(reply) + 1 : 1;
             redis_pools.execute('pool_1',function(client, release) {
-                client.hset(h_rank_running_man + "_times_statistics", device_guid, times, function (err, reply) {
+                client.hset(h_rank_running_man + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, times, function (err, reply) {
                     if (err) {
                         //  some thing log
                         console.error(err);
@@ -130,12 +139,35 @@ redis_rank_running_man_wrapper.get_rank = function(championship_id,device_guid,c
                         release();
                     });
                 });
+            },
+            function(callback){
+                redis_pools.execute('pool_1',function(client, release) {
+                    client.hget(h_rank_running_man + ":" + championship_id,device_guid, function (err, reply) {
+                        if (err) {
+                            //  some thing log
+                            console.error(err);
+                        }
+                        callback(null, reply);
+                        release();
+                    });
+                });
+            },
+            function(callback){
+                redis_pools.execute('pool_1',function(client, release){
+                    client.zcount(z_rank_running_man + ":" + championship_id,'-inf','+inf',function (err, reply){
+                        if(err){
+                            //  some thing log
+                            console.error(err);
+                        }
+                        callback(null, reply);
+                        release();
+                    });
+                });
             }
         ],
         // optional callback
         function(err, results){
-            // the results array will equal ['one','two'] even though
-            // the second function had a shorter timeout.
+            // the results array will equal ['rank','score','phone_number',rank_total_count]
             cb(results);
         });
 };

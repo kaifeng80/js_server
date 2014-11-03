@@ -34,6 +34,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
             }
         }
         //  random prize
+        random_prize_wrapper.statistics_for_participant(device_guid);
         random_prize_wrapper.get(device_guid,function(reply){
             if(null != reply){
                 current_card = JSON.parse(reply).current_card;

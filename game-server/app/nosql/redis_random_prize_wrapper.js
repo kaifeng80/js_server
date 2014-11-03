@@ -30,3 +30,46 @@ random_prize_wrapper.get = function(device_guid,cb){
         });
     });
 };
+
+//  for statistics
+/*
+ 4、可按日期统计“抽取满级特斯拉”的参与玩家人数
+ 5、可按日期统计“抽取满级特斯拉”每个玩家的参与次数
+ */
+
+random_prize_wrapper.statistics_for_participant = function(device_guid){
+    //  for 4
+    redis_pools.execute('pool_1',function(client, release){
+        var date = new Date();
+        client.hset(h_random_prize + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),device_guid,Date.now(),function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+
+    //  for 5
+    redis_pools.execute('pool_1',function(client, release) {
+        var date = new Date();
+        client.hget(h_random_prize + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            var times = reply ? parseInt(reply) + 1 : 1;
+            redis_pools.execute('pool_1',function(client, release) {
+                client.hset(h_random_prize + "_times_statistics" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, times, function (err, reply) {
+                    if (err) {
+                        //  some thing log
+                        console.error(err);
+                    }
+                    release();
+                });
+            });
+            release();
+        });
+    });
+};
+

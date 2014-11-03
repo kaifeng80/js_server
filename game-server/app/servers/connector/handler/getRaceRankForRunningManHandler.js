@@ -27,10 +27,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RACE_RANK_FOR_RUNNING_MAN, function(
                         flowid: msg.flowid,
                         rank:reply[0] != null ? parseInt(reply[0]) + 1: 0,
                         score:reply[1] != null ? parseInt(reply[1]): 0,
+                        phone_number:reply[2] != null ? JSON.parse(reply[2]).phone_number: 0,
+                        player_number:reply[3] != null ? reply[3]: 0,
                         normal_energy:activity.normal_energy,
                         boss_energy:activity.boss_energy,
                         rival_score:activity.rival_score,
                         rival_score_boss:activity.rival_score_boss,
+                        phone_number_option:activity.phone_number_option,
                         time: Math.floor(Date.now() / 1000)
                     });
                 });

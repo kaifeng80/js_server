@@ -10,14 +10,17 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
     var channel = msg.channel;
     var version = msg.version;
     var device_guid = msg.deviceid;
+    var phone_number = msg.phone_number;
     var boss_rank = parseInt(msg.boss_rank);
     var mine_rank = parseInt(msg.my_rank);
     var is_increase_level = msg.is_increase_level;
+    var is_add_score = msg.is_add_score;
     var date_now = new Date();
     var championship_id = util.getWeek(new Date());
     var rank_info = {
         channel:channel,
         version:version,
+        phone_number:phone_number,
         championship_id:championship_id
     };
     pomelo.app.get('statistics_wrapper').requestsRankInAllIncForRunningMan();
@@ -38,10 +41,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
                     finally_score  = rival_score_boss.length >= mine_rank ? rival_score_boss[mine_rank - 1]:0;
                 }
                 var rank_running_man_wrapper = pomelo.app.get('rank_running_man_wrapper');
-                if(is_increase_level){
+                if("true" == is_increase_level){
                     rank_running_man_wrapper.increase_level(championship_id,device_guid);
                 }
-                rank_running_man_wrapper.add_rank_info(championship_id,device_guid,finally_score,rank_info,function(result){
+                rank_running_man_wrapper.add_rank_info(championship_id,device_guid,is_add_score,finally_score,rank_info,function(result){
                     rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){
                         next(null, {
                             code: 0,
@@ -50,6 +53,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
                             championship_id:championship_id,
                             rank:reply[0] != null ? parseInt(reply[0]) + 1: reply[0],
                             score:reply[1] != null ? parseInt(reply[1]): reply[1],
+                            player_number:reply[3] != null ? reply[3]: 0,
                             time: Math.floor(Date.now() / 1000)
                         });
                     });

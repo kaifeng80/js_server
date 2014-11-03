@@ -43,16 +43,16 @@ rank_running_man_wrapper.prototype.tick = function() {
     },self.time_interval);
 };
 
-rank_running_man_wrapper.prototype.add_rank_info = function(championship_id,device_guid,finally_score,rank_info,cb){
-    redis_rank_running_man_wrapper.add_rank_info(championship_id,device_guid,finally_score,rank_info,cb);
+rank_running_man_wrapper.prototype.add_rank_info = function(championship_id,device_guid,is_add_score,finally_score,rank_info,cb){
+    redis_rank_running_man_wrapper.add_rank_info(championship_id,device_guid,is_add_score,finally_score,rank_info,cb);
 };
 
 rank_running_man_wrapper.prototype.get_all_rank_info = function(championship_id,cb){
     redis_rank_running_man_wrapper.get_all_rank_info(championship_id,cb);
 };
 
-rank_running_man_wrapper.prototype.get_rank = function(championship_id,device_guid,db){
-    redis_rank_running_man_wrapper.get_rank(championship_id,device_guid,db);
+rank_running_man_wrapper.prototype.get_rank = function(championship_id,device_guid,cb){
+    redis_rank_running_man_wrapper.get_rank(championship_id,device_guid,cb);
 };
 
 rank_running_man_wrapper.prototype.increase_level = function(championship_id,device_guid){

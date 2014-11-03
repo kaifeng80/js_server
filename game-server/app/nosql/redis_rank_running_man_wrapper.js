@@ -101,6 +101,19 @@ redis_rank_running_man_wrapper.get_all_rank_info = function(championship_id,cb){
     });
 };
 
+redis_rank_running_man_wrapper.update_rank_info = function(championship_id,device_guid,rank_info,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_running_man + ":" + championship_id, device_guid, JSON.stringify(rank_info), function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
 redis_rank_running_man_wrapper.get_rank_time = function(championship_id,device_guid,cb){
     redis_pools.execute('pool_1',function(client, release){
         client.zscore(z_rank_running_man + ":" + championship_id,device_guid,function (err, reply){

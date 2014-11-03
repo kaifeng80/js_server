@@ -75,6 +75,10 @@ rank_running_man_wrapper.prototype.del_award = function(device_guid){
     redis_rank_running_man_wrapper.del_award(device_guid);
 };
 
+rank_running_man_wrapper.prototype.update_rank_info = function(championship_id,device_guid,rank_info,cb){
+    redis_rank_running_man_wrapper.update_rank_info(championship_id,device_guid,rank_info,cb);
+};
+
 rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,rivals){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_array = new Array();

@@ -15,7 +15,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
     var mine_rank = parseInt(msg.my_rank);
     var is_increase_level = msg.is_increase_level;
     var is_add_score = msg.is_add_score;
-    var date_now = new Date();
     var championship_id = util.getWeek(new Date());
     var rank_info = {
         channel:channel,

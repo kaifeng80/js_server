@@ -14,18 +14,18 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
     redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
         redis_pools.execute('pool_1',function(client, release) {
             if (reply) {
-                finally_score = finally_score + parseInt(reply);
+                if("true" == is_add_score){
+                    finally_score = finally_score + parseInt(reply);
+                }
             }
-            if("true" == is_add_score){
-                client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
-                    if (err) {
-                        //  some thing log
-                        console.error(err);
-                    }
-                    cb(reply);
-                    release();
-                });
-            }
+            client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    console.error(err);
+                }
+                cb(reply);
+                release();
+            });
         });
     });
     redis_pools.execute('pool_1',function(client, release) {

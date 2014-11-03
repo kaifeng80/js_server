@@ -41,7 +41,7 @@ random_prize_wrapper.statistics_for_participant = function(device_guid){
     //  for 4
     redis_pools.execute('pool_1',function(client, release){
         var date = new Date();
-        client.hset(h_random_prize + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),device_guid,Date.now(),function (err, reply){
+        client.hset(h_random_prize + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),device_guid,Date.now()/*useless data*/,function (err, reply){
             if(err){
                 //  some thing log
                 console.error(err);

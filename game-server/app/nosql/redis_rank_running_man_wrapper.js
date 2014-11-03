@@ -47,7 +47,7 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
     var date = new Date();
     //  for 1
     redis_pools.execute('pool_1',function(client, release) {
-        client.hset(h_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, finally_score/*useless data*/, function (err, reply) {
+        client.hset(h_rank_running_man + "_statistics:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(), device_guid, Date.now()/*useless data*/, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);

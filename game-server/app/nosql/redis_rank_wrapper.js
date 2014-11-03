@@ -46,7 +46,7 @@ redis_rank_wrapper.add_rank_info = function(championship_id,device_guid,race_tim
     var date = new Date();
     //  for 1
     redis_pools.execute('pool_1',function(client, release) {
-        client.hset(h_rank + "_statistics:" + date.getFullYear() + ":" + (date.getMonth() + 1) + ":" + date.getDate(), device_guid, race_time/*useless data*/, function (err, reply) {
+        client.hset(h_rank + "_statistics:" + date.getFullYear() + ":" + (date.getMonth() + 1) + ":" + date.getDate(), device_guid, Date.now()/*useless data*/, function (err, reply) {
             if (err) {
                 //  some thing log
                 console.error(err);

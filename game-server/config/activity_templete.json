@@ -25,10 +25,10 @@
         "reward_rate_start_time":"2014/10/21",
         "reward_rate_end_time":"2015/11/30",
         "missions": [
+            {"mission": "5,0"},
             {"mission": "1|2,1|2"},
             {"mission": "2|3,1|2|3"},
-            {"mission": "3|4|5,1|2|3|4"},
-            {"mission": "5,0"}
+            {"mission": "3|4|5,1|2|3|4"}
         ],
         "awardGem": 2,
         "desc":"每日任务"

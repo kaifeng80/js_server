@@ -14,6 +14,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
     var boss_rank = parseInt(msg.boss_rank);
     var mine_rank = parseInt(msg.my_rank);
     var is_increase_level = msg.is_increase_level;
+    //  distance_ahead_2nd meters in front of the second when i was no.1,else the value distance_ahead_2nd is 0
+    var distance_ahead_2nd = parseInt(msg.distance_ahead_2nd);
     var is_add_score = msg.is_add_score;
     var championship_id = util.getWeek(new Date());
     var rank_info = {
@@ -39,9 +41,16 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
                 }else{
                     finally_score  = rival_score_boss.length >= mine_rank ? rival_score_boss[mine_rank - 1]:0;
                 }
+
+                //  calc increase_level_num
+                var increase_level_num = 0;
+                increase_level_num = activity.level_step_increase[mine_rank - 1];
+                if(1 == mine_rank){
+                    increase_level_num += Math.floor(distance_ahead_2nd/activity.level_step_value);
+                }
                 var rank_running_man_wrapper = pomelo.app.get('rank_running_man_wrapper');
                 if("true" == is_increase_level){
-                    rank_running_man_wrapper.increase_level(championship_id,device_guid);
+                    rank_running_man_wrapper.increase_level(championship_id,device_guid,increase_level_num);
                 }
                 rank_running_man_wrapper.add_rank_info(championship_id,device_guid,is_add_score,finally_score,rank_info,function(result){
                     rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){

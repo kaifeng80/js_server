@@ -55,8 +55,8 @@ rank_running_man_wrapper.prototype.get_rank = function(championship_id,device_gu
     redis_rank_running_man_wrapper.get_rank(championship_id,device_guid,cb);
 };
 
-rank_running_man_wrapper.prototype.increase_level = function(championship_id,device_guid){
-    redis_rank_running_man_wrapper.increase_level(championship_id,device_guid);
+rank_running_man_wrapper.prototype.increase_level = function(championship_id,device_guid,increase_level_num){
+    redis_rank_running_man_wrapper.increase_level(championship_id,device_guid,increase_level_num);
 };
 
 rank_running_man_wrapper.prototype.get_level = function(championship_id,device_guid,cb){
@@ -84,7 +84,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,riv
     var rival_seoul_array = new Array();
     for(var i = 0 ; i < rivals; ++i){
         var rival_seoul_random_index = Math.floor(parseInt(level) + Math.random()*(rival_offset/*level + rival_offset - level*/));
-        var rival_seoul = rival_seoul_json[rival_seoul_random_index - 1];
+        var rival_seoul = rival_seoul_json[(rival_seoul_random_index > rival_seoul_json.length ? rival_seoul_json.length: rival_seoul_random_index) - 1];
         if(rival_seoul){
             var rival_seoul_res = rival_seoul.res;
             var rival_seoul_res_sub = rival_seoul_res.substr(2,rival_seoul_res.length - 2);
@@ -148,7 +148,7 @@ rank_running_man_wrapper.prototype.random_rival_seoul_boss = function(level,riva
 rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,level,invalid_index){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_random_index = this.random_rival_seoul_boss(level,rival_offset,invalid_index);/*Math.floor(parseInt(level) + Math.random() * (rival_offset));*/
-    var rival_seoul = rival_seoul_boss_json[rival_seoul_random_index - 1];
+    var rival_seoul = rival_seoul_boss_json[(rival_seoul_random_index > rival_seoul_boss_json.length? rival_seoul_boss_json.length : rival_seoul_random_index) - 1];
     if (rival_seoul) {
         var wight_total_rate = 0;
         var wight_total_backup = 0;

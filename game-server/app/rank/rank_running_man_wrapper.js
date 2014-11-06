@@ -82,8 +82,26 @@ rank_running_man_wrapper.prototype.update_rank_info = function(championship_id,d
 rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,rivals){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_array = new Array();
-    for(var i = 0 ; i < rivals; ++i){
+    //  the index have been random
+    var rival_seoul_random_index_general = [];
+    for(var i = 0 ; i < rivals; ){
         var rival_seoul_random_index = Math.floor(parseInt(level) + Math.random()*(rival_offset/*level + rival_offset - level*/));
+        //  get rid of repetition
+        var find_repetition = false;
+        for(var j = 0; j < rival_seoul_random_index_general.length; ++j){
+            if(rival_seoul_random_index_general[j] == rival_seoul_random_index){
+                find_repetition = true;
+                break;
+            }
+        }
+        if(!find_repetition){
+            rival_seoul_random_index_general.push(rival_seoul_random_index);
+            ++i;
+        }
+        else{
+            //  random again
+            continue;
+        }
         var rival_seoul = rival_seoul_json[(rival_seoul_random_index > rival_seoul_json.length ? rival_seoul_json.length: rival_seoul_random_index) - 1];
         if(rival_seoul){
             var rival_seoul_res = rival_seoul.res;
@@ -118,7 +136,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,riv
 };
 
 /**
- * get the boss config index which is different invalid_index
+ * get the boss config index which is different invalid_index, no useless now!
  * @param level
  * @param rival_offset
  * @param invalid_index
@@ -147,7 +165,8 @@ rank_running_man_wrapper.prototype.random_rival_seoul_boss = function(level,riva
  */
 rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,level,invalid_index){
     var rival_offset = parseInt(activity.rival_offset);
-    var rival_seoul_random_index = this.random_rival_seoul_boss(level,rival_offset,invalid_index);/*Math.floor(parseInt(level) + Math.random() * (rival_offset));*/
+    //  boss id 's level do not random
+    var rival_seoul_random_index = level/*this.random_rival_seoul_boss(level,rival_offset,invalid_index)*/;
     var rival_seoul = rival_seoul_boss_json[(rival_seoul_random_index > rival_seoul_boss_json.length? rival_seoul_boss_json.length : rival_seoul_random_index) - 1];
     if (rival_seoul) {
         var wight_total_rate = 0;
@@ -213,7 +232,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,leve
 
 rank_running_man_wrapper.prototype.composs_rival_seoul_boss = function(activity,level,boss_id,boss_res){
     var rival_offset = parseInt(activity.rival_offset);
-    var rival_seoul_random_index = Math.floor(parseInt(level) + Math.random() * (rival_offset/*level + rival_offset - level*/));
+    var rival_seoul_random_index = level/*Math.floor(parseInt(level) + Math.random() * (rival_offset))*/;
     var rival_seoul = rival_seoul_boss_json[rival_seoul_random_index - 1];
     if (rival_seoul) {
         rival_seoul.res_real = boss_res;

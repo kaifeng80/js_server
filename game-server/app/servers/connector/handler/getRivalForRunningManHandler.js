@@ -49,7 +49,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
             var boss_info_next;
             var boss_come_cross_random_value = Math.floor(Math.random()*100);
             if(boss_come_cross_random_value <= activity.boss_rate * 100){
-                boss_info_next = rank_running_man_wrapper.get_rival_seoul_boss(activity,level,boss_info?boss_info.level:-1);
+                //  level plus 1 to avoid  boss_info and boss_info_next use the same memory
+                boss_info_next = rank_running_man_wrapper.get_rival_seoul_boss(activity,level + 1,boss_info?boss_info.level:-1);
             }
             next(null, {
                 code: 0,
@@ -59,7 +60,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 rival_list:rival_seoul_array,
                 boss_info:boss_info,
                 boss_id:boss_info_next?boss_info_next.bossid_real:0,
-                boss_res:boss_info_next?boss_info_next.res_real:""
+                boss_res:boss_info_next?boss_info_next.res_real:"",
+                level:level
             });
         });
     });

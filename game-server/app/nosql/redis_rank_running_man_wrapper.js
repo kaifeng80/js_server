@@ -21,6 +21,9 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
                     finally_score = reply;
                 }
             }
+            else{
+                finally_score = 0;
+            }
             client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
                 if (err) {
                     //  some thing log

@@ -143,7 +143,7 @@
             },
             "2-10" : {
                 "item1":{"type":"RM_KEY","data":"","number":30,"icon":"K"},
-                "item2":{"type":"GEM","data":"","number":500,"icon":"G"},
+                "item2":{"type":"GEM","data":"","number":50,"icon":"G"},
                 "item3":{"type":"COIN","data":"","number":500000,"icon":"C"},
                 "item4":{"type":"ITEM","data":"4","number":20,"icon":"X"},
                 "item5":{"type":"ITEM","data":"5","number":20,"icon":"Y"},

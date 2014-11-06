@@ -1,5 +1,5 @@
 [
 	{"id":1,"type":"CP","number":2000,"data":"","rate":100,"icon":"c"},
-	{"id":2,"type":"SPARK","number":10,"data":"3","rate":50,"icon":"y"},
+	{"id":2,"type":"SPARK","number":10,"data":"3","rate":50,"icon":"p"},
 	{"id":3,"type":"CP","number":10000,"data":"","rate":2,"icon":"c"}
 ]

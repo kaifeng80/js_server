@@ -4,7 +4,7 @@
 	{"id":3,"type":"ITEM","number":2,"data":"6","rate":100,"icon":"Z"},
 	{"id":4,"type":"CP","number":1000,"data":"","rate":100,"icon":"c"},
 	{"id":5,"type":"SPARK","number":2,"data":"1","rate":50,"icon":"g"},
-	{"id":6,"type":"SPARK","number":2,"data":"2","rate":50,"icon":"p"},
-	{"id":7,"type":"SPARK","number":2,"data":"3","rate":50,"icon":"y"},
+	{"id":6,"type":"SPARK","number":2,"data":"2","rate":50,"icon":"y"},
+	{"id":7,"type":"SPARK","number":2,"data":"3","rate":50,"icon":"p"},
 	{"id":8,"type":"SPARK","number":100,"data":"4","rate":50,"icon":"r"}
 ]

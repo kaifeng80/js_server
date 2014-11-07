@@ -58,3 +58,33 @@ redis_activity_wrapper.get_activity = function(channel,version,cb){
         });
     });
 };
+
+/*
+ dump and load
+ */
+redis_activity_wrapper.dump_load = function(){
+    redis_pools.execute('pool_1',function(client, release){
+        client.hgetall(h_activity,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            var redis_json = require('../../config/redis');
+            for(var w in redis_json){
+                if(w == "pool_dump_load"){
+                    var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname);
+                    if(reply){
+                        for(var v in reply){
+                            client.hset(h_activity,v ,reply[v], function (err, reply) {
+                                if(err){
+                                    console.error(err);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            release();
+        });
+    });
+};

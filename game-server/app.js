@@ -8,6 +8,7 @@ var rank_wrapper = require('./app/rank/rank_wrapper');
 var rank_running_man_wrapper = require('./app/rank/rank_running_man_wrapper');
 var http_connectors = require('./app/component/http_connectors');
 var random_prize_wrapper = require('./app/random_prize/random_prize_wrapper');
+var dump_load_wrapper = require('./app/dump_load/dump_load_wrapper');
 /**
  * Init app for client.
  */
@@ -64,6 +65,10 @@ app.configure('production|development', 'connector', function(){
     //  for random prize
     var __random_prize_wrapper = new random_prize_wrapper();
     app.set('random_prize_wrapper',__random_prize_wrapper);
+
+    //  for dump load
+    var __dump_load_wrapper = new dump_load_wrapper();
+    app.set('dump_load',__dump_load_wrapper);
 });
 
 // start app

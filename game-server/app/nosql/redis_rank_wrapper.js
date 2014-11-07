@@ -133,5 +133,64 @@ redis_rank_wrapper.get_rank = function(championship_id,device_guid,cb){
             // the second function had a shorter timeout.
             cb(results);
         });
+};
 
+/*
+ dump and load
+ */
+redis_rank_wrapper.dump_load = function(){
+    var championship_id = 2;
+    /*
+    redis_pools.execute('pool_1',function(client, release){
+        client.hgetall(h_rank + ":" + championship_id,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            var redis_json = require('../../config/redis');
+            for(var w in redis_json){
+                if(w == "pool_dump_load"){
+                    var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname);
+                    if(reply){
+                        for(var v in reply){
+                            client.hset(h_rank + ":" + championship_id,v ,reply[v], function (err, reply) {
+                                if(err){
+                                    console.error(err);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            release();
+        });
+    });
+    */
+    redis_pools.execute('pool_1',function(client, release){
+        var tmp = z_rank + ":" + championship_id;
+        var args = [ tmp,0,-1,"withscores"];
+        client.zrange(args,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            var redis_json = require('../../config/redis');
+            for(var w in redis_json){
+                if(w == "pool_dump_load"){
+                    var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname);
+                    if(reply){
+                        var rank_scores_array = reply;
+                        for(var i = 0; i < rank_scores_array.length; i = i + 2){
+                            client.zadd(z_rank + ":" + championship_id,rank_scores_array[i + 1] ,rank_scores_array[i], function (err, reply) {
+                                if(err){
+                                    console.error(err);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            release();
+        });
+    });
 };

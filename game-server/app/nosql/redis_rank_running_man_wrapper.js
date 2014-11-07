@@ -11,29 +11,51 @@ var h_award_running_man = 'h_award_running_man';
 var redis_rank_running_man_wrapper = module.exports;
 
 redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_guid,is_add_score,finally_score,rank_info,cb){
-    redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
-        redis_pools.execute('pool_1',function(client, release) {
-            if (reply) {
-                if("true" == is_add_score){
-                    finally_score = finally_score + parseInt(reply);
+    if(0){
+        redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
+            redis_pools.execute('pool_1',function(client, release) {
+                if (reply) {
+                    if("true" == is_add_score){
+                        finally_score = finally_score + parseInt(reply);
+                    }
+                    else{
+                        finally_score = reply;
+                    }
                 }
                 else{
-                    finally_score = reply;
+                    finally_score = 0;
                 }
-            }
-            else{
-                finally_score = 0;
-            }
-            client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
-                if (err) {
-                    //  some thing log
-                    console.error(err);
-                }
-                cb(reply);
-                release();
+                client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
+                    if (err) {
+                        //  some thing log
+                        console.error(err);
+                    }
+                    cb(reply);
+                    release();
+                });
             });
         });
-    });
+    }
+    else{
+        if("true" == is_add_score){
+            redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
+                redis_pools.execute('pool_1',function(client, release) {
+                    if (reply) {
+                        finally_score = finally_score + parseInt(reply);
+                    }
+                    client.zadd(z_rank_running_man + ":" + championship_id, finally_score, device_guid, function (err, reply) {
+                        if (err) {
+                            //  some thing log
+                            console.error(err);
+                        }
+                        cb(reply);
+                        release();
+                    });
+                });
+            });
+        }
+    }
+
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_running_man + ":" + championship_id, device_guid, JSON.stringify(rank_info), function (err, reply) {
             if (err) {

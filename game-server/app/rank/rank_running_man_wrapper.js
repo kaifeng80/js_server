@@ -11,6 +11,8 @@ var pomelo = require('pomelo');
 var async = require('async');
 var log4js = require('log4js');
 var log_json = require('../../config/log.json');
+var rank_for_ranning_man_json = require('../../config/rank_for_ranning_man.json');
+
 log4js.configure(log_json);
 var rank_logger = log4js.getLogger('rank-logger');
 
@@ -19,7 +21,14 @@ var rank_running_man_wrapper = function() {
     this.trigger_time_hour = 0;
     this.trigger_time_minutes = 0;
     this.championship_id = util.getWeek(new Date());
-    this.tick();
+    for(var v in rank_for_ranning_man_json){
+        if(v == "calc_award"){
+            if(1 == rank_for_ranning_man_json[v]){
+                this.tick();
+            }
+        }
+    }
+
 };
 
 rank_running_man_wrapper.prototype.tick = function() {

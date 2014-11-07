@@ -30,7 +30,6 @@ statistics_wrapper.prototype.tick = function(){
             if (err)  {
                 console.log(err);
             }
-            console.log(mac_address);
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();

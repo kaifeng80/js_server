@@ -37,8 +37,8 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
         });
     }
     else{
-        if("true" == is_add_score){
-            redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
+        redis_rank_running_man_wrapper.get_rank_time(championship_id,device_guid,function(reply){
+            if("true" == is_add_score){
                 redis_pools.execute('pool_1',function(client, release) {
                     if (reply) {
                         finally_score = finally_score + parseInt(reply);
@@ -52,8 +52,11 @@ redis_rank_running_man_wrapper.add_rank_info = function(championship_id,device_g
                         release();
                     });
                 });
-            });
-        }
+            }
+            else{
+                cb(reply);
+            }
+        });
     }
 
     redis_pools.execute('pool_1',function(client, release) {

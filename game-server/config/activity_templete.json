@@ -6,7 +6,7 @@
         "endTime": "2014/11/30",
         "signDays": "20",
         "awardCoin": "5000",
-        "desc": "每日签到,双倍好礼"
+        "desc": "ลงชื่อทุกวัน มีรางวัลงาม2เท่า"
     },
     "2": {
         "type": "2",
@@ -63,7 +63,7 @@
         "combo_count":12,
         "gacha_random_num":4,
         "gacha2_random_num":6,
-        "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140925.png",
+        "ad_url":"",
         "desc":"抽奖"
     }
 }

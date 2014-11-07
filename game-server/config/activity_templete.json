@@ -6,7 +6,7 @@
         "endTime": "2014/11/30",
         "signDays": "20",
         "awardCoin": "5000",
-        "desc": "ทุกวันลงชื่อ รางวัล 2 เท่า"
+        "desc": "每日签到,双倍好礼"
     },
     "2": {
         "type": "2",
@@ -14,7 +14,7 @@
         "startTime": "2014/10/21",
         "endTime": "2014/11/30",
         "rate": "2",
-        "desc":"อสูรสูญพันธุ์คืนชีพ"
+        "desc":"绝地重生"
     },
     "3": {
         "type": "3",
@@ -31,14 +31,14 @@
             {"mission": "3|4|5,1|2|3|4"}
         ],
         "awardGem": 2,
-        "desc":"ภารกิจประจำวัน"
+        "desc":"每日任务"
     },
     "4": {
         "type": "4",
         "switch": "1",
         "startTime": "2014/10/21",
         "endTime": "2014/11/11",
-        "desc":"สนามท้าแข่ง"
+        "desc":"挑战赛"
     },
     "5": {
         "type": "5",
@@ -46,7 +46,7 @@
         "startTime": "2014/10/21",
         "endTime": "2014/11/30",
         "rate": "2",
-        "desc":"เขาชิวหมิง"
+        "desc":"秋名山"
     },
     "6": {
         "type": "6",
@@ -63,7 +63,6 @@
         "combo_count":12,
         "gacha_random_num":4,
         "gacha2_random_num":6,
-<<<<<<< HEAD
         "ad_url":"http://update.racegame.appget.cn/resImmortalRacer/gacha/128_template_20140925.png",
         "desc":"抽奖"
     },
@@ -177,9 +176,5 @@
             }
         },
         "desc":"running man 挑战赛"
-=======
-        "ad_url":"",
-        "desc":"จับรางวัล"
->>>>>>> 7c1cbb8907136dd3bb00bd473bd2dcef33de1b90
     }
 }

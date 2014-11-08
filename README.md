@@ -8,4 +8,3 @@ pomelo >= 8.0
 pomelo start -e production -D
 
 new branch for 1.3.0
-

@@ -20,3 +20,16 @@ redis_h_statistics_wrapper.set = function(key,value){
     });
 };
 
+redis_h_statistics_wrapper.statistics_device = function(device_guid){
+    var date = new Date();
+    redis_pools.execute('pool_1',function(client, release){
+        client.hset(h_statistics + "_device:" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),device_guid,device_guid,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+};
+

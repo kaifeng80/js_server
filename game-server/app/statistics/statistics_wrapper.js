@@ -165,4 +165,8 @@ statistics_wrapper.prototype.requestsRankPerDayClear = function() {
 statistics_wrapper.prototype.requestsRankPerDayClearForRunningMan = function() {
     this.requests_rank_per_day_for_running_man = 0;
 };
+
+statistics_wrapper.prototype.statistics_device = function(device_guid) {
+    redis_statistics_wrapper.statistics_device(device_guid);
+};
 module.exports = statistics_wrapper;

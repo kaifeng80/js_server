@@ -5,6 +5,7 @@ var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
 var util = require('../../../util/util');
+var rival_seoul_json = require('../../../../config/rival_seoul');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg, session, next) {
     var channel = msg.channel;
@@ -61,7 +62,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 boss_info:boss_info,
                 boss_id:boss_info_next?boss_info_next.bossid_real:0,
                 boss_res:boss_info_next?boss_info_next.res_real:"",
-                level:level
+                level:level > rival_seoul_json.length ? rival_seoul_json.length:level
             });
         });
     });

@@ -217,13 +217,19 @@ redis_rank_running_man_wrapper.get_rank = function(championship_id,device_guid,c
 };
 
 redis_rank_running_man_wrapper.increase_level = function(championship_id,device_guid,increase_level_num){
-    redis_pools.execute('pool_1',function(client, release) {
-        client.zincrby(z_level_running_man + ":" + championship_id, increase_level_num,device_guid, function (err, reply) {
-            if (err) {
-                //  some thing log
-                console.error(err);
-            }
-            release();
+    redis_rank_running_man_wrapper.get_level(championship_id,device_guid,function(reply){
+        //  level start from 1
+        if(!reply){
+            ++increase_level_num;
+        }
+        redis_pools.execute('pool_1',function(client, release) {
+            client.zincrby(z_level_running_man + ":" + championship_id, increase_level_num,device_guid, function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    console.error(err);
+                }
+                release();
+            });
         });
     });
 };

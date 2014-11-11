@@ -21,7 +21,7 @@ var DEFAULT_PORT = 20000;
 var http_connectors = function(app, opts) {
     this.app = app;
     this.server = null;
-    this.port = opts.port | DEFAULT_PORT;
+    this.port = opts.port ;
     this.host = opts.host;
     this.cluster = opts.cluster;
     //  a temp variable

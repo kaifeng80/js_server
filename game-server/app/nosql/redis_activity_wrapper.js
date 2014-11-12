@@ -72,7 +72,7 @@ redis_activity_wrapper.dump_load = function(){
             var redis_json = require('../../config/redis');
             for(var w in redis_json){
                 if(w == "pool_dump_load"){
-                    var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname);
+                    var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname,{"no_ready_check":true});
                     if(reply){
                         for(var v in reply){
                             client.hset(h_activity,v ,reply[v], function (err, reply) {

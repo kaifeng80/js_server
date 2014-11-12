@@ -126,11 +126,14 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->15);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> deviceid);
-    			cmd += ("boss_rank" -> 2);
-    			cmd += ("my_rank" -> 1);
-    			cmd += ("is_increase_level" -> 1);
+    			cmd += ("boss_rank" -> "2");
+    			cmd += ("my_rank" -> "1");
+    			cmd += ("phone_number" -> "18510384228");
+    			cmd += ("is_increase_level" -> "true");
+    			cmd += ("is_add_score" -> "true");
+    			cmd += ("distance_ahead_2nd" -> "1000");
     			return Json.build(cmd).toString;
     		}
     	}
@@ -141,9 +144,9 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->16);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> deviceid);
-    			cmd += ("boss_res" -> "res");
+    			cmd += ("boss_res" -> "car_370z_s");
     			cmd += ("boss_id" -> "2");
     			return Json.build(cmd).toString;
     		}
@@ -155,7 +158,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->17);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> deviceid);
     			return Json.build(cmd).toString;
     		}
@@ -167,17 +170,18 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->18);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> deviceid);
+    			cmd += ("phone_number" -> "18510384228");
     			return Json.build(cmd).toString;
     		}
     	}
 
 	val httpProtocol = http
 		//.baseURL("http://192.168.1.74:20000")
-		//.baseURL("http://117.121.32.94:20000")
+		.baseURL("http://117.121.32.94:20000")
 		//.baseURL("http://192.168.22.66:20000")
-		.baseURL("http://192.168.1.74:20000")
+		//.baseURL("http://192.168.1.74:20000")
 		//.baseURL("http://211.151.21.53:20000")
 		.inferHtmlResources()
 
@@ -256,5 +260,5 @@ class JSServerSimulation extends Simulation {
 			.pause(sleep_time)
 	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
 	//setUp(scn.inject(rampUsers(1000000) over (9000 seconds))).protocols(httpProtocol)   //  8 cpu
-	setUp(scn.inject(rampUsers(100000) over (900 seconds))).protocols(httpProtocol)        //  2 cpu
+	setUp(scn.inject(rampUsers(100) over (9 seconds))).protocols(httpProtocol)        //  2 cpu
 }

@@ -7,7 +7,7 @@ var redis_notice_wrapper = require('../nosql/redis_notice_wrapper');
 var redis_rank_wrapper = require('../nosql/redis_rank_wrapper');
 
 var dump_load_wrapper = function() {
-    if(1){
+    if(0){
         this.dump_load();
     }
 };

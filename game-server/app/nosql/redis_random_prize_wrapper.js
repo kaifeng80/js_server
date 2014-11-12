@@ -6,9 +6,9 @@ var h_random_prize = 'h_random_prize';
 
 var random_prize_wrapper = module.exports;
 
-random_prize_wrapper.set = function(device_guid,current_card){
+random_prize_wrapper.set = function(device_guid,current_card,free_flag){
     redis_pools.execute('pool_1',function(client, release){
-        client.hset(h_random_prize,device_guid,JSON.stringify({current_card:current_card}),function (err, reply){
+        client.hset(h_random_prize,device_guid,JSON.stringify({current_card:current_card,free_flag:free_flag}),function (err, reply){
             if(err){
                 //  some thing log
                 console.error(err);

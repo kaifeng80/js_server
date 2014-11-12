@@ -21,7 +21,7 @@ var DEFAULT_PORT = 20000;
 var http_connectors = function(app, opts) {
     this.app = app;
     this.server = null;
-    this.port = opts.port | DEFAULT_PORT;
+    this.port = opts.port ;
     this.host = opts.host;
     this.cluster = opts.cluster;
     //  a temp variable
@@ -142,7 +142,7 @@ http_connectors.prototype.dispatchMessage = function(data,url,req,res){
     statistics_wrapper.requestsPerDayInc();
     statistics_wrapper.requestsPerHourInc();
     statistics_wrapper.requestsPerMinuteInc();
-    statistics_wrapper.statistics_device(msg.device_guid);
+    statistics_wrapper.statistics_device(msg.deviceid);
     http_logger.debug("before dispatchMessage ... %j", msg);
     handlerMgr.trigger(msg.msg_id,msg,this.session,function(error,res_msg){
         http_logger.debug("after dispatchMessage ... %j", res_msg);

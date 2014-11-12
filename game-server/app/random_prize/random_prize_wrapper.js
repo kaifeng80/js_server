@@ -59,8 +59,8 @@ random_prize_wrapper.prototype.random2 = function(){
     return null;
 };
 
-random_prize_wrapper.prototype.set = function(device_guid,current_card){
-    redis_random_prize_wrapper.set(device_guid,current_card);
+random_prize_wrapper.prototype.set = function(device_guid,current_card,free_flag){
+    redis_random_prize_wrapper.set(device_guid,current_card,free_flag);
 };
 
 random_prize_wrapper.prototype.get = function(device_guid,cb){

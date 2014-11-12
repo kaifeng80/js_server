@@ -132,8 +132,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
             pomelo.app.get('random_prize_wrapper').get(msg.player_guid,function(reply){
                 if(null != reply){
                     var current_card = JSON.parse(reply).current_card;
+                    var free_flag = JSON.parse(reply).free_flag;
+                    //  if the free_flag is 1, that means is the first to single random prize
+                    activity.is_first = free_flag;
                     activity.current_card = current_card;
-                    activity.is_first = 0;
                 }else{
                     activity.current_card = 0;
                     activity.is_first = 1;

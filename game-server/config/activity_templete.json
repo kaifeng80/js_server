@@ -3,7 +3,7 @@
         "type": "1",
         "switch":"1",
         "startTime": "2014/10/21",
-        "endTime": "2014/11/30",
+        "endTime": "2014/12/30",
         "signDays": "20",
         "awardCoin": "5000",
         "desc": "每日签到,双倍好礼"
@@ -20,7 +20,7 @@
         "type": "3",
         "switch":"1",
         "startTime": "2014/10/21",
-        "endTime": "2015/11/30",
+        "endTime": "2015/12/30",
         "reward_rate":"1",
         "reward_rate_start_time":"2014/10/21",
         "reward_rate_end_time":"2015/11/30",

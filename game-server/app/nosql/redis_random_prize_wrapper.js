@@ -89,7 +89,9 @@ random_prize_wrapper.dump_load = function(){
                     var client = require("redis").createClient(redis_json[w].port,redis_json[w].hostname);
                     if(reply){
                         for(var v in reply){
-                            client.hset(h_random_prize,v ,reply[v], function (err, reply) {
+                            var award_info = JSON.parse(reply[v]);
+                            award_info.free_flag = 0;
+                            client.hset(h_random_prize,v ,JSON.stringify(award_info), function (err, reply) {
                                 if(err){
                                     console.error(err);
                                 }

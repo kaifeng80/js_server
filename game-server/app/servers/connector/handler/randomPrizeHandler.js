@@ -22,6 +22,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
         count = 12;
     }
     var current_card = 0;
+    var free_flag = 1;
     var last_current_card = 0;
     var reward_car = 0;
     var activity = {};
@@ -38,7 +39,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
         random_prize_wrapper.get(device_guid,function(reply){
             if(null != reply){
                 current_card = JSON.parse(reply).current_card;
+                free_flag = JSON.parse(reply).free_flag;
                 last_current_card = current_card;
+            }
+            //  if is single random prize, free_flag set zero
+            if(1 == free_flag && single_gacha == "true" ){
+                free_flag = 0;
             }
             for(var i = 0; i < count; ++i){
                 var gacha_array = new Array();
@@ -79,9 +85,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE, function(msg, session, nex
                 }
                 gacha_result.push(gacha_array);
             }
-            if(current_card <= activity.total_card && last_current_card != current_card){
-                random_prize_wrapper.set(device_guid,current_card);
-            }
+            random_prize_wrapper.set(device_guid,current_card > activity.total_card ? activity.total_card: current_card,free_flag);
             //  test code
             if(0){
                 var gacha_result_string = JSON.stringify(gacha_result);

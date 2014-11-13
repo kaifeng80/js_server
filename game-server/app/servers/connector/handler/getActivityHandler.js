@@ -134,7 +134,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     var current_card = JSON.parse(reply).current_card;
                     var free_flag = JSON.parse(reply).free_flag;
                     //  if the free_flag is 1, that means is the first to single random prize
-                    activity.is_first = free_flag;
+                    activity.is_first = free_flag?free_flag:0;
                     activity.current_card = current_card;
                 }else{
                     activity.current_card = 0;

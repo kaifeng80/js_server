@@ -72,7 +72,7 @@ class JSServerSimulation extends Simulation {
 			cmd += ("flowid" -> 88888888);
 			cmd += ("activity_type" -> 1);
 			cmd += ("channel" -> "000023");
-			cmd += ("version" -> "1.2.4");
+			cmd += ("version" -> "1.3.0");
 			return Json.build(cmd).toString;
 		}
 	}
@@ -83,7 +83,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->6);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			return Json.build(cmd).toString;
     		}
     	}
@@ -94,7 +94,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->7);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> random.nextInt(seed));
     			cmd += ("race_time" -> random.nextInt(seed));
     			cmd += ("car" -> 1);
@@ -113,7 +113,7 @@ class JSServerSimulation extends Simulation {
     			cmd += ("msg_id"->8);
     			cmd += ("flowid" -> 88888888);
     			cmd += ("channel" -> "000023");
-    			cmd += ("version" -> "1.2.4");
+    			cmd += ("version" -> "1.3.0");
     			cmd += ("deviceid" -> deviceid);
     			cmd += ("championship_id" -> 1);
     			return Json.build(cmd).toString;

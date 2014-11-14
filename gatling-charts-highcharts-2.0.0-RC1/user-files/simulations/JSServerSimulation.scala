@@ -10,7 +10,6 @@ class JSServerSimulation extends Simulation {
 	println("Hello, JSServerSimulation!")
 	var seed = 1000;
 	val random = new Random(System.currentTimeMillis)
-	var sleep_time = 0;
 	/*
 	println(random.nextInt(seed))
 	println(random.nextInt(seed))
@@ -186,14 +185,15 @@ class JSServerSimulation extends Simulation {
 		.inferHtmlResources()
 
 		val scn = scenario("Scenario name")
-            .exec(
+		.during(2 minutes) {
+            exec(
                 http("get_time")
                     .post("/")
                     .formParam("token", "1234567788")
                     .formParam("msg",get_time.msg())
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_activity")
                     .post("/")
@@ -201,7 +201,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_activity.msg())
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_notice")
                     .post("/")
@@ -209,7 +209,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_notice.msg())
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("upload_race_time")
                     .post("/")
@@ -217,7 +217,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",upload_race_time.msg())
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_rank")
                     .post("/")
@@ -225,7 +225,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_rank.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("upload_race_time_for_running_man")
                     .post("/")
@@ -233,7 +233,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",upload_race_time_for_running_man.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_rival_for_running_man")
                     .post("/")
@@ -241,7 +241,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_rival_for_running_man.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_race_rank_for_running_man")
                     .post("/")
@@ -249,7 +249,7 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_race_rank_for_running_man.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
 			.exec(
                 http("get_award_rank_for_running_man")
                     .post("/")
@@ -257,8 +257,9 @@ class JSServerSimulation extends Simulation {
                     .formParam("msg",get_award_rank_for_running_man.msg(random.nextInt(seed)))
                     .check(status.is(200))
 				)
-			.pause(sleep_time)
+			.pause(1 seconds)
+		}
 	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
 	//setUp(scn.inject(rampUsers(1000000) over (9000 seconds))).protocols(httpProtocol)   //  8 cpu
-	setUp(scn.inject(rampUsers(100) over (9 seconds))).protocols(httpProtocol)        //  2 cpu
+	setUp(scn.inject(rampUsers(100) over (0 seconds))).protocols(httpProtocol)        //  2 cpu
 }

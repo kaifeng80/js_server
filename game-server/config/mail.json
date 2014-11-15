@@ -11,5 +11,6 @@
     "trigger_time_hour":9,
     "trigger_time_minutes":0,
     "time_interval":60,
-    "send_directly":0
+    "send_directly":0,
+    "switch":1
 }

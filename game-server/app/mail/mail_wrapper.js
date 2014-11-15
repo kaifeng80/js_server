@@ -23,7 +23,9 @@ var mail_wrapper = function(mail_config) {
             pass: this.pass
         }
     });
-    this.tick();
+    if(mail_config.switch){
+        this.tick();
+    }
 };
 
 mail_wrapper.prototype.send = function(title,content,channel,version){

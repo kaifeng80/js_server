@@ -4,6 +4,7 @@
  */
 var nodemailer = require("nodemailer");
 var redis_mail_wrapper = require('../nosql/redis_mail_wrapper');
+var cluster = require('cluster');
 
 var mail_wrapper = function(mail_config) {
     this.service = mail_config.transport.service;
@@ -110,24 +111,26 @@ mail_wrapper.prototype.tick = function(){
         var minutes = date.getMinutes();
         if(hours == self.trigger_time_hour && minutes == self.trigger_time_minutes)
         {
-            redis_mail_wrapper.get_all_mail(function(reply){
-                if(0){
-                    for( var v in reply){
-                        var json_reply = JSON.parse(reply[v]);
-                        self.send(json_reply.title,json_reply.content,json_reply.channel,json_reply.version);
-                        redis_mail_wrapper.del_mail(v);
+            if (cluster.isMaster){
+                redis_mail_wrapper.get_all_mail(function(reply){
+                    if(0){
+                        for( var v in reply){
+                            var json_reply = JSON.parse(reply[v]);
+                            self.send(json_reply.title,json_reply.content,json_reply.channel,json_reply.version);
+                            redis_mail_wrapper.del_mail(v);
+                        }
+                    }else{
+                        var all_mails = [];
+                        for( var v in reply){
+                            all_mails.push(JSON.parse(reply[v]));
+                            redis_mail_wrapper.del_mail(v);
+                        }
+                        if(0 != all_mails.length){
+                            self.batch_send(JSON.stringify(all_mails));
+                        }
                     }
-                }else{
-                    var all_mails = [];
-                    for( var v in reply){
-                        all_mails.push(JSON.parse(reply[v]));
-                        redis_mail_wrapper.del_mail(v);
-                    }
-                    if(0 != all_mails.length){
-                        self.batch_send(JSON.stringify(all_mails));
-                    }
-                }
-            })
+                })
+            }
         }
     },this.time_interval);
 };

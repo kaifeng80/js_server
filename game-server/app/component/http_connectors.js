@@ -135,6 +135,16 @@ http_connectors.prototype.dispatchMessage = function(data,url,req,res){
         //  date for test
         data = qs.parse('msg={"context": "context", "msg_id": 2}&account=king_lee');
     }
+    else if(url == "/status")
+    {
+        var result = {code :200,status:"ok"}
+        res.end(JSON.stringify(result) + '\n', 'utf8');
+        return;
+    }else if(url == "/favicon.ico")
+    {
+        //  do nothing
+        return;
+    }
     var msg = JSON.parse(data.msg);
     var token = data.token;
     var statistics_wrapper = pomelo.app.get('statistics_wrapper');

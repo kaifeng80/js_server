@@ -268,7 +268,7 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                 }
             }
         }
-        var count = 0;
+        var count = 1;
         async.whilst(
             function () { return count < device_version_channel_list.length; },
             function (callback) {
@@ -322,9 +322,10 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                         if(err){
                             rank_logger.error(err);
                         }
+                        ++count;
+                        callback(null);
                     });
-                ++count;
-                setTimeout(callback, 100);
+
             },
             function (err) {
                 //  whilst end,do nothing

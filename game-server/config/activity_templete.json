@@ -81,6 +81,10 @@
         "phone_number_option":1,
         "level_step_value":200,
         "level_step_increase":[3,2,1,0],
+        "award_tracks_days":[6,0],
+        "award_tracks_hours":[0,23],
+        "award_tracks_ranks":[1,2,3],
+        "award_tracks_numbers":1,
         "akina_1" : {
             "item1":{"res":"car_370z","rate":1},
             "item2":{"res":"car_beetle","rate":0.5},

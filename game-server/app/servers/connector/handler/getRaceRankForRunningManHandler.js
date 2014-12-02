@@ -34,6 +34,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RACE_RANK_FOR_RUNNING_MAN, function(
                         rival_score:activity.rival_score,
                         rival_score_boss:activity.rival_score_boss,
                         phone_number_option:activity.phone_number_option,
+                        server_msg:activity.server_msg,
                         time: Math.floor(Date.now() / 1000)
                     });
                 });

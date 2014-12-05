@@ -85,7 +85,7 @@
         "award_tracks_hours":[0,23],
         "award_tracks_ranks":[1,2,3],
         "award_tracks_numbers":1,
-        "server_msg":"每周六、日，决战首尔获得比赛前三名，可额外获得轮胎1个，挑战不停！",
+        "server_msg":"每周六、日，决战首尔获前三名，可额外获得轮胎1个，挑战不停！",
         "akina_1" : {
             "item1":{"res":"car_370z","rate":1},
             "item2":{"res":"car_beetle","rate":0.5},

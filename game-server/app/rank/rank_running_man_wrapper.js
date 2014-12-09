@@ -288,7 +288,11 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                         function(device_guid,activity,callback){
                             //  3  get rank info
                             rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){
-                                var rank = reply[0] != null ? parseInt(reply[0]) + 1: reply[0];
+                                if(null == reply){
+                                    rank_logger.error(device_guid);
+                                }
+                                //  reply is null, that means user join in the the activity,but not upload score,it dangerous!
+                                var rank = reply[0] != null ? parseInt(reply[0]) + 1: 999999;
                                 var award = activity.award;
                                 var rank_award;
                                 for(var w in award){

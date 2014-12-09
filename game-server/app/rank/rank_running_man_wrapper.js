@@ -242,7 +242,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,leve
 rank_running_man_wrapper.prototype.composs_rival_seoul_boss = function(activity,level,boss_id,boss_res){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_random_index = level/*Math.floor(parseInt(level) + Math.random() * (rival_offset))*/;
-    var rival_seoul = rival_seoul_boss_json[rival_seoul_random_index - 1];
+    var rival_seoul = rival_seoul_boss_json[(rival_seoul_random_index > rival_seoul_boss_json.length? rival_seoul_boss_json.length : rival_seoul_random_index) - 1];
     if (rival_seoul) {
         rival_seoul.res_real = boss_res;
         rival_seoul.bossid_real = boss_id;

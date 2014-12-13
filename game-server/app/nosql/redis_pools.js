@@ -8,7 +8,7 @@ var generic_pool = require('generic-pool');
 
 //  store the map of redis connect pool,{db_name:pool}
 var pools = {};
-
+var redis_count_statistics = 0;
 function createRedisPool(db_name,config_file){
     var opts = {
         "no_ready_check" : config_file.proxy
@@ -73,6 +73,7 @@ function configure(config_file) {
 
 //  do redis command
 function execute(db_name, execb) {
+    ++redis_count_statistics;
     var pool = pools[db_name];
     pool.acquire(function(err, client) {
         var release = function() { pool.release(client); };
@@ -104,11 +105,21 @@ function show(){
     }, 5000);
 }
 
+function get_redis_count_statistics() {
+    return redis_count_statistics;
+};
+
+function reset_redis_count_statistics() {
+    redis_count_statistics = 0;
+};
+
 //show();
 
 module.exports = {
     configure : configure,
     execute : execute,
-    info : info
+    info : info,
+    get_redis_count_statistics:get_redis_count_statistics,
+    reset_redis_count_statistics:reset_redis_count_statistics
 };
 

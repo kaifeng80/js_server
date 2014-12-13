@@ -67,6 +67,9 @@ statistics_wrapper.prototype.tick = function(){
             }
             redis_statistics_wrapper.set(mac_address + ":" + "requests_per_minute"+  ":" + work_id,self.requests_per_minute);
             self.requestsPerMiniuteClear();
+
+            redis_statistics_wrapper.set(mac_address + ":" + "redis_count_per_minute"+  ":" + work_id,redis_statistics_wrapper.get_redis_count_statistics());
+            redis_statistics_wrapper.reset_redis_count_statistics();
         });
     },this.time_interval);
 };

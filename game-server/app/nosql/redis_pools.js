@@ -107,11 +107,11 @@ function show(){
 
 function get_redis_count_statistics() {
     return redis_count_statistics;
-};
+}
 
 function reset_redis_count_statistics() {
     redis_count_statistics = 0;
-};
+}
 
 //show();
 

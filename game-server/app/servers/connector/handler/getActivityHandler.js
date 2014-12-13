@@ -88,6 +88,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     var mission_rank_to_be_random = [];
                     for(var j = 0; j < mission_rank_array.length; ++j){
                         for(var v in mission_json){
+                            if((mission_json.length -1) == parseInt(v)){
+                                continue;
+                            }
                             if(parseInt(mission_rank_array[j]) == mission_json[v].rank){
                                 mission_rank_to_be_random.push(mission_json[v]);
                             }
@@ -129,7 +132,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 var date = new Date();
                 var week_day = date.getDay();
                 //  sunday
-                if(0 == week_day){
+                //if(0 == week_day)
+                {
                     activity.missions.push(mission_json[mission_json.length -1]);
                 }
             }
@@ -179,7 +183,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         }
         else if(consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type){
             //  get the sign data exists
-            pomelo.app.get('sign_in_wrapper').get(msg.device_guid,function(reply){
+            pomelo.app.get('sign_in_wrapper').get(msg.deviceid,function(reply){
                 var sign_total = 1;
                 if(null == reply){
                     //  if reply is null, that means it is the first sign in
@@ -205,7 +209,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 }
                 //  give award for sign in
                 activity.login_bonus = login_bonus_json[sign_total -1];
-                pomelo.app.get('sign_in_wrapper').set(msg.device_guid,sign_total);
+                activity.continuousSignDay = sign_total;
+                pomelo.app.get('sign_in_wrapper').set(msg.deviceid,sign_total);
                 next(null, {
                     code: 0,
                     msg_id : msg.msg_id,

@@ -188,16 +188,13 @@
         "switch": "1",
         "startTime": "2014/12/15",
         "endTime": "2015/6/30",
-        "total_card":20,
         "single_gacha_cost":10000,
         "multi_gacha_cost":100000,
         "single_gacha_unit":"C",
         "multi_gacha_unit":"C",
-        "reward_car":44,
         "single_count":1,
         "combo_count":12,
-        "gacha_random_num":4,
-        "gacha2_random_num":6,
+        "gacha_random_num":10,
         "ad_url":"",
         "desc":"抽奖2期"
     }

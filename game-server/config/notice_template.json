@@ -3,5 +3,8 @@
     "abstract": "",
     "content": "",
     "url1":"http://117.121.32.94:20002/show_200_1",
-    "url2":"http://117.121.32.94:20002/show_200_2"
+    "url2":"http://117.121.32.94:20002/show_200_2",
+    "update":"false",
+    "force_update":"false",
+    "update_url":"http://sxupdate.racegame.appget.cn/updateTest.apk"
 }

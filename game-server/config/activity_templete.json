@@ -69,8 +69,8 @@
     "7": {
         "type": "7",
         "switch": "1",
-        "hat_num": "10",
-        "candy_num": "10",
+        "hat_num": "100",
+        "candy_num": "100",
         "startTime": "2014/12/10",
         "endTime": "2014/12/30",
         "desc":"เขาชิวหมิง"

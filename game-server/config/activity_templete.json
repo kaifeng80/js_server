@@ -72,7 +72,7 @@
         "startTime": "2014/11/14",
         "endTime": "2015/11/30",
         "normal_energy":1,
-        "boss_rate":0.25,
+        "boss_rate":0.66,
         "boss_energy":1,
         "rivals":3,
         "rival_offset":10,

@@ -193,7 +193,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     var last_sign_time = sign_info.last_sign_time;
                     sign_total = sign_info.sign_total;
 
+                    var last_sign_day_time = new Date(last_sign_time);
                     var last_sign_day_tomorrow_time = new Date(last_sign_time + 1000*60*60*24);
+                    var last_sign_day = last_sign_day_time.getDate();
                     var last_sign_day_tomorrow = last_sign_day_tomorrow_time.getDate();
                     var date_new = new Date();
                     var date_today = date_new.getDate();
@@ -202,6 +204,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                         if(sign_total != login_bonus_json.length ){
                             ++sign_total;
                         }
+                    }else if(last_sign_day == date_today){
+                        //  sign in already
                     }else{
                         //  sign in interrupt,count from 1
                         sign_total = 1;

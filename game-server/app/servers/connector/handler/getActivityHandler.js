@@ -183,7 +183,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         }
         else if(consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type){
             //  get the sign data exists
-            pomelo.app.get('sign_in_wrapper').get(msg.deviceid,function(reply){
+            pomelo.app.get('sign_in_wrapper').get(msg.player_guid,function(reply){
                 var sign_total = 1;
                 if(null == reply){
                     //  if reply is null, that means it is the first sign in
@@ -214,7 +214,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 //  give award for sign in
                 activity.login_bonus = login_bonus_json[sign_total -1];
                 activity.continuousSignDay = sign_total;
-                pomelo.app.get('sign_in_wrapper').set(msg.deviceid,sign_total);
+                pomelo.app.get('sign_in_wrapper').set(msg.player_guid,sign_total);
                 next(null, {
                     code: 0,
                     msg_id : msg.msg_id,

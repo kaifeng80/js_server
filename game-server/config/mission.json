@@ -1173,7 +1173,7 @@
 },
 {
 	"id": 71,
-	"desc": "[限时任务]完成本周的所有课题",
+	"desc": "[限时任务]完成20个Baby的课题",
 	"mission_type": "WEEKLY",
 	"condition_type": "CLEAR_ALL_MISSION",
 	"used_car_id": 0,

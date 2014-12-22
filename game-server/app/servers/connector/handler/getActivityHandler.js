@@ -29,6 +29,11 @@ var cur_version_major = 1;
 var cur_version_minor = 2;
 var cur_version_fix = 8;
 
+//  for week mission
+var cur_version_major_4_week_mission = 2;
+var cur_version_minor_4_week_mission = 2;
+var cur_version_fix_4_week_mission = 0;
+
 var cur_version_major_4_sign_in = 2;
 var cur_version_minor_4_sign_in = 2;
 var cur_version_fix_4_sign_in = 0;
@@ -134,10 +139,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     activity.missions.push(mission_type_to_be_random[random_mission_index]);
                 }
                 //  add week mission
-                var date = new Date();
-                var week_day = date.getDay();
-                //  sunday
-                //if(0 == week_day)
+                if(version_major*100 + version_minor*10 + version_fix >= cur_version_major_4_week_mission*100 + cur_version_minor_4_week_mission*10 + cur_version_fix_4_week_mission)
                 {
                     activity.missions.push(mission_json[mission_json.length -1]);
                 }

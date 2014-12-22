@@ -24,9 +24,14 @@ var mission_string_2_type = function(mission_string){
 };
 
 //  for protocol adaptive,do not change
+//  for mission
 var cur_version_major = 1;
 var cur_version_minor = 2;
 var cur_version_fix = 8;
+
+var cur_version_major_4_sign_in = 2;
+var cur_version_minor_4_sign_in = 2;
+var cur_version_fix_4_sign_in = 0;
 
 var get_version_major = function(version){
     var version_array = version.split('.');
@@ -182,39 +187,51 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
             });
         }
         else if(consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type){
-            //  get the sign data exists
-            pomelo.app.get('sign_in_wrapper').get(msg.player_guid,function(reply){
-                var sign_total = 1;
-                if(null == reply){
-                    //  if reply is null, that means it is the first sign in
-                    //  sign_total = 1;
-                }else{
-                    var sign_info = JSON.parse(reply);
-                    var last_sign_time = sign_info.last_sign_time;
-                    sign_total = sign_info.sign_total;
-
-                    var last_sign_day_time = new Date(last_sign_time);
-                    var last_sign_day_tomorrow_time = new Date(last_sign_time + 1000*60*60*24);
-                    var last_sign_day = last_sign_day_time.getDate();
-                    var last_sign_day_tomorrow = last_sign_day_tomorrow_time.getDate();
-                    var date_new = new Date();
-                    var date_today = date_new.getDate();
-                    if(date_today == last_sign_day_tomorrow){
-                        //  sign in 'days is more than login_bonus_json.length, not increase any more
-                        if(sign_total != login_bonus_json.length ){
-                            ++sign_total;
-                        }
-                    }else if(last_sign_day == date_today){
-                        //  sign in already
+            if(version_major*100 + version_minor*10 + version_fix >= cur_version_major_4_sign_in *100 + cur_version_minor_4_sign_in*10 + cur_version_fix_4_sign_in){
+                //  get the sign data exists
+                pomelo.app.get('sign_in_wrapper').get(msg.player_guid,function(reply){
+                    var sign_total = 1;
+                    if(null == reply){
+                        //  if reply is null, that means it is the first sign in
+                        //  sign_total = 1;
                     }else{
-                        //  sign in interrupt,count from 1
-                        sign_total = 1;
+                        var sign_info = JSON.parse(reply);
+                        var last_sign_time = sign_info.last_sign_time;
+                        sign_total = sign_info.sign_total;
+
+                        var last_sign_day_time = new Date(last_sign_time);
+                        var last_sign_day_tomorrow_time = new Date(last_sign_time + 1000*60*60*24);
+                        var last_sign_day = last_sign_day_time.getDate();
+                        var last_sign_day_tomorrow = last_sign_day_tomorrow_time.getDate();
+                        var date_new = new Date();
+                        var date_today = date_new.getDate();
+                        if(date_today == last_sign_day_tomorrow){
+                            //  sign in 'days is more than login_bonus_json.length, not increase any more
+                            if(sign_total != login_bonus_json.length ){
+                                ++sign_total;
+                            }
+                        }else if(last_sign_day == date_today){
+                            //  sign in already
+                        }else{
+                            //  sign in interrupt,count from 1
+                            sign_total = 1;
+                        }
                     }
-                }
-                //  give award for sign in
-                activity.login_bonus = login_bonus_json[sign_total -1];
-                activity.continuousSignDay = sign_total;
-                pomelo.app.get('sign_in_wrapper').set(msg.player_guid,sign_total);
+                    //  give award for sign in
+                    activity.login_bonus = login_bonus_json[sign_total -1];
+                    activity.continuousSignDay = sign_total;
+                    pomelo.app.get('sign_in_wrapper').set(msg.player_guid,sign_total);
+                    next(null, {
+                        code: 0,
+                        msg_id : msg.msg_id,
+                        flowid : msg.flowid,
+                        user_data : msg.user_data,
+                        time:Math.floor(Date.now()/1000),
+                        activity:activity
+                    });
+                });
+            }
+            else{
                 next(null, {
                     code: 0,
                     msg_id : msg.msg_id,
@@ -223,7 +240,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     time:Math.floor(Date.now()/1000),
                     activity:activity
                 });
-            });
+            }
         }
         //  do not callback,must be later
         if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type

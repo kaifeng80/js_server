@@ -60,8 +60,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_RUNNING_MAN, function(msg,
                 time:Math.floor(Date.now()/1000),
                 rival_list:rival_seoul_array,
                 boss_info:boss_info,
-                boss_id:boss_info_next?boss_info_next.bossid_real:0,
-                boss_res:boss_info_next?boss_info_next.res_real:"",
+                boss_id:boss_info_next?boss_info_next.bossid_real_next:0,
+                boss_res:boss_info_next?boss_info_next.res_real_next:"",
                 level:level > rival_seoul_json.length ? rival_seoul_json.length:level
             });
         });

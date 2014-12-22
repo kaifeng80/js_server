@@ -205,7 +205,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,leve
                     }
                 }
                 var rival_seoul_config_res = wight_array_rate[rival_seoul_config_index].res;
-                rival_seoul.res_real = rival_seoul_config_res;
+                rival_seoul.res_real_next = rival_seoul_config_res;
                 break;
             }
         }
@@ -231,7 +231,7 @@ rank_running_man_wrapper.prototype.get_rival_seoul_boss = function(activity,leve
                     }
                 }
                 var rival_seoul_config_boss_id = wight_array_rate[rival_seoul_config_index].res;
-                rival_seoul.bossid_real = rival_seoul_config_boss_id;
+                rival_seoul.bossid_real_next = rival_seoul_config_boss_id;
                 break;
             }
         }

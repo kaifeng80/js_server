@@ -221,6 +221,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     }
                     //  give award for sign in
                     activity.login_bonus = login_bonus_json[sign_total -1];
+                    activity.login_bonus_next = login_bonus_json[sign_total != login_bonus_json.length ? sign_total : login_bonus_json.length - 1];
                     activity.continuousSignDay = sign_total;
                     pomelo.app.get('sign_in_wrapper').set(msg.player_guid,sign_total);
                     next(null, {

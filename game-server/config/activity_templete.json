@@ -194,7 +194,8 @@
         "multi_gacha_unit":"C",
         "single_count":1,
         "combo_count":12,
-        "gacha_random_num":10,
+        "gacha_random_num":1,
+        "gacha2_random_num":9,
         "ad_url":"",
         "desc":"抽奖2期"
     }

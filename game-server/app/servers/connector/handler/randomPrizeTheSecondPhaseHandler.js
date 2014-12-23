@@ -47,6 +47,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_SECOND_PHASE, function(
                     }
                     gacha_array.push(prize);
                 }
+                for(var j = 0; j < activity.gacha2_random_num; ++j){
+                    var prize = random_prize_the_second_phase_wrapper.random2();
+                    if(!prize){
+                        continue;
+                    }
+                    gacha_array.push(prize);
+                }
                 gacha_result.push(gacha_array);
             }
             random_prize_the_second_phase_wrapper.set(device_guid,free_flag);

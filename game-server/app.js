@@ -8,7 +8,9 @@ var rank_wrapper = require('./app/rank/rank_wrapper');
 var rank_running_man_wrapper = require('./app/rank/rank_running_man_wrapper');
 var http_connectors = require('./app/component/http_connectors');
 var random_prize_wrapper = require('./app/random_prize/random_prize_wrapper');
+var random_prize_the_second_phase_wrapper = require('./app/random_prize/random_prize_the_second_phase_wrapper');
 var dump_load_wrapper = require('./app/dump_load/dump_load_wrapper');
+var sign_in_wrapper = require('./app/sign_in/sign_in_wrapper');
 
 /**
  * Init app for client.
@@ -67,9 +69,17 @@ app.configure('production|development', 'connector', function(){
     var __random_prize_wrapper = new random_prize_wrapper();
     app.set('random_prize_wrapper',__random_prize_wrapper);
 
+    //  for the second phase random prize
+    var __random_prize_the_second_phase_wrapper = new random_prize_the_second_phase_wrapper();
+    app.set('random_prize_the_second_phase_wrapper',__random_prize_the_second_phase_wrapper);
+
     //  for dump load
     var __dump_load_wrapper = new dump_load_wrapper();
     app.set('dump_load',__dump_load_wrapper);
+
+    //  for sign in
+    var __sign_in_wrapper = new sign_in_wrapper();
+    app.set('sign_in_wrapper',__sign_in_wrapper);
 });
 
 // start app

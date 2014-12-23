@@ -4,6 +4,7 @@
 var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var mission_json = require('../../../../config/mission');
+var login_bonus_json = require('../../../../config/login_bonus');
 var pomelo = require('pomelo');
 
 var mission_string_2_type = function(mission_string){
@@ -55,7 +56,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
     var channel = msg.channel;
     var version = msg.version;
     var type = msg.activity_type;
-    var user_data = msg.user_data;
 
     //  record sign days
     if(1 == type){
@@ -125,6 +125,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                     }
                     activity.missions.push(mission_type_to_be_random[random_mission_index]);
                 }
+                //  add week mission
+                var date = new Date();
+                var week_day = date.getDay();
+                //  sunday
+                if(0 == week_day){
+                    activity.missions.push(mission_json[mission_json.length -1]);
+                }
             }
         }
         //  for random prize
@@ -150,7 +157,70 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 });
             });
         }
-        if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type){
+        //  for the second phase random prize
+        else if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE_THE_SECOND_PHASE == type){
+            pomelo.app.get('random_prize_the_second_phase_wrapper').get(msg.player_guid,function(reply){
+                if(null != reply){
+                    var free_flag = JSON.parse(reply);
+                    //  if the free_flag is 1, that means is the first to single random prize
+                    activity.is_first = free_flag?free_flag:0;
+                }else{
+                    activity.is_first = 1;
+                }
+                next(null, {
+                    code: 0,
+                    msg_id : msg.msg_id,
+                    flowid : msg.flowid,
+                    user_data : msg.user_data,
+                    time:Math.floor(Date.now()/1000),
+                    activity:activity
+                });
+            });
+        }
+        else if(consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type){
+            //  get the sign data exists
+            pomelo.app.get('sign_in_wrapper').get(msg.device_guid,function(reply){
+                var sign_total = 1;
+                if(null == reply){
+                    //  if reply is null, that means it is the first sign in
+                    //  sign_total = 1;
+                }else{
+                    var sign_info = JSON.parse(reply);
+                    var last_sign_time = sign_info.last_sign_time;
+                    sign_total = sign_info.sign_total;
+
+                    var last_sign_day_tomorrow_time = new Date(last_sign_time + 1000*60*60*24);
+                    var last_sign_day_tomorrow = last_sign_day_tomorrow_time.getDate();
+                    var date_new = new Date();
+                    var date_today = date_new.getDate();
+                    if(date_today == last_sign_day_tomorrow){
+                        //  sign in 'days is more than login_bonus_json.length, not increase any more
+                        if(sign_total != login_bonus_json.length ){
+                            ++sign_total;
+                        }
+                    }else{
+                        //  sign in interrupt,count from 1
+                        sign_total = 1;
+                    }
+                }
+                //  give award for sign in
+                activity.login_bonus = login_bonus_json[sign_total -1];
+                pomelo.app.get('sign_in_wrapper').set(msg.device_guid,sign_total);
+                next(null, {
+                    code: 0,
+                    msg_id : msg.msg_id,
+                    flowid : msg.flowid,
+                    user_data : msg.user_data,
+                    time:Math.floor(Date.now()/1000),
+                    activity:activity
+                });
+            });
+        }
+        //  do not callback,must be later
+        if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type
+            || consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE_THE_SECOND_PHASE == type
+            || consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type
+            ){
             return;
         }
         next(null, {

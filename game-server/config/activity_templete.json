@@ -181,5 +181,23 @@
             }
         },
         "desc":"running man 挑战赛"
+    },
+    "8": {
+        "type": "8",
+        "switch": "1",
+        "startTime": "2014/12/21",
+        "endTime": "2015/1/30",
+        "total_card":20,
+        "single_gacha_cost":15,
+        "multi_gacha_cost":150,
+        "single_gacha_unit":"G",
+        "multi_gacha_unit":"G",
+        "reward_car":44,
+        "single_count":1,
+        "combo_count":12,
+        "gacha_random_num":4,
+        "gacha2_random_num":6,
+        "ad_url":"",
+        "desc":"抽奖2期"
     }
 }

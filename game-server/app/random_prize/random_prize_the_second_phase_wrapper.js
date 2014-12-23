@@ -7,6 +7,9 @@ var random_prize_the_second_phase_wrapper = function() {
     this.wight_total = 0;
     this.wight_array = [];
     this.init();
+    if(0){
+        this.test();
+    }
 };
 
 random_prize_the_second_phase_wrapper.prototype.init = function(){
@@ -44,6 +47,26 @@ random_prize_the_second_phase_wrapper.prototype.get = function(device_guid,cb){
 
 random_prize_the_second_phase_wrapper.prototype.statistics_for_participant = function(device_guid){
     redis_random_prize_the_second_phase_wrapper.statistics_for_participant(device_guid);
+};
+
+random_prize_the_second_phase_wrapper.prototype.test = function(){
+    var prize_statistics = {};
+    var max_loop = 10000000;
+    for(var i = 0; i < max_loop; ++i){
+        var prize = this.random();
+        if(prize_statistics[prize.id]){
+            ++prize_statistics[prize.id];
+        }else{
+            prize_statistics[prize.id] = 1;
+        }
+    }
+    require("fs").writeFile('prize.json', JSON.stringify(prize_statistics), 'utf8', function(err){
+        if(err){
+            console.log('failed');
+        }else{
+            console.log('ok');
+        }
+    });
 };
 
 

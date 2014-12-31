@@ -69,7 +69,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                     var date = new Date();
                                     var entity_award_time = activity.entity_award_time;
                                     var date_string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +  date.getDate();
-                                    var use_replace = false;
+                                    var use_replace = true;
                                     for(var i = 0; i < entity_award_time.length; ++i){
                                         if(date_string == entity_award_time[i]){
                                             use_replace = true;
@@ -89,13 +89,21 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                             //  get all award information, and judge the entity is enough
                                             random_prize_the_third_phase_wrapper.get_all_award(function(all_award_info){
                                                 for(var i = 0; i < all_award_info.length; ++i){
-                                                    if(all_award_info[i].data  == prize.data){
-                                                        ++cur_entity_num;
+                                                    if(all_award_info[i]){
+                                                        if(JSON.parse(all_award_info[i]).prize){
+                                                            if(JSON.parse(all_award_info[i]).prize.data  == prize.data){
+                                                                ++cur_entity_num;
+                                                            }
+                                                        }
                                                     }
+
                                                 }
                                                 //  the entity item is no more today
                                                 if(cur_entity_num < max_entity_num){
-                                                    random_prize_the_third_phase_wrapper.add_award(prize);
+                                                    var award_info = new Object();
+                                                    award_info.device_guid = device_guid;
+                                                    award_info.prize = prize;
+                                                    random_prize_the_third_phase_wrapper.add_award(award_info);
                                                 }
                                                 else{
                                                     //  tell client use replace data

@@ -221,6 +221,7 @@
         "combo_count":5,
         "gacha_random_num":1,
         "gacha2_random_num":9,
+        "server_msg":"server_msg",
         "desc":"抽奖3期"
     }
 }

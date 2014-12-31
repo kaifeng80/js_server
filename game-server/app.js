@@ -13,6 +13,7 @@ var random_prize_the_second_phase_wrapper = require('./app/random_prize/random_p
 var random_prize_the_third_phase_wrapper = require('./app/random_prize/random_prize_the_third_phase_wrapper');
 var dump_load_wrapper = require('./app/dump_load/dump_load_wrapper');
 var sign_in_wrapper = require('./app/sign_in/sign_in_wrapper');
+var mask_word_wrapper = require('./app/mask_word/mask_word_wrapper');
 
 /**
  * Init app for client.
@@ -90,6 +91,10 @@ app.configure('production|development', 'connector', function(){
     //  for sign in
     var __sign_in_wrapper = new sign_in_wrapper();
     app.set('sign_in_wrapper',__sign_in_wrapper);
+
+    //  for mask word
+    var __mask_word_wrapper = new mask_word_wrapper();
+    app.set('mask_word_wrapper',__mask_word_wrapper);
 });
 
 // start app

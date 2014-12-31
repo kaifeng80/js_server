@@ -14,6 +14,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var device_guid = msg.deviceid;
     var type = msg.type;
     var expend_tracks = 0;
+    var server_msg;
     var is_exist = false;
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
@@ -80,6 +81,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                         }
                     }
                     expend_tracks = activity.expend_tracks;
+                    server_msg = activity.server_msg;
                     var degree;
                     var degree_title;
                     var buff_desc;
@@ -98,20 +100,25 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                         degree_next = degree < rival_vs_title_json.length ? degree + 1 : rival_vs_title_json.length;
                         score_next = rival_vs_title_json[degree_next - 1].score;
                     }
-                    next(null, {
-                        code: 0,
-                        msg_id: msg.msg_id,
-                        flowid: msg.flowid,
-                        time: Math.floor(Date.now() / 1000),
-                        type: type,
-                        expend_tracks: expend_tracks,
-                        rank_info: rank_info,
-                        degree: degree,
-                        degree_title: degree_title,
-                        buff_desc: buff_desc,
-                        buff_data: buff_data,
-                        score_next: score_next,
-                        is_exist: is_exist
+                    //  mask word
+                    pomelo.app.get('mask_word_wrapper').analysis(rank_info.nickname,function(nickname_new){
+                        rank_info.nickname_new = nickname_new;
+                        next(null, {
+                            code: 0,
+                            msg_id: msg.msg_id,
+                            flowid: msg.flowid,
+                            time: Math.floor(Date.now() / 1000),
+                            type: type,
+                            expend_tracks: expend_tracks,
+                            server_msg: server_msg,
+                            rank_info: rank_info,
+                            degree: degree,
+                            degree_title: degree_title,
+                            buff_desc: buff_desc,
+                            buff_data: buff_data,
+                            score_next: score_next,
+                            is_exist: is_exist
+                        });
                     });
                 });
                 callback(null);

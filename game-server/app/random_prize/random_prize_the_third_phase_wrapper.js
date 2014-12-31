@@ -108,6 +108,10 @@ random_prize_the_third_phase_wrapper.prototype.statistics_for_participant = func
     redis_random_prize_the_third_phase_wrapper.statistics_for_participant(device_guid);
 };
 
+random_prize_the_third_phase_wrapper.prototype.update_phone = function(device_guid,phone_number){
+    redis_random_prize_the_third_phase_wrapper.update_phone(device_guid,phone_number);
+};
+
 random_prize_the_third_phase_wrapper.prototype.test = function(){
     var prize_statistics = {};
     var max_loop = 10000000;

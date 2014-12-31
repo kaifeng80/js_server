@@ -18,6 +18,19 @@ var get_rival = function(strength){
     return rival_vs_json[0];
 };
 
+var get_extra_info = function(player_info_somebody,score){
+    for(var v in rival_vs_title_json){
+        if(rival_vs_title_json[v].score <= score){
+            player_info_somebody.degree_title = rival_vs_title_json[v].title;
+            player_info_somebody.degree = rival_vs_title_json[v].grade;
+            player_info_somebody.buff_desc = rival_vs_title_json[v].buff_desc;
+            player_info_somebody.buff_data = rival_vs_title_json[v].buff_data;
+        }
+    }
+    var degree_next = player_info_somebody.degree < rival_vs_title_json.length ? player_info_somebody.degree + 1 : rival_vs_title_json.length;
+    player_info_somebody.score_next = rival_vs_title_json[degree_next - 1].score;
+};
+
 var copy_rival_info = function(player_info_somebody,strength){
     var rival_info = get_rival(strength);
     player_info_somebody.level = rival_info.level;
@@ -103,16 +116,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.driver = rank_info.racer;
                 player_info_somebody.driver_lv = rank_info.racer_lv;
                 player_info_somebody.total_win = rank_info.total_win;
-                for(var v in rival_vs_title_json){
-                    if(rival_vs_title_json[v].score <= rank_info.score){
-                        player_info_somebody.degree_title = rival_vs_title_json[v].title;
-                        player_info_somebody.degree = rival_vs_title_json[v].grade;
-                        player_info_somebody.buff_desc = rival_vs_title_json[v].buff_desc;
-                        player_info_somebody.buff_data = rival_vs_title_json[v].buff_data;
-                    }
-                }
-                var degree_next = player_info_somebody.degree < rival_vs_title_json.length ? player_info_somebody.degree + 1 : rival_vs_title_json.length;
-                player_info_somebody.score_next = rival_vs_title_json[degree_next - 1].score;
+                get_extra_info(player_info_somebody,rank_info);
                 player_info_array.push(player_info_somebody);
                 callback(null,player_info_array);
             });
@@ -140,6 +144,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
             var player_info_somebody = new Object();
             copy_rival_info(player_info_somebody,random_val);
             player_info_array.push(player_info_somebody);
+            get_extra_info(player_info_somebody,player_info_somebody.score);
             callback(null,player_info_array);
         }
     });

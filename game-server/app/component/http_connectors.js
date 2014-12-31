@@ -86,7 +86,7 @@ http_connectors.prototype.afterStart = function (cb) {
 };
 
 http_connectors.prototype.stop = function(force, cb) {
-    cosole.log('http connectors stop');
+    console.log('http connectors stop');
     process.nextTick(cb);
 };
 

@@ -43,33 +43,27 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             blocked: 0
                         };
                         rank_pvp_wrapper.set_rank_info(device_guid, rank_info);
+                        is_exist = true;
                         callback(null, rank_info);
                         break;
                     }
                     case "get":
                     {
-                        var activity_wrapper = pomelo.app.get('activity_wrapper');
-                        var activity = {};
-                        activity_wrapper.get(channel, version, function (activity_json) {
-                            for (var v in activity_json) {
-                                if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
-                                    activity = activity_json[v];
-                                }
+                        rank_pvp_wrapper.get_rank_info(device_guid, function (rank_info) {
+                            if (rank_info) {
+                                is_exist = true;
+                                rank_info = JSON.parse(rank_info);
                             }
-                            expend_tracks = activity.expend_tracks;
-                            rank_pvp_wrapper.get_rank_info(device_guid, function (rank_info) {
-                                if (rank_info) {
-                                    is_exist = true;
-                                    rank_info = JSON.parse(rank_info);
-                                }
-                                callback(null, rank_info);
-                            });
+                            callback(null, rank_info);
                         });
                         break;
                     }
                     case "update":
                     {
                         rank_pvp_wrapper.update_rank_info(device_guid, msg.area, msg.phone_number, function (rank_info) {
+                            if(rank_info){
+                                is_exist = true;
+                            }
                             callback(null, rank_info);
                         });
                         break;
@@ -77,38 +71,48 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                 }
             },
             function (rank_info, callback) {
-                var degree;
-                var degree_title;
-                var buff_desc;
-                var buff_data;
-                var degree_next;
-                var score_next;
-                if (rank_info) {
-                    for (var v in rival_vs_title_json) {
-                        if (rival_vs_title_json[v].score <= rank_info.score) {
-                            degree_title = rival_vs_title_json[v].title;
-                            degree = rival_vs_title_json[v].grade;
-                            buff_desc = rival_vs_title_json[v].buff_desc;
-                            buff_data = rival_vs_title_json[v].buff_data;
+                var activity_wrapper = pomelo.app.get('activity_wrapper');
+                var activity = {};
+                activity_wrapper.get(channel, version, function (activity_json) {
+                    for (var v in activity_json) {
+                        if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
+                            activity = activity_json[v];
                         }
                     }
-                    degree_next = degree < rival_vs_title_json.length ? degree + 1 : rival_vs_title_json.length;
-                    score_next = rival_vs_title_json[degree_next - 1].score;
-                }
-                next(null, {
-                    code: 0,
-                    msg_id: msg.msg_id,
-                    flowid: msg.flowid,
-                    time: Math.floor(Date.now() / 1000),
-                    type: type,
-                    expend_tracks: expend_tracks,
-                    rank_info: rank_info,
-                    degree: degree,
-                    degree_title: degree_title,
-                    buff_desc: buff_desc,
-                    buff_data: buff_data,
-                    score_next: score_next,
-                    is_exist: is_exist
+                    expend_tracks = activity.expend_tracks;
+                    var degree;
+                    var degree_title;
+                    var buff_desc;
+                    var buff_data;
+                    var degree_next;
+                    var score_next;
+                    if (rank_info) {
+                        for (var v in rival_vs_title_json) {
+                            if (rival_vs_title_json[v].score <= rank_info.score) {
+                                degree_title = rival_vs_title_json[v].title;
+                                degree = rival_vs_title_json[v].grade;
+                                buff_desc = rival_vs_title_json[v].buff_desc;
+                                buff_data = rival_vs_title_json[v].buff_data;
+                            }
+                        }
+                        degree_next = degree < rival_vs_title_json.length ? degree + 1 : rival_vs_title_json.length;
+                        score_next = rival_vs_title_json[degree_next - 1].score;
+                    }
+                    next(null, {
+                        code: 0,
+                        msg_id: msg.msg_id,
+                        flowid: msg.flowid,
+                        time: Math.floor(Date.now() / 1000),
+                        type: type,
+                        expend_tracks: expend_tracks,
+                        rank_info: rank_info,
+                        degree: degree,
+                        degree_title: degree_title,
+                        buff_desc: buff_desc,
+                        buff_data: buff_data,
+                        score_next: score_next,
+                        is_exist: is_exist
+                    });
                 });
                 callback(null);
             }

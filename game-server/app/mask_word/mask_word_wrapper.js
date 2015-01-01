@@ -38,7 +38,7 @@ mask_word_wrapper.prototype.analysis = function(sentence,cb){
                                 for(var i = 0; i < word_length; ++i){
                                     word_des += '*';
                                 }
-                                sentence_new = sentence_new.replace(/word_src/,word_des);
+                                sentence_new = sentence_new.replace(word_src,word_des);
                             }
                             callback(null);
                         }

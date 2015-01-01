@@ -69,7 +69,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                     var date = new Date();
                                     var entity_award_time = activity.entity_award_time;
                                     var date_string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +  date.getDate();
-                                    var use_replace = true;
+                                    var use_replace = false;
                                     for(var i = 0; i < entity_award_time.length; ++i){
                                         if(date_string == entity_award_time[i]){
                                             use_replace = true;
@@ -149,6 +149,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                         console.error(err);
                     }
                     random_prize_the_third_phase_wrapper.set(device_guid,free_flag);
+                    if(0){
+                        console.log("j%",gacha_result);
+                        console.log(gacha_result[0].length);
+                    }
                     next(null, {
                         code: 0,
                         msg_id : msg.msg_id,

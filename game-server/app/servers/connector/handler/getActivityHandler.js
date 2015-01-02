@@ -215,8 +215,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                         }else if(last_sign_day == date_today){
                             //  sign in already
                         }else{
-                            //  sign in interrupt,count from 1
-                            sign_total = 1;
+                            //  after login_bonus_json.length days, not interrupt
+                            if(sign_total == (login_bonus_json.length - 1)){
+                                ++sign_total;
+                            }else{
+                                //  sign in interrupt,count from 1
+                                sign_total = 1;
+                            }
                         }
                     }
                     //  give award for sign in

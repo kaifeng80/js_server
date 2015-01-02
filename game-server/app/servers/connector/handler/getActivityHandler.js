@@ -215,7 +215,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                         }else if(last_sign_day == date_today){
                             //  sign in already
                         }else{
-                            //  after login_bonus_json.length days, not interrupt
+                            //  after login_bonus_json.length - 1(30) days, not interrupt
                             if(sign_total == (login_bonus_json.length - 1)){
                                 ++sign_total;
                             }else{

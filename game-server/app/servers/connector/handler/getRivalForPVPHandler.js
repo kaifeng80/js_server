@@ -143,36 +143,45 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
     var strength_min = strength;
     var strength_max = strength;
     var player_info_array = [];
-    async.waterfall([
-            function (callback) {
-                //  player 1
-                if(random_val <= 80){
+    var activity = {};
+    var activity_wrapper = pomelo.app.get('activity_wrapper');
+    activity_wrapper.get(channel,version,function(activity_json) {
+        for (var v in activity_json) {
+            if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
+                activity = activity_json[v];
+            }
+        }
+        async.waterfall([
+                function (callback) {
+                    //  player 1
+                    if(random_val <= 80){
+                        strength_min = strength - 100;
+                        strength_max = strength + 30;
+                    }else{
+                        strength_min = strength + 50;
+                        strength_max = strength + 150;
+                    }
+                    get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
+                },
+                function (player_info_array,callback) {
                     strength_min = strength - 100;
                     strength_max = strength + 30;
-                }else{
-                    strength_min = strength + 50;
-                    strength_max = strength + 150;
+                    get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
+                },
+                function (player_info_array,callback) {
+                    strength_min = strength - 100;
+                    strength_max = strength + 30;
+                    get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 }
-                get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
-            },
-            function (player_info_array,callback) {
-                strength_min = strength - 100;
-                strength_max = strength + 30;
-                get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
-            },
-            function (player_info_array,callback) {
-                strength_min = strength - 100;
-                strength_max = strength + 30;
-                get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
-            }
-        ],
-        function (err, player_info_array) {
-            next(null, {
-                code: 0,
-                msg_id : msg.msg_id,
-                flowid : msg.flowid,
-                time:Math.floor(Date.now()/1000),
-                player_info_array:player_info_array
+            ],
+            function (err, player_info_array) {
+                next(null, {
+                    code: 0,
+                    msg_id : msg.msg_id,
+                    flowid : msg.flowid,
+                    time:Math.floor(Date.now()/1000),
+                    player_info_array:player_info_array
+                });
             });
-        });
+    });
 });

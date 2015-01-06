@@ -198,5 +198,10 @@
         "gacha2_random_num":9,
         "ad_url":"",
         "desc":"抽奖2期"
+    },
+    "9": {
+        "type": "9",
+        "switch": "1",
+        "desc":"pvp"
     }
 }

@@ -21,7 +21,8 @@ module.exports = {
         TYPE_VERSION_UPDATE:21,
         TYPE_RANK_INFO_FOR_PVP:22,
         TYPE_GET_RIVAL_FOR_PVP:23,
-        TYPE_UPLOAD_SCORE_FOR_PVP:24
+        TYPE_UPLOAD_SCORE_FOR_PVP:24,
+        TYPE_GET_AWARD_FOR_PVP:25
     },
     TYPE_ACTIVITY:{
         TYPE_DAILY_SIGN:1, 	    //// 每日签到
@@ -29,7 +30,8 @@ module.exports = {
         TYPE_TASK:3,		    //// 每日任务
         TYPE_RANDOM_PRIZE:6,
         RIVAL_SEOUL:7,
-        TYPE_RANDOM_PRIZE_THE_SECOND_PHASE:8
+        TYPE_RANDOM_PRIZE_THE_SECOND_PHASE:8,
+        TYPE_PVP:9
     },
     TYPE_MISSION:{
         MISSION_TYPE_GEM :0,

@@ -8,10 +8,12 @@ var log4js = require('log4js');
 var log_json = require('../../config/log.json');
 log4js.configure(log_json);
 var rank_for_pvp_logger = log4js.getLogger('rank-for-pvp-logger');
+
 var h_rank_pvp = 'h_rank_pvp';
 var z_rank_pvp_score = 'z_rank_pvp_score';
-var z_rank_pvp_score_weekly = 'z_rank_pvp_score_weekly';
 var z_rank_pvp_strength = 'z_rank_pvp_strength';
+var h_award_pvp = 'h_award_pvp';
+
 /**
  * add rank info at first enter pvp
  * @param device_guid
@@ -48,27 +50,6 @@ redis_rank_pvp_wrapper.get_rank_info = function(device_guid,cb){
 };
 
 /**
- * get multi rank info form redis
- * @param device_guid1
- * @param device_guid2
- * @param device_guid3
- * @param cb
- */
-redis_rank_pvp_wrapper.get_rank_info_multi = function(device_guid1,device_guid2,device_guid3,cb){
-    redis_pools.execute('pool_1',function(client, release) {
-        var args = [ z_rank_pvp_strength, device_guid1, device_guid2, device_guid3 ];
-        client.hmget(args, function (err, reply) {
-            if (err) {
-                //  some thing log
-                rank_for_pvp_logger.error(err);
-            }
-            cb(reply);
-            release();
-        });
-    });
-};
-
-/**
  * update some about area,phone info for player
  * @param device_guid
  * @param area
@@ -92,9 +73,9 @@ redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number
  * @param championship_id : the week index
  * @param score : the latest score
  */
-redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,score){
+redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,rank_info){
     redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score, score,device_guid, function (err, reply) {
+        client.zadd(z_rank_pvp_score, rank_info.score_weekly,device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
@@ -103,7 +84,16 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
         });
     });
     redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score_weekly + ":" + championship_id, score,device_guid, function (err, reply) {
+        client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score,device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            release();
+        });
+    });
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_pvp + ":" + championship_id,device_guid, JSON.stringify(rank_info),function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
@@ -120,7 +110,7 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
  */
 redis_rank_pvp_wrapper.get_score_rank = function(device_guid,cb){
     redis_pools.execute('pool_1',function(client, release) {
-        client.rank(z_rank_pvp_score,device_guid, function (err, reply) {
+        client.zrevrank(z_rank_pvp_score,device_guid,function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
@@ -139,12 +129,81 @@ redis_rank_pvp_wrapper.get_score_rank = function(device_guid,cb){
  */
 redis_rank_pvp_wrapper.get_score_rank_weekly = function(device_guid,championship_id,cb){
     redis_pools.execute('pool_1',function(client, release) {
-        client.rank(z_rank_pvp_score_weekly + ":" + championship_id,device_guid, function (err, reply) {
+        client.zrevrank(z_rank_pvp_score + ":" + championship_id,device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
             }
             cb(reply);
+            release();
+        });
+    });
+};
+
+/**
+ * get current week's rank info
+ * @param championship_id
+ * @param cb
+ */
+redis_rank_pvp_wrapper.get_all_rank_info_weekly = function(championship_id,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hgetall(h_rank_pvp + ":" + championship_id,function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+/**
+ * set award
+ * @param device_guid
+ * @param award_info
+ */
+redis_rank_pvp_wrapper.set_award = function(device_guid,award_info){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_award_pvp,device_guid, JSON.stringify(award_info),function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            release();
+        });
+    });
+};
+
+/**
+ * get award
+ * @param device_guid
+ * @param cb
+ */
+redis_rank_pvp_wrapper.get_award = function(device_guid,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hget(h_award_pvp,device_guid,function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+/**
+ * del award
+ * @param device_guid
+ */
+redis_rank_pvp_wrapper.del_award = function(device_guid){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hdel(h_award_pvp,device_guid,function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
             release();
         });
     });

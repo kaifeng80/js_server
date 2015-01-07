@@ -6,6 +6,7 @@ var notice_wrapper = require('./app/notice/notice_wrapper');
 var statistics_wrapper = require('./app/statistics/statistics_wrapper');
 var rank_wrapper = require('./app/rank/rank_wrapper');
 var rank_running_man_wrapper = require('./app/rank/rank_running_man_wrapper');
+var rank_pvp_wrapper = require('./app/rank/rank_pvp_wrapper');
 var http_connectors = require('./app/component/http_connectors');
 var random_prize_wrapper = require('./app/random_prize/random_prize_wrapper');
 var random_prize_the_second_phase_wrapper = require('./app/random_prize/random_prize_the_second_phase_wrapper');
@@ -64,6 +65,10 @@ app.configure('production|development', 'connector', function(){
     //  for rank running man handler
     var __rank_running_man_wrapper = new rank_running_man_wrapper();
     app.set('rank_running_man_wrapper',__rank_running_man_wrapper);
+
+    //  for rank pvp handler
+    var __rank_pvp_wrapper = new rank_pvp_wrapper();
+    app.set('rank_pvp_wrapper',__rank_pvp_wrapper);
 
     //  for random prize
     var __random_prize_wrapper = new random_prize_wrapper();

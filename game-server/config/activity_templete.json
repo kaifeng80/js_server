@@ -202,6 +202,8 @@
     "9": {
         "type": "9",
         "switch": "1",
+        "expend_tracks":1,
+        "stage":[1,2,3],
         "desc":"pvp"
     }
 }

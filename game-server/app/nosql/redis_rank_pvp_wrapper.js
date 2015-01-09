@@ -50,6 +50,24 @@ redis_rank_pvp_wrapper.get_rank_info = function(device_guid,cb){
 };
 
 /**
+ * get rank info form redis batch
+ * @param device_guid
+ * @param cb
+ */
+redis_rank_pvp_wrapper.get_rank_info_batch = function(device_guid_array,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hmget(h_rank_pvp, device_guid_array, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+/**
  * update some about area,phone info for player
  * @param device_guid
  * @param area
@@ -122,6 +140,23 @@ redis_rank_pvp_wrapper.get_score_rank = function(device_guid,cb){
 };
 
 /**
+ * get score rank from 1 to 10
+ * @param cb
+ */
+redis_rank_pvp_wrapper.get_score_rank_partial = function(cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.zrevrange(z_rank_pvp_score,0,9,function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+/**
  * get rank by score weekly
  * @param device_guid
  * @param championship_id
@@ -130,6 +165,19 @@ redis_rank_pvp_wrapper.get_score_rank = function(device_guid,cb){
 redis_rank_pvp_wrapper.get_score_rank_weekly = function(device_guid,championship_id,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.zrevrank(z_rank_pvp_score + ":" + championship_id,device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+redis_rank_pvp_wrapper.get_score_rank_partial_weekly = function(championship_id,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.zrevrange(z_rank_pvp_score + ":" + championship_id,0,9,function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

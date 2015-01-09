@@ -38,17 +38,35 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function(msg, session
             break;
         }
         case "get":{
-            pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,function(rank_info){
-                var is_exist = false;
-                if(rank_info){
-                    is_exist = true;
+            var activity_wrapper = pomelo.app.get('activity_wrapper');
+            var activity = {};
+            activity_wrapper.get(channel,version,function(activity_json) {
+                for (var v in activity_json) {
+                    if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
+                        activity = activity_json[v];
+                    }
                 }
-                next(null, {
-                    code: 0,
-                    msg_id : msg.msg_id,
-                    flowid : msg.flowid,
-                    time:Math.floor(Date.now()/1000),
-                    is_exist:is_exist
+                //  calc stage
+                var stage_array = activity.stage;
+                var expend_tracks = activity.expend_tracks;
+                var random_val = Math.floor(Math.random()* stage_array.length);
+                pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,function(rank_info){
+                    var is_exist = false;
+                    if(rank_info){
+                        is_exist = true;
+                        rank_info = JSON.parse(rank_info);
+                    }
+                    next(null, {
+                        code: 0,
+                        msg_id : msg.msg_id,
+                        flowid : msg.flowid,
+                        time:Math.floor(Date.now()/1000),
+                        type:type,
+                        stage:stage_array[random_val],
+                        expend_tracks:expend_tracks,
+                        rank_info:rank_info,
+                        is_exist:is_exist
+                    });
                 });
             });
             return;
@@ -62,6 +80,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function(msg, session
         code: 0,
         msg_id : msg.msg_id,
         flowid : msg.flowid,
-        time:Math.floor(Date.now()/1000)
+        time:Math.floor(Date.now()/1000),
+        type:type
     });
 });

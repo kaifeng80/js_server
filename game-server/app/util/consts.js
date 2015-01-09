@@ -22,7 +22,8 @@ module.exports = {
         TYPE_RANK_INFO_FOR_PVP:22,
         TYPE_GET_RIVAL_FOR_PVP:23,
         TYPE_UPLOAD_SCORE_FOR_PVP:24,
-        TYPE_GET_AWARD_FOR_PVP:25
+        TYPE_GET_AWARD_FOR_PVP:25,
+        TYPE_GET_RANK_PARTIAL_FOR_PVP:26
     },
     TYPE_ACTIVITY:{
         TYPE_DAILY_SIGN:1, 	    //// 每日签到
@@ -44,5 +45,9 @@ module.exports = {
     TYPE_RIVAL:{
         TYPE_RIVAL_GENERAL:0,
         TYPE_RIVAL_BOSS:1
+    },
+    TYPE_SCORE_RANK_PVP:{
+        TYPE_SCORE_RANK_PVP_WEEKLY:0,
+        TYPE_SCORE_RANK_PVP_ALL:1
     }
 };

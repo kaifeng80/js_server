@@ -52,6 +52,10 @@ rank_pvp_wrapper.prototype.get_rank_info = function(device_guid,cb){
     redis_rank_pvp_wrapper.get_rank_info(device_guid,cb);
 };
 
+rank_pvp_wrapper.prototype.get_rank_info_batch = function(device_guid_array,cb){
+    redis_rank_pvp_wrapper.get_rank_info_batch(device_guid_array,cb);
+};
+
 rank_pvp_wrapper.prototype.update_rank_info = function(device_guid,area,phone_number){
     redis_rank_pvp_wrapper.update_rank_info(device_guid,area,phone_number);
 };
@@ -64,8 +68,16 @@ rank_pvp_wrapper.prototype.get_score_rank = function(device_guid,cb){
     redis_rank_pvp_wrapper.get_score_rank(device_guid,cb);
 };
 
+rank_pvp_wrapper.prototype.get_score_rank_partial = function(cb){
+    redis_rank_pvp_wrapper.get_score_rank_partial(cb);
+};
+
 rank_pvp_wrapper.prototype.get_score_rank_weekly = function(device_guid,championship_id,cb){
     redis_rank_pvp_wrapper.get_score_rank_weekly(device_guid,championship_id,cb);
+};
+
+rank_pvp_wrapper.prototype.get_score_rank_partial_weekly = function(championship_id,cb){
+    redis_rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id,cb);
 };
 
 rank_pvp_wrapper.prototype.get_all_rank_info_weekly = function(championship_id,cb){

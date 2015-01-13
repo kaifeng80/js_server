@@ -151,6 +151,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                 activity = activity_json[v];
             }
         }
+        //  calc stage
+        var stage_array = activity.stage;
+        random_val = Math.floor(Math.random()* stage_array.length);
         async.waterfall([
                 function (callback) {
                     //  player 1
@@ -180,6 +183,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     msg_id : msg.msg_id,
                     flowid : msg.flowid,
                     time:Math.floor(Date.now()/1000),
+                    stage:stage_array[random_val],
                     player_info_array:player_info_array
                 });
             });

@@ -42,7 +42,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     if(rank_info_array[i])
                     {
                         var rank_info = JSON.parse(rank_info_array[i]);
-                        score_rank_array.push({driver_id:rank_info.device_guid,
+                        score_rank_array.push({driver_id:rank_info.racer,
+                            nickname:rank_info.nickname,
                             area:rank_info.area,
                             rank:i + 1,
                             score:rank_info.score})

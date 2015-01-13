@@ -46,10 +46,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function(msg, session
                         activity = activity_json[v];
                     }
                 }
-                //  calc stage
-                var stage_array = activity.stage;
                 var expend_tracks = activity.expend_tracks;
-                var random_val = Math.floor(Math.random()* stage_array.length);
                 pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,function(rank_info){
                     var is_exist = false;
                     if(rank_info){
@@ -62,7 +59,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function(msg, session
                         flowid : msg.flowid,
                         time:Math.floor(Date.now()/1000),
                         type:type,
-                        stage:stage_array[random_val],
                         expend_tracks:expend_tracks,
                         rank_info:rank_info,
                         is_exist:is_exist

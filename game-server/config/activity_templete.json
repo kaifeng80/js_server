@@ -134,6 +134,7 @@
         },
         "boss_id_seoul" : {
             "item1":{"res":"1","rate":1},
+            "item5":{"res":"2","rate":1},
             "item5":{"res":"5","rate":1},
             "item6":{"res":"6","rate":1},
             "item7":{"res":"7","rate":1}
@@ -205,5 +206,21 @@
         "expend_tracks":1,
         "stage":[1,2,3],
         "desc":"pvp"
+    },
+    "10": {
+        "type": "10",
+        "switch": "1",
+        "startTime": "2015/2/18",
+        "endTime": "2015/6/30",
+        "single_gacha_cost":10000,
+        "multi_gacha_cost":100000,
+        "single_gacha_unit":"C",
+        "multi_gacha_unit":"C",
+        "single_count":1,
+        "combo_count":12,
+        "gacha_random_num":1,
+        "gacha2_random_num":9,
+        "ad_url":"",
+        "desc":"抽奖3期"
     }
 }

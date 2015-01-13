@@ -188,6 +188,26 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
                 });
             });
         }
+        //  for the third phase random prize
+        else if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE == type){
+            pomelo.app.get('random_prize_the_third_phase_wrapper').get(msg.player_guid,function(reply){
+                if(null != reply){
+                    var free_flag = JSON.parse(reply);
+                    //  if the free_flag is 1, that means is the first to single random prize
+                    activity.is_first = free_flag?free_flag:0;
+                }else{
+                    activity.is_first = 1;
+                }
+                next(null, {
+                    code: 0,
+                    msg_id : msg.msg_id,
+                    flowid : msg.flowid,
+                    user_data : msg.user_data,
+                    time:Math.floor(Date.now()/1000),
+                    activity:activity
+                });
+            });
+        }
         else if(consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type){
             if(version_major*100 + version_minor*10 + version_fix >= cur_version_major_4_sign_in *100 + cur_version_minor_4_sign_in*10 + cur_version_fix_4_sign_in){
                 //  get the sign data exists
@@ -253,6 +273,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_ACTIVITY, function(msg, session, nex
         //  do not callback,must be later
         if(consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE == type
             || consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE_THE_SECOND_PHASE == type
+            || consts.TYPE_ACTIVITY.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE == type
             || consts.TYPE_ACTIVITY.TYPE_DAILY_SIGN == type
             ){
             return;

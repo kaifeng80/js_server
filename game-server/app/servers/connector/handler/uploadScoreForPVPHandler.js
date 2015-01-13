@@ -15,13 +15,24 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         if(rank_info){
             rank_info = JSON.parse(rank_info);
         }
+        //  calc score and money
+        var my_rank = msg.my_rank;
+        var rivals = msg.rivals;
+        var score_add = 0;
+        var money_add = 0;
+        for(var i = 0; i < rivals.length; ++i){
+            if(rivals[i].rank < my_rank){
+                score_add += Math.floor(rivals[i].strength/10);
+                money_add += Math.floor(rivals[i].strength/3);
+            }
+        }
         rank_info.car = msg.car;
         rank_info.car_lv = msg.car_lv;
         rank_info.racer = msg.racer;
         rank_info.racer_lv = msg.racer_lv;
         rank_info.strength = msg.strength;
         //  score is provide by client, which is the final result(include all loser's score).
-        rank_info.score += msg.score;
+        rank_info.score += score_add;
         if(rank_info.championship_id == championship_id){
             rank_info.score_weekly += msg.score;
         }
@@ -42,7 +53,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             code: 0,
             msg_id : msg.msg_id,
             flowid : msg.flowid,
-            time:Math.floor(Date.now()/1000)
+            time:Math.floor(Date.now()/1000),
+            score:score_add,
+            money:money_add
         });
     });
 

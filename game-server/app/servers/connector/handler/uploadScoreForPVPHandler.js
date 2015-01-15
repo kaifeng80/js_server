@@ -51,6 +51,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             }
             else{
                 rank_info.score_weekly = score_add;
+                rank_info.championship_id = championship_id;
             }
             //  calc degree
             var old_degree = rank_info.degree ? rank_info.degree : 1;

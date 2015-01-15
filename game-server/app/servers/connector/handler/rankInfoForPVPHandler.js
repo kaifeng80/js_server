@@ -32,7 +32,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             area: msg.area,
                             phone_number: msg.phone_number,
                             championship_id: championship_id,
-                            car: 0,
+                            car: 28,
                             car_lv: 0,
                             racer: 0,
                             racer_lv: 0,

@@ -94,24 +94,28 @@ redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number
  * @param score : the latest score
  */
 redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,rank_info){
-    redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score, rank_info.score,device_guid, function (err, reply) {
-            if (err) {
-                //  some thing log
-                rank_for_pvp_logger.error(err);
-            }
-            release();
+    if(0 != rank_info.score){
+        redis_pools.execute('pool_1',function(client, release) {
+            client.zadd(z_rank_pvp_score, rank_info.score,device_guid, function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    rank_for_pvp_logger.error(err);
+                }
+                release();
+            });
         });
-    });
-    redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score_weekly,device_guid, function (err, reply) {
-            if (err) {
-                //  some thing log
-                rank_for_pvp_logger.error(err);
-            }
-            release();
+    }
+    if(0 != rank_info.score_weekly){
+        redis_pools.execute('pool_1',function(client, release) {
+            client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score_weekly,device_guid, function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    rank_for_pvp_logger.error(err);
+                }
+                release();
+            });
         });
-    });
+    }
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp + ":" + championship_id,device_guid, JSON.stringify(rank_info),function (err, reply) {
             if (err) {

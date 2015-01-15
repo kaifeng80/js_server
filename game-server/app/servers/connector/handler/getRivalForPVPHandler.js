@@ -111,7 +111,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.device_guid = rank_info.device_guid;
                 player_info_somebody.name = rank_info.nickname;
                 player_info_somebody.from = rank_info.area;
-                player_info_somebody.car = rank_info.car;
+                player_info_somebody.car = rank_info.car?rank_info.car:28;
                 player_info_somebody.car_lv = rank_info.car_lv;
                 player_info_somebody.driver = rank_info.racer;
                 player_info_somebody.driver_lv = rank_info.racer_lv;
@@ -119,7 +119,11 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.is_robot = 0;
                 get_extra_info(player_info_somebody,rank_info.score);
                 player_info_array.push(player_info_somebody);
-                callback(null,player_info_array);
+                //  mask word
+                pomelo.app.get('mask_word_wrapper').analysis(player_info_somebody.nickname,function(nickname_new){
+                    player_info_somebody.nickname = nickname_new;
+                    callback(null,player_info_array);
+                });
             });
         }
         else{

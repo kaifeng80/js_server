@@ -29,16 +29,18 @@ mask_word_wrapper.prototype.analysis = function(sentence,cb){
                             });
                         },
                         function(find_result,word,callback){
-                            //  find and replace it
-                            var index = sentence_new.indexOf(word);
-                            if(index >= 0){
-                                var word_src = word;
-                                var word_des = '';
-                                var word_length = word_src.length;
-                                for(var i = 0; i < word_length; ++i){
-                                    word_des += '*';
+                            if(find_result){
+                                //  find and replace it
+                                var index = sentence_new.indexOf(word);
+                                if(index >= 0){
+                                    var word_src = word;
+                                    var word_des = '';
+                                    var word_length = word_src.length;
+                                    for(var i = 0; i < word_length; ++i){
+                                        word_des += '*';
+                                    }
+                                    sentence_new = sentence_new.replace(word_src,word_des);
                                 }
-                                sentence_new = sentence_new.replace(word_src,word_des);
                             }
                             callback(null);
                         }

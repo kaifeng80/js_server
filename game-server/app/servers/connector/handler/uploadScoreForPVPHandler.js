@@ -67,7 +67,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.total_win += 1;
             }
             //  save it
-            pomelo.app.get("rank_pvp_wrapper").set_rank_info(device_guid,rank_info);
+            pomelo.app.get("rank_pvp_wrapper").set_rank_info(device_guid,rank_info,function(reply){});
             //  update score/score weekly rank
             pomelo.app.get("rank_pvp_wrapper").update_score_rank(device_guid,championship_id,rank_info);
             //  update strength rank

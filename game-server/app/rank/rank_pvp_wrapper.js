@@ -44,8 +44,8 @@ rank_pvp_wrapper.prototype.tick = function() {
     },self.time_interval);
 };
 
-rank_pvp_wrapper.prototype.set_rank_info = function(device_guid,rank_info){
-    redis_rank_pvp_wrapper.set_rank_info(device_guid,rank_info);
+rank_pvp_wrapper.prototype.set_rank_info = function(device_guid,rank_info,cb){
+    redis_rank_pvp_wrapper.set_rank_info(device_guid,rank_info,cb);
 };
 
 rank_pvp_wrapper.prototype.get_rank_info = function(device_guid,cb){

@@ -19,13 +19,14 @@ var h_award_pvp = 'h_award_pvp';
  * @param device_guid
  * @param rank_info
  */
-redis_rank_pvp_wrapper.set_rank_info = function(device_guid,rank_info){
+redis_rank_pvp_wrapper.set_rank_info = function(device_guid,rank_info,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp, device_guid, JSON.stringify(rank_info), function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
             }
+            cb(reply);
             release();
         });
     });

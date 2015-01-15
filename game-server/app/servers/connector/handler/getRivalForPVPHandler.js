@@ -103,27 +103,55 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 var rank_info = {};
                 if(reply){
                     rank_info = JSON.parse(reply);
+                    var player_info_somebody = new Object();
+                    //  random json table
+                    random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
+                    copy_rival_info(player_info_somebody,random_val);
+                    player_info_somebody.device_guid = rank_info.device_guid;
+                    player_info_somebody.name = rank_info.nickname;
+                    player_info_somebody.from = rank_info.area;
+                    player_info_somebody.car = rank_info.car?rank_info.car:28;
+                    player_info_somebody.car_lv = rank_info.car_lv;
+                    player_info_somebody.driver = rank_info.racer;
+                    player_info_somebody.driver_lv = rank_info.racer_lv;
+                    player_info_somebody.total_win = rank_info.total_win;
+                    player_info_somebody.is_robot = 0;
+                    get_extra_info(player_info_somebody,rank_info.score);
+                    player_info_array.push(player_info_somebody);
+                    //  mask word
+                    pomelo.app.get('mask_word_wrapper').analysis(player_info_somebody.nickname,function(nickname_new){
+                        player_info_somebody.nickname = nickname_new;
+                        callback(null,player_info_array);
+                    });
                 }
-                var player_info_somebody = new Object();
-                //  random json table
-                random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
-                copy_rival_info(player_info_somebody,random_val);
-                player_info_somebody.device_guid = rank_info.device_guid;
-                player_info_somebody.name = rank_info.nickname;
-                player_info_somebody.from = rank_info.area;
-                player_info_somebody.car = rank_info.car?rank_info.car:28;
-                player_info_somebody.car_lv = rank_info.car_lv;
-                player_info_somebody.driver = rank_info.racer;
-                player_info_somebody.driver_lv = rank_info.racer_lv;
-                player_info_somebody.total_win = rank_info.total_win;
-                player_info_somebody.is_robot = 0;
-                get_extra_info(player_info_somebody,rank_info.score);
-                player_info_array.push(player_info_somebody);
-                //  mask word
-                pomelo.app.get('mask_word_wrapper').analysis(player_info_somebody.nickname,function(nickname_new){
-                    player_info_somebody.nickname = nickname_new;
+                else{
+                    //  if rank_info is null,random from robot,usually it is impossible! just in case
+                    var is_repeat = true;
+                    do
+                    {
+                        random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
+                        //  can not be the player have chose
+                        var find = false;
+                        for(var i = 0; i < player_info_array.length; ++i){
+                            if(random_val == player_info_array[i].strength){
+                                find = true;
+                                break;
+                            }
+                        }
+                        if(find){
+                            ++cur_loop_count;
+                            continue;
+                        }
+                        is_repeat = false;
+                        ++cur_loop_count;
+                    }while(is_repeat && cur_loop_count < max_loop_count);
+                    var player_info_somebody = new Object();
+                    copy_rival_info(player_info_somebody,random_val);
+                    player_info_somebody.is_robot = 1;
+                    player_info_array.push(player_info_somebody);
+                    get_extra_info(player_info_somebody,player_info_somebody.score);
                     callback(null,player_info_array);
-                });
+                }
             });
         }
         else{
@@ -178,7 +206,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
         //  calc stage
         var stage_array = activity.stage;
         pvp_switch = activity.switch;
-        random_val = Math.floor(Math.random()* stage_array.length);
         async.waterfall([
                 function (callback) {
                     //  player 1
@@ -211,6 +238,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     }
                 }
                 var stage_distance = Math.floor(max_strength / 6 * 100);
+                random_val = Math.floor(Math.random()* stage_array.length);
                 next(null, {
                     code: 0,
                     msg_id : msg.msg_id,

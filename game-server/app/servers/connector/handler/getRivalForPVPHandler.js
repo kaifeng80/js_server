@@ -154,7 +154,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
     var channel = msg.channel;
     var version = msg.version;
     var device_guid = msg.deviceid;
-    var strength = msg.strength;
+    var strength = parseInt(msg.strength);
     var random_val = Math.floor(Math.random()*100);
     var max_count_to_be_choose = 100;
     var strength_min = strength;

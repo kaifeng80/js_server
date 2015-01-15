@@ -35,7 +35,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             car_lv: 0,
                             racer: 0,
                             racer_lv: 0,
-                            strength: 0,
+                            strength: 280,
                             score: 0,
                             score_weekly: 0,
                             total_race: 0,

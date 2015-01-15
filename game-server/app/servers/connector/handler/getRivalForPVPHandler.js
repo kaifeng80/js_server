@@ -62,6 +62,36 @@ var copy_rival_info = function(player_info_somebody,strength){
     player_info_somebody.coin = rival_info.coin;
 };
 
+var get_robot_rival_info = function(strength_min,strength_max,player_info_array,callback){
+    var cur_loop_count = 0;
+    var random_val = 0;
+    var is_repeat = true;
+    do
+    {
+        random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
+        //  can not be the player have chose
+        var find = false;
+        for(var i = 0; i < player_info_array.length; ++i){
+            if(random_val == player_info_array[i].strength){
+                find = true;
+                break;
+            }
+        }
+        if(find){
+            ++cur_loop_count;
+            continue;
+        }
+        is_repeat = false;
+        ++cur_loop_count;
+    }while(is_repeat && cur_loop_count < max_loop_count);
+    var player_info_somebody = new Object();
+    copy_rival_info(player_info_somebody,random_val);
+    player_info_somebody.is_robot = 1;
+    player_info_array.push(player_info_somebody);
+    get_extra_info(player_info_somebody,player_info_somebody.score);
+    callback(null,player_info_array);
+};
+
 var get_player_info = function(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback){
     strength_min = (strength_min < 250 ? 250 : strength_min);
     strength_max = (strength_max > 1200 ? 1200 : strength_max);
@@ -126,60 +156,12 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 }
                 else{
                     //  if rank_info is null,random from robot,usually it is impossible! just in case
-                    var is_repeat = true;
-                    do
-                    {
-                        random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
-                        //  can not be the player have chose
-                        var find = false;
-                        for(var i = 0; i < player_info_array.length; ++i){
-                            if(random_val == player_info_array[i].strength){
-                                find = true;
-                                break;
-                            }
-                        }
-                        if(find){
-                            ++cur_loop_count;
-                            continue;
-                        }
-                        is_repeat = false;
-                        ++cur_loop_count;
-                    }while(is_repeat && cur_loop_count < max_loop_count);
-                    var player_info_somebody = new Object();
-                    copy_rival_info(player_info_somebody,random_val);
-                    player_info_somebody.is_robot = 1;
-                    player_info_array.push(player_info_somebody);
-                    get_extra_info(player_info_somebody,player_info_somebody.score);
-                    callback(null,player_info_array);
+                    get_robot_rival_info(strength_min,strength_max,player_info_array,callback);
                 }
             });
         }
         else{
-            var is_repeat = true;
-            do
-            {
-                random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
-                //  can not be the player have chose
-                var find = false;
-                for(var i = 0; i < player_info_array.length; ++i){
-                    if(random_val == player_info_array[i].strength){
-                        find = true;
-                        break;
-                    }
-                }
-                if(find){
-                    ++cur_loop_count;
-                    continue;
-                }
-                is_repeat = false;
-                ++cur_loop_count;
-            }while(is_repeat && cur_loop_count < max_loop_count);
-            var player_info_somebody = new Object();
-            copy_rival_info(player_info_somebody,random_val);
-            player_info_somebody.is_robot = 1;
-            player_info_array.push(player_info_somebody);
-            get_extra_info(player_info_somebody,player_info_somebody.score);
-            callback(null,player_info_array);
+            get_robot_rival_info(strength_min,strength_max,player_info_array,callback);
         }
     });
 };

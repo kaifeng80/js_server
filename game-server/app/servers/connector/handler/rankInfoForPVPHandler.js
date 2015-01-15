@@ -56,12 +56,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 is_exist = true;
                                 rank_info = JSON.parse(rank_info);
                                 //  set car and drive
-                                if(0 == rank_info.car){
-                                    rank_info.car = msg.car;
-                                }
-                                if(0 == rank_info.racer){
-                                    rank_info.racer = msg.driver;
-                                }
+                                rank_info.car = msg.car;
+                                rank_info.racer = msg.driver;
                             }
                             rank_pvp_wrapper.set_rank_info(device_guid, rank_info,function(reply){
                                 callback(null, rank_info);

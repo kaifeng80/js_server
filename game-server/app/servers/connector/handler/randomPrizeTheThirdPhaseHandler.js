@@ -59,7 +59,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                     if(1 == free_flag_this_time){
                                         for(var v in gacha_the_third_phase_json){
                                             if("SAVE" == gacha_the_third_phase_json[v].type){
-                                                gacha_array.push(v);
+                                                gacha_array.push(gacha_the_third_phase_json[v]);
                                                 free_flag_this_time = 0;
                                                 j++;
                                                 callback(null);

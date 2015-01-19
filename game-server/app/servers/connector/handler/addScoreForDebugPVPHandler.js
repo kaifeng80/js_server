@@ -9,7 +9,7 @@ var util = require('../../../util/util');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_ADD_SCORE_FOR_DEBUG_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var add_score = msg.add_score;
+    var add_score = parseInt(msg.add_score);
     var device_guid = msg.deviceid;
     var rank_pvp_wrapper = pomelo.app.get('rank_pvp_wrapper');
     rank_pvp_wrapper.get_rank_info(device_guid,function(rank_info){

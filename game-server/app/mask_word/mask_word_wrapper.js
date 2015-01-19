@@ -16,6 +16,7 @@ mask_word_wrapper.prototype.load = function(){
 
 mask_word_wrapper.prototype.analysis = function(sentence,cb){
     if(sentence){
+        //  first floor, split sentence by key word, and replace for some thing!
         var sentence_new = sentence;
         var word_list =  segment.cutSync(sentence_new);
         var count = 0;
@@ -59,7 +60,24 @@ mask_word_wrapper.prototype.analysis = function(sentence,cb){
                 if(err){
                     console.error(err);
                 }
-                cb(sentence_new);
+                //  second floor,match the key word which update online
+                redis_mask_word_wrapper.get_all_online(function(reply){
+                    for(var i = 0; i < reply.length; ++i){
+                        if(reply[i]){
+                            var index = sentence_new.indexOf(reply[i],0);
+                            if(index >= 0){
+                                var word_src = reply[i];
+                                var word_des = '';
+                                var word_length = word_src.length;
+                                for(var i = 0; i < word_length; ++i){
+                                    word_des += '*';
+                                }
+                                sentence_new = sentence_new.replace(word_src,word_des);
+                            }
+                        }
+                    }
+                    cb(sentence_new);
+                });
             }
         );
     }

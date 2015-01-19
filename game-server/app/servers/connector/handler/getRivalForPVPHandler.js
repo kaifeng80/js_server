@@ -25,6 +25,7 @@ var get_extra_info = function(player_info_somebody,score){
             player_info_somebody.degree = rival_vs_title_json[v].grade;
             player_info_somebody.buff_desc = rival_vs_title_json[v].buff_desc;
             player_info_somebody.buff_data = rival_vs_title_json[v].buff_data;
+            player_info_somebody.score_current = rival_vs_title_json[v].score;
         }
     }
     var degree_next = player_info_somebody.degree < rival_vs_title_json.length ? player_info_somebody.degree + 1 : rival_vs_title_json.length;

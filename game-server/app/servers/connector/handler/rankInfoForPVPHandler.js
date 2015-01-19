@@ -96,6 +96,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     var buff_data;
                     var degree_next;
                     var score_next;
+                    var score_current;
                     if (rank_info) {
                         for (var v in rival_vs_title_json) {
                             if (rival_vs_title_json[v].score <= rank_info.score) {
@@ -103,6 +104,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 degree = rival_vs_title_json[v].grade;
                                 buff_desc = rival_vs_title_json[v].buff_desc;
                                 buff_data = rival_vs_title_json[v].buff_data;
+                                score_current = rival_vs_title_json[v].score;
                             }
                         }
                         degree_next = degree < rival_vs_title_json.length ? degree + 1 : rival_vs_title_json.length;
@@ -125,6 +127,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 degree_title: degree_title,
                                 buff_desc: buff_desc,
                                 buff_data: buff_data,
+                                score_current:score_current,
                                 score_next: score_next,
                                 is_exist: is_exist,
                                 pvp_switch: pvp_switch

@@ -90,7 +90,7 @@ mail_wrapper.prototype.batch_send = function(all_mails){
     var mailOptions = {
         from: this.from, // sender address
         to: this.to, // list of receivers
-        subject: "all", // Subject line
+        subject: "我是车神玩家反馈", // Subject line
         text: all_mails_execl_format // plaintext body
     };
     // send mail with defined transport object

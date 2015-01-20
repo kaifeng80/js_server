@@ -55,10 +55,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                             function(callback){
                                 for(var j = 0; j < activity.gacha_random_num; ++j)
                                 {
+                                    replace_flag = 0;
                                     //  free random prize come out the item type "SAVE"
                                     if(1 == free_flag_this_time){
                                         for(var v in gacha_the_third_phase_json){
                                             if("SAVE" == gacha_the_third_phase_json[v].type){
+                                                gacha_the_third_phase_json[v].replace_flag = 0;
                                                 gacha_array.push(gacha_the_third_phase_json[v]);
                                                 free_flag_this_time = 0;
                                                 j++;
@@ -116,9 +118,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                             else{
                                                 callback(null);
                                             }
+                                            prize.replace_flag = replace_flag;
                                             gacha_array.push(prize);
                                         }else{
                                             prize = random_prize_the_third_phase_wrapper.random();
+                                            prize.replace_flag = 0;
                                             gacha_array.push(prize);
                                             //  no need replace at this condition
                                             callback(null);
@@ -129,6 +133,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                             function(callback){
                                 for(var j = 0; j < activity.gacha2_random_num; ++j){
                                     prize = random_prize_the_third_phase_wrapper.random2();
+                                    prize.replace_flag = 0;
                                     gacha_array.push(prize);
                                 }
                                 gacha_result.push(gacha_array);

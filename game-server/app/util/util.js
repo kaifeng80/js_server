@@ -10,3 +10,29 @@ utils.getWeek = function (date) {
     var delay_day = 3;
     return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1 + delay_day) / 7);
 };
+
+utils.genNormalDistributionValue1 = function( e, v )
+{
+    var u1	= Math.random();
+    var u2	= Math.random();
+    var variable_e = 2.718281828;
+    var variable_pi = 2.718281828;
+    var r	= e + v * Math.sqrt( -2.0 * ( Math.log( u1 ) / Math.log( variable_e ) ) ) * Math.cos( 2.0 * variable_pi * u2 );
+    return r;
+};
+
+utils.genNormalDistributionValue2 = function(min_value, max_value, e, v )
+{
+    var random_value = 0.0;
+    do
+    {
+        random_value = utils.genNormalDistributionValue1( e, v );
+    } while ( random_value < min_value || random_value > max_value );
+
+    return random_value;
+};
+
+utils.genRandom = function(  e,  min_value,  offset )
+{
+    return utils.genNormalDistributionValue2( min_value, e + offset, e, ( e - min_value ) / 2.5 );
+};

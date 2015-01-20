@@ -150,8 +150,8 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                     get_extra_info(player_info_somebody,rank_info.score);
                     player_info_array.push(player_info_somebody);
                     //  mask word
-                    pomelo.app.get('mask_word_wrapper').analysis(player_info_somebody.nickname,function(nickname_new){
-                        player_info_somebody.nickname = nickname_new;
+                    pomelo.app.get('mask_word_wrapper').analysis(player_info_somebody.name,function(nickname_new){
+                        player_info_somebody.name = nickname_new;
                         callback(null,player_info_array);
                     });
                 }

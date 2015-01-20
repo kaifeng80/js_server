@@ -112,16 +112,14 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                         //  tell client use replace data
                                                         replace_flag = 1;
                                                         prize.replace_flag = replace_flag;
-                                                        gacha_array.push(prize);
                                                     }
                                                     callback(null);
                                                 });
                                             }
                                             else{
                                                 callback(null);
-                                                prize.replace_flag = 0;
-                                                gacha_array.push(prize);
                                             }
+                                            gacha_array.push(prize);
                                         }else{
                                             prize = random_prize_the_third_phase_wrapper.random();
                                             prize.replace_flag = 0;

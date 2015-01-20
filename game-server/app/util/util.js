@@ -16,7 +16,7 @@ utils.genNormalDistributionValue1 = function( e, v )
     var u1	= Math.random();
     var u2	= Math.random();
     var variable_e = 2.718281828;
-    var variable_pi = 2.718281828;
+    var variable_pi = 3.141592654;
     var r	= e + v * Math.sqrt( -2.0 * ( Math.log( u1 ) / Math.log( variable_e ) ) ) * Math.cos( 2.0 * variable_pi * u2 );
     return r;
 };

@@ -56,7 +56,7 @@ mail_wrapper.prototype.send = function(title,content,channel,version){
     var mailOptions = {
         from: this.from, // sender address
         to: this.to, // list of receivers
-        subject: title, // Subject line
+        subject: "玩玩车神玩家反馈", // Subject line
         text: all_mails_text // plaintext body
     };
 

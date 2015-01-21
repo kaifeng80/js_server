@@ -268,7 +268,7 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                 }
             }
         }
-        var count = 1;
+        var count = 0;
         async.whilst(
             function () { return count < device_version_channel_list.length; },
             function (callback) {
@@ -276,11 +276,11 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                 var activity = {};
                 async.waterfall([
                         function(callback){
-                            activity_wrapper.get(device_version_channel_list[count - 1].channel,device_version_channel_list[count - 1].version,function(activity_json) {
+                            activity_wrapper.get(device_version_channel_list[count].channel,device_version_channel_list[count].version,function(activity_json) {
                                 for (var w in activity_json) {
                                     if (consts.TYPE_ACTIVITY.RIVAL_SEOUL == parseInt(activity_json[w].type)) {
                                         activity = activity_json[w];
-                                        callback(null,device_version_channel_list[count - 1].device_guid,activity);
+                                        callback(null,device_version_channel_list[count].device_guid,activity);
                                     }
                                 }
                             });

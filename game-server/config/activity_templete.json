@@ -205,7 +205,7 @@
         "switch": "1",
         "expend_tracks":1,
         "stage":[1,2,3],
-        "server_msg":"server_msg",
+        "server_msg":"对战模式全新开启!各路英雄齐聚一堂,看谁才是真正的车神!",
         "desc":"pvp"
     },
     "10": {

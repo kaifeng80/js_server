@@ -19,6 +19,8 @@ var rank_pvp_wrapper = function() {
             if(1 == rank_for_pvp_json[v]){
                 this.tick();
             }
+        }else if(v == "require_version"){
+            this.require_version = rank_for_pvp_json[v];
         }
     }
 };
@@ -106,6 +108,22 @@ rank_pvp_wrapper.prototype.get_award = function(device_guid,cb){
 
 rank_pvp_wrapper.prototype.del_award = function(device_guid){
     redis_rank_pvp_wrapper.del_award(device_guid);
+};
+
+rank_pvp_wrapper.prototype.compare_version = function(client_version){
+    var require_version_array = this.require_version.split('.');
+    if(3 != require_version_array.length){
+        return false;
+    }
+    var client_version_array = client_version.split('.');
+    if(3 != client_version_array.length){
+        return false;
+    }
+    if(parseInt(require_version_array[0])*100 + parseInt(require_version_array[1])*10 + parseInt(require_version_array[2]) >
+        parseInt(client_version_array[0])*100 + parseInt(client_version_array[1])*10 + parseInt(client_version_array[2]) ){
+        return false;
+    }
+    return true;
 };
 
 rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){

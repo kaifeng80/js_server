@@ -89,6 +89,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     }
                     expend_tracks = activity.expend_tracks;
                     server_msg = activity.server_msg;
+                    var version_fix_flag = rank_pvp_wrapper.compare_version(version);
                     pvp_switch = activity.switch;
                     var degree;
                     var degree_title;
@@ -134,7 +135,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 score_current:score_current,
                                 score_next: score_next,
                                 is_exist: is_exist,
-                                pvp_switch: pvp_switch
+                                pvp_switch: pvp_switch,
+                                version_low:version_fix_flag ? 0 : 1
                             });
                         });
                     }else{
@@ -153,7 +155,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             buff_data: buff_data,
                             score_next: score_next,
                             is_exist: is_exist,
-                            pvp_switch: pvp_switch
+                            pvp_switch: pvp_switch,
+                            version_low:version_fix_flag ? 0 : 1
                         });
                     }
                 });

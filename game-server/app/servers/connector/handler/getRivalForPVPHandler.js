@@ -64,6 +64,7 @@ var copy_rival_info = function(player_info_somebody,strength){
 };
 
 var get_robot_rival_info = function(strength_min,strength_max,player_info_array,callback){
+    var max_loop_count = 100;
     var cur_loop_count = 0;
     var random_val = 0;
     var is_repeat = true;

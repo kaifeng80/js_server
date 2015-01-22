@@ -13,12 +13,18 @@ utils.getWeek = function (date) {
 
 utils.genNormalDistributionValue1 = function( e, v )
 {
-    var u1	= Math.random();
-    var u2	= Math.random();
     var variable_e = 2.718281828;
     var variable_pi = 3.141592654;
-    var r	= e + v * Math.sqrt( -2.0 * ( Math.log( u1 ) / Math.log( variable_e ) ) ) * Math.cos( 2.0 * variable_pi * u2 );
-    return r;
+    if(0){
+        var u1	= Math.random();
+        var u2	= Math.random();
+        return e + v * Math.sqrt( -2.0 * ( Math.log( u1 ) / Math.log( variable_e ) ) ) * Math.cos( 2.0 * variable_pi * u2 );
+    }else{
+        var rand1 = Math.random();
+        rand1 = -2.0 * Math.log( rand1 ) / Math.log( variable_e );
+        var rand2 = Math.random() * 2 * variable_pi;
+        return e + v * Math.sqrt( rand1 ) * Math.cos( rand2 );
+    }
 };
 
 utils.genNormalDistributionValue2 = function(min_value, max_value, e, v )

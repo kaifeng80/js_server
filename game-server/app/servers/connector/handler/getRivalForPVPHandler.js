@@ -181,6 +181,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
     var pvp_switch = 1;
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
+    var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
+    var version_fix_flag = rank_pvp_wrapper.compare_version(version);
     activity_wrapper.get(channel,version,function(activity_json) {
         for (var v in activity_json) {
             if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
@@ -231,7 +233,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     stage:stage_array[random_val],
                     stage_distance:stage_distance,
                     player_info_array:player_info_array,
-                    pvp_switch:pvp_switch
+                    pvp_switch:pvp_switch,
+                    version_low:version_fix_flag ? 0 : 1
                 });
             });
     });

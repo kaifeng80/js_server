@@ -18,6 +18,10 @@ var get_rival = function(strength){
     return rival_vs_json[0];
 };
 
+var get_limit = function(){
+    return [rival_vs_json[0].level,rival_vs_json[rival_vs_json.length - 1].level];
+};
+
 var get_extra_info = function(player_info_somebody,score){
     for(var v in rival_vs_title_json){
         if(rival_vs_title_json[v].score <= score){
@@ -95,8 +99,11 @@ var get_robot_rival_info = function(strength_min,strength_max,player_info_array,
 };
 
 var get_player_info = function(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback){
-    strength_min = (strength_min < 180 ? 180 : strength_min);
-    strength_max = (strength_max > 1200 ? 1200 : strength_max);
+    var limit = get_limit();
+    var limit_min = limit[0];
+    var limit_max = limit[1];
+    strength_min = (strength_min < limit_min ? limit_min : strength_min);
+    strength_max = (strength_max > limit_max ? limit_max : strength_max);
     var random_val = 0;
     var cur_loop_count = 0;
     var max_loop_count = 100;
@@ -198,21 +205,21 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     //  player 1
                     if(random_val <= 80){
                         strength_min = strength - 100;
-                        strength_max = strength + 0;
+                        strength_max = strength + 30;
                     }else{
-                        strength_min = strength + 0;
+                        strength_min = strength + 30;
                         strength_max = strength + 100;
                     }
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 0;
+                    strength_max = strength + 30;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 0;
+                    strength_max = strength + 30;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 }
             ],

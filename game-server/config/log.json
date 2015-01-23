@@ -33,12 +33,12 @@
       "absolute": true,
       "filename": "./logs/absolute-logger.log",
       "maxLogSize": 204800,
-      "backups": 10,
+      "backups": 3,
       "category": "absolute-logger"          
     }
   ],
   "levels": {
-	"http-logger" : "DEBUG",
+	"http-logger" : "ERROR",
 	"rank-logger" : "DEBUG",
 	"rank-for-pvp-logger" : "DEBUG",
     "relative-logger" : "DEBUG",

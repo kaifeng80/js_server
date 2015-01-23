@@ -198,10 +198,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     //  player 1
                     if(random_val <= 80){
                         strength_min = strength - 100;
-                        strength_max = strength + 30;
+                        strength_max = strength + 0;
                     }else{
-                        strength_min = strength + 50;
-                        strength_max = strength + 150;
+                        strength_min = strength + 0;
+                        strength_max = strength + 100;
                     }
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },

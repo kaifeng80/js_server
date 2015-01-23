@@ -224,7 +224,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                         max_strength = player_info_array[i].strength;
                     }
                 }
-                var stage_distance = Math.floor(max_strength / 6 * 100);
+                var stage_distance = Math.floor(strength / 6 * 100);
                 random_val = Math.floor(Math.random()* stage_array.length);
                 next(null, {
                     code: 0,

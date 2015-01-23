@@ -95,7 +95,7 @@ var get_robot_rival_info = function(strength_min,strength_max,player_info_array,
 };
 
 var get_player_info = function(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback){
-    strength_min = (strength_min < 250 ? 250 : strength_min);
+    strength_min = (strength_min < 180 ? 180 : strength_min);
     strength_max = (strength_max > 1200 ? 1200 : strength_max);
     var random_val = 0;
     var cur_loop_count = 0;

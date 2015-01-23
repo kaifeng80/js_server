@@ -63,7 +63,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_SECOND_PHASE, function(
                 flowid : msg.flowid,
                 time:Math.floor(Date.now()/1000),
                 gacha_result : gacha_result,
-                use_ticket : msg.use_ticket
+                use_ticket : msg.use_ticket == "true" ? "1": "0"
             });
         });
 

@@ -138,7 +138,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                     var player_info_somebody = new Object();
                     //  random json table
                     random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
-                    copy_rival_info(player_info_somebody,random_val);
+                    copy_rival_info(player_info_somebody,rank_info.strength);
                     player_info_somebody.device_guid = rank_info.device_guid;
                     player_info_somebody.name = rank_info.nickname;
                     player_info_somebody.strength = rank_info.strength;

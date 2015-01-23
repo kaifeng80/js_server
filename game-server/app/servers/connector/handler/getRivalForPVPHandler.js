@@ -207,12 +207,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 30;
+                    strength_max = strength + 0;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 30;
+                    strength_max = strength + 0;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 }
             ],

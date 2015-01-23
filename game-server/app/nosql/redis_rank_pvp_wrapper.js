@@ -68,6 +68,19 @@ redis_rank_pvp_wrapper.get_rank_info_batch = function(device_guid_array,cb){
     });
 };
 
+redis_rank_pvp_wrapper.get_rank_info_weekly_batch = function(championship_id,device_guid_array,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hmget(h_rank_pvp + ":" + championship_id, device_guid_array, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
 /**
  * update some about area,phone info for player
  * @param device_guid

@@ -29,7 +29,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id, function (reply) {
                         //  reply is rank as a json array
                         if (0 != reply.length) {
-                            rank_pvp_wrapper.get_rank_info_batch(reply, function (reply) {
+                            rank_pvp_wrapper.get_rank_info_weekly_batch(championship_id,reply, function (reply) {
                                 callback(null, reply);
                             });
                         } else {

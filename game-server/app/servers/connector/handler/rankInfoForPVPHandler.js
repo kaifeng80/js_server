@@ -16,7 +16,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var expend_tracks = 0;
     var pvp_switch = 1;
     var server_msg;
-    var is_exist = false;
+    var is_exist = 0;
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
     async.waterfall([
@@ -45,7 +45,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             blocked: 0
                         };
                         rank_pvp_wrapper.set_rank_info(device_guid, rank_info,function(reply){});
-                        is_exist = true;
+                        is_exist = 1;
                         callback(null, rank_info);
                         break;
                     }
@@ -53,7 +53,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     {
                         rank_pvp_wrapper.get_rank_info(device_guid, function (rank_info) {
                             if (rank_info) {
-                                is_exist = true;
+                                is_exist = 1;
                                 rank_info = JSON.parse(rank_info);
                                 //  set car and drive
                                 rank_info.car = msg.car;
@@ -70,7 +70,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     {
                         rank_pvp_wrapper.update_rank_info(device_guid, msg.area, msg.phone_number, msg.nickname,function (rank_info) {
                             if(rank_info){
-                                is_exist = true;
+                                is_exist = 1;
                             }
                             callback(null, rank_info);
                         });

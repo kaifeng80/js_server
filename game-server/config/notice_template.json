@@ -4,7 +4,7 @@
     "content": "",
     "url1":"http://117.121.32.94:20002/announcement_230",
     "url2":"http://117.121.32.94:20002/rewardlist_seoul_230",
-    "url3":"http://117.121.32.94:20002/rewardlist_pvp_230",
+    "url3":"http://117.121.32.94:20002/reward_vs_weekly",
     "update":"false",
     "force_update":"false",
     "update_url":"http://sxupdate.racegame.appget.cn/updateTest.apk"

@@ -138,7 +138,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                     var player_info_somebody = new Object();
                     //  random json table
                     random_val = Math.floor(strength_min + Math.random()*(strength_max - strength_min));
-                    copy_rival_info(player_info_somebody,random_val);
+                    copy_rival_info(player_info_somebody,rank_info.strength);
                     player_info_somebody.device_guid = rank_info.device_guid;
                     player_info_somebody.name = rank_info.nickname;
                     player_info_somebody.strength = rank_info.strength;
@@ -198,21 +198,21 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     //  player 1
                     if(random_val <= 80){
                         strength_min = strength - 100;
-                        strength_max = strength + 30;
+                        strength_max = strength + 0;
                     }else{
-                        strength_min = strength + 50;
-                        strength_max = strength + 150;
+                        strength_min = strength + 0;
+                        strength_max = strength + 100;
                     }
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 30;
+                    strength_max = strength + 0;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 },
                 function (player_info_array,callback) {
                     strength_min = strength - 100;
-                    strength_max = strength + 30;
+                    strength_max = strength + 0;
                     get_player_info(device_guid,strength_min,strength_max,max_count_to_be_choose,player_info_array,callback);
                 }
             ],
@@ -224,7 +224,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                         max_strength = player_info_array[i].strength;
                     }
                 }
-                var stage_distance = Math.floor(max_strength / 6 * 100);
+                var stage_distance = Math.floor(strength / 6 * 100);
                 random_val = Math.floor(Math.random()* stage_array.length);
                 next(null, {
                     code: 0,

@@ -5,6 +5,7 @@ var redis_pools = require("../nosql/redis_pools");
 
 var redis_rank_pvp_wrapper = module.exports;
 var log4js = require('log4js');
+var util = require('../util/util');
 var log_json = require('../../config/log.json');
 log4js.configure(log_json);
 var rank_for_pvp_logger = log4js.getLogger('rank-for-pvp-logger');
@@ -22,6 +23,17 @@ var h_award_pvp = 'h_award_pvp';
 redis_rank_pvp_wrapper.set_rank_info = function(device_guid,rank_info,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp, device_guid, JSON.stringify(rank_info), function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+    var championship_id = util.getWeek(new Date());
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_pvp + ":" + championship_id, device_guid, JSON.stringify(rank_info), function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

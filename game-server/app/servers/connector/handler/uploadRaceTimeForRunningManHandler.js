@@ -101,7 +101,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_RACE_TIME_FOR_RUNNING_MAN, functi
                             score:reply[1] != null ? parseInt(reply[1]): reply[1],
                             player_number:reply[3] != null ? reply[3]: 0,
                             tracks:award_tracks_number_at_last,
-                            is_add_score:is_add_score,
+                            is_add_score:is_add_score == "true" ? "1" : "0",
                             time: Math.floor(Date.now() / 1000)
                         });
                     });

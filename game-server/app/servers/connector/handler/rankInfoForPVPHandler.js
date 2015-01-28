@@ -70,7 +70,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     }
                     case "update":
                     {
-                        rank_pvp_wrapper.update_rank_info(device_guid, msg.area, msg.phone_number, msg.nickname,function (rank_info) {
+                        rank_pvp_wrapper.update_rank_info(device_guid,channel, msg.area, msg.phone_number, msg.nickname,function (rank_info) {
                             if(rank_info){
                                 is_exist = 1;
                             }
@@ -139,7 +139,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 is_exist: is_exist,
                                 pvp_switch: pvp_switch,
                                 version_low:version_fix_flag ? 0 : 1,
-                                acitivty_switch:acitivty_switch
+                                acitivty_switch:acitivty_switch,
+                                url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
                             });
                         });
                     }else{
@@ -160,7 +161,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             is_exist: is_exist,
                             pvp_switch: pvp_switch,
                             version_low:version_fix_flag ? 0 : 1,
-                            acitivty_switch:acitivty_switch
+                            acitivty_switch:acitivty_switch,
+                            url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
                         });
                     }
                 });

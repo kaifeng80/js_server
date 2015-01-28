@@ -50,12 +50,29 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     });
                 },
                 function (callback) {
+                    rank_pvp_wrapper.get_score_rank_partial_activity(channel,function (reply) {
+                        //  reply is rank as a json array
+                        if (0 != reply.length) {
+                            rank_pvp_wrapper.get_rank_info_activity_batch(channel,reply, function (reply) {
+                                callback(null, reply);
+                            });
+                        } else {
+                            callback(null, []);
+                        }
+                    });
+                },
+                function (callback) {
                     rank_pvp_wrapper.get_score_rank_weekly(device_guid, championship_id, function (reply) {
                         callback(null, reply);
                     });
                 },
                 function (callback) {
                     rank_pvp_wrapper.get_score_rank(device_guid, function (reply) {
+                        callback(null, reply);
+                    });
+                },
+                function (callback) {
+                    rank_pvp_wrapper.get_score_rank_activity(device_guid,channel,function (reply) {
                         callback(null, reply);
                     });
                 }
@@ -70,10 +87,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                 }
                 var rank_info_array_weekly = result[0];
                 var rank_info_array = result[1];
-                var mine_score_rank_weekly = result[2];
-                var mine_score_rank = result[3];
+                var rank_info_array_activity = result[2];
+                var mine_score_rank_weekly = result[3];
+                var mine_score_rank = result[4];
+                var mine_score_rank_activity = result[5];
                 var score_rank_array = [];
                 var score_rank_array_weekly = [];
+                var score_rank_array_activity = [];
                 var degree;
                 var degree_title;
                 for (var i = 0; i < rank_info_array.length; ++i) {
@@ -118,9 +138,31 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         })
                     }
                 }
+                for (var i = 0; i < rank_info_array_activity.length; ++i) {
+                    if (rank_info_array_activity[i]) {
+                        var rank_info = JSON.parse(rank_info_array_activity[i]);
+                        if (rank_info) {
+                            for (var v in rival_vs_title_json) {
+                                if (rival_vs_title_json[v].score <= rank_info.score_activity) {
+                                    degree_title = rival_vs_title_json[v].title;
+                                    degree = rival_vs_title_json[v].grade;
+                                }
+                            }
+                        }
+                        score_rank_array_activity.push({
+                            driver_id: rank_info.racer,
+                            nickname: rank_info.nickname,
+                            degree_title: degree_title,
+                            area: rank_info.area,
+                            rank: i + 1,
+                            score: rank_info.score_activity
+                        })
+                    }
+                }
                 //  mask word,so complicated!
                 var count_score_rank = 0;
                 var count_score_rank_weekly = 0;
+                var count_score_rank_activity = 0;
                 async.parallel([
                         function (callback) {
                             async.whilst(
@@ -181,6 +223,36 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                                     callback(null);
                                 }
                             );
+                        },
+                        function (callback) {
+                            async.whilst(
+                                function () {return count_score_rank_activity < score_rank_array_activity.length;},
+                                function (whilst_callback) {
+                                    async.waterfall([
+                                            function (waterfall_callback) {
+                                                pomelo.app.get('mask_word_wrapper').analysis(score_rank_array_activity[count_score_rank_activity].nickname, function (nickname_new) {
+                                                    score_rank_array_activity[count_score_rank_activity].nickname = nickname_new;
+                                                    waterfall_callback(null);
+                                                });
+                                            }
+                                        ],
+                                        function (err) {
+                                            if (err) {
+                                                console.error(err);
+                                            }
+                                            ++count_score_rank_activity;
+                                            whilst_callback(null);
+                                        }
+                                    );
+                                },
+                                function (err) {
+                                    //  whilst end,do nothing
+                                    if (err) {
+                                        console.error(err);
+                                    }
+                                    callback(null);
+                                }
+                            );
                         }
                     ],
                     // optional callback
@@ -193,8 +265,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                             time: Math.floor(Date.now() / 1000),
                             score_rank_array: score_rank_array,
                             score_rank_array_weekly: score_rank_array_weekly,
+                            score_rank_array_activity: score_rank_array_activity,
                             mine_score_rank: mine_score_rank != null ? parseInt(mine_score_rank) + 1 : mine_score_rank,
                             mine_score_rank_weekly: mine_score_rank_weekly != null ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly,
+                            mine_score_rank_activity: mine_score_rank_activity != null ? parseInt(mine_score_rank_activity) + 1 : mine_score_rank_activity,
                             pvp_switch: pvp_switch
                         });
                     });

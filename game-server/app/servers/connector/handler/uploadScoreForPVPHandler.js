@@ -53,6 +53,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.score_weekly = score_add;
                 rank_info.championship_id = championship_id;
             }
+
+            if(pomelo.app.get("rank_pvp_wrapper").in_activity(channel)){
+                //  version compatibility, 2.3.0 have not the value of score_activity
+                if(!rank_info.score_activity){ rank_info.score_activity = 0;}
+                rank_info.score_activity += score_add;
+            }
             //  calc degree
             var old_degree = rank_info.degree ? rank_info.degree : 1;
             var degree = old_degree;
@@ -68,9 +74,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.total_win += 1;
             }
             //  save it
-            pomelo.app.get("rank_pvp_wrapper").set_rank_info(device_guid,rank_info,function(reply){});
+            pomelo.app.get("rank_pvp_wrapper").set_rank_info(channel,device_guid,rank_info,function(reply){});
             //  update score/score weekly rank
-            pomelo.app.get("rank_pvp_wrapper").update_score_rank(device_guid,championship_id,rank_info);
+            pomelo.app.get("rank_pvp_wrapper").update_score_rank(channel,device_guid,championship_id,rank_info);
             //  update strength rank
             pomelo.app.get("rank_pvp_wrapper").update_strength_rank(device_guid,rank_info.strength);
             next(null, {

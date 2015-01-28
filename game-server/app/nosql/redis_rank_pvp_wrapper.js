@@ -2,7 +2,7 @@
  * Created by King Lee on 2015/1/5.
  */
 var redis_pools = require("../nosql/redis_pools");
-
+var pomelo = require('pomelo');
 var redis_rank_pvp_wrapper = module.exports;
 var log4js = require('log4js');
 var util = require('../util/util');
@@ -20,7 +20,7 @@ var h_award_pvp = 'h_award_pvp';
  * @param device_guid
  * @param rank_info
  */
-redis_rank_pvp_wrapper.set_rank_info = function(device_guid,rank_info,cb){
+redis_rank_pvp_wrapper.set_rank_info = function(channel,device_guid,rank_info,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp, device_guid, JSON.stringify(rank_info), function (err, reply) {
             if (err) {
@@ -42,6 +42,17 @@ redis_rank_pvp_wrapper.set_rank_info = function(device_guid,rank_info,cb){
             release();
         });
     });
+    if(pomelo.app.get('rank_pvp_wrapper').in_activity(channel)){
+        redis_pools.execute('pool_1',function(client, release) {
+            client.hset(h_rank_pvp + ":" + channel,device_guid, JSON.stringify(rank_info),function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    rank_for_pvp_logger.error(err);
+                }
+                release();
+            });
+        });
+    }
 };
 
 /**
@@ -93,6 +104,19 @@ redis_rank_pvp_wrapper.get_rank_info_weekly_batch = function(championship_id,dev
     });
 };
 
+redis_rank_pvp_wrapper.get_rank_info_activity_batch = function(channel,device_guid_array,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hmget(h_rank_pvp + ":" + channel, device_guid_array, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
 /**
  * update some about area,phone info for player
  * @param device_guid
@@ -119,7 +143,8 @@ redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number
  * @param championship_id : the week index
  * @param score : the latest score
  */
-redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,rank_info){
+redis_rank_pvp_wrapper.update_score_rank = function(channel,device_guid,championship_id,rank_info){
+    //  avoid score is 0 in redis
     if(0 != rank_info.score){
         redis_pools.execute('pool_1',function(client, release) {
             client.zadd(z_rank_pvp_score, rank_info.score,device_guid, function (err, reply) {
@@ -131,6 +156,7 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
             });
         });
     }
+    //  avoid score_weekly is 0 in redis
     if(0 != rank_info.score_weekly){
         redis_pools.execute('pool_1',function(client, release) {
             client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score_weekly,device_guid, function (err, reply) {
@@ -142,15 +168,20 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
             });
         });
     }
-    redis_pools.execute('pool_1',function(client, release) {
-        client.hset(h_rank_pvp + ":" + championship_id,device_guid, JSON.stringify(rank_info),function (err, reply) {
-            if (err) {
-                //  some thing log
-                rank_for_pvp_logger.error(err);
-            }
-            release();
-        });
-    });
+    if(pomelo.app.get('rank_pvp_wrapper').in_activity(channel)){
+        //  avoid score_activity is 0 in redis
+        if(0 != rank_info.score_activity){
+            redis_pools.execute('pool_1',function(client, release) {
+                client.zadd(z_rank_pvp_score + ":" + channel, rank_info.score_activity,device_guid, function (err, reply) {
+                    if (err) {
+                        //  some thing log
+                        rank_for_pvp_logger.error(err);
+                    }
+                    release();
+                });
+            });
+        }
+    }
 };
 
 /**
@@ -207,6 +238,19 @@ redis_rank_pvp_wrapper.get_score_rank_weekly = function(device_guid,championship
     });
 };
 
+redis_rank_pvp_wrapper.get_score_rank_activity = function(device_guid,channel,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.zrevrank(z_rank_pvp_score + ":" + channel,device_guid, function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
 /**
  * get the top 10 by score weekly
  * @param championship_id
@@ -215,6 +259,19 @@ redis_rank_pvp_wrapper.get_score_rank_weekly = function(device_guid,championship
 redis_rank_pvp_wrapper.get_score_rank_partial_weekly = function(championship_id,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.zrevrange(z_rank_pvp_score + ":" + championship_id,0,9,function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};
+
+redis_rank_pvp_wrapper.get_score_rank_partial_activity = function(channel,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.zrevrange(z_rank_pvp_score + ":" + channel,0,9,function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

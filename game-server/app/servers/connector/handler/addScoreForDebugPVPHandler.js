@@ -18,7 +18,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_ADD_SCORE_FOR_DEBUG_PVP, function(msg, s
         }
         rank_info.score += add_score;
         rank_info.score_weekly += add_score;
-        rank_pvp_wrapper.set_rank_info(device_guid,rank_info,function(){});
+        rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(){});
         next(null, {
             code: 0,
             msg_id: msg.msg_id,

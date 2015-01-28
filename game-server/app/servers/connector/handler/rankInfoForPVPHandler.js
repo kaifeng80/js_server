@@ -19,6 +19,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var is_exist = 0;
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
+    var acitivty_switch = rank_pvp_wrapper.in_activity(channel);
     async.waterfall([
             function (callback) {
                 switch (type) {
@@ -39,12 +40,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             strength: 280,
                             score: 0,
                             score_weekly: 0,
+                            score_activity:0,
                             total_race: 0,
                             total_win: 0,
                             //  reversed , to avoid cheat
                             blocked: 0
                         };
-                        rank_pvp_wrapper.set_rank_info(device_guid, rank_info,function(reply){});
+                        rank_pvp_wrapper.set_rank_info(channel,device_guid, rank_info,function(reply){});
                         is_exist = 1;
                         callback(null, rank_info);
                         break;
@@ -61,7 +63,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             }
                             callback(null, rank_info);
                             if(rank_info){
-                                rank_pvp_wrapper.set_rank_info(device_guid, rank_info,function(reply){});
+                                rank_pvp_wrapper.set_rank_info(channel,device_guid, rank_info,function(reply){});
                             }
                         });
                         break;
@@ -136,7 +138,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 score_next: score_next,
                                 is_exist: is_exist,
                                 pvp_switch: pvp_switch,
-                                version_low:version_fix_flag ? 0 : 1
+                                version_low:version_fix_flag ? 0 : 1,
+                                acitivty_switch:acitivty_switch
                             });
                         });
                     }else{
@@ -156,7 +159,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             score_next: score_next,
                             is_exist: is_exist,
                             pvp_switch: pvp_switch,
-                            version_low:version_fix_flag ? 0 : 1
+                            version_low:version_fix_flag ? 0 : 1,
+                            acitivty_switch:acitivty_switch
                         });
                     }
                 });

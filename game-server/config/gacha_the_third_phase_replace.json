@@ -37,7 +37,7 @@
   {"id":36,"type":"COIN","number":20000,"data":"","rate":50,"icon":"C"},
   {"id":37,"type":"COIN","number":50000,"data":"","rate":15,"icon":"C"},
   {"id":38,"type":"COIN","number":100000,"data":"","rate":5,"icon":"C"},
-  {"id":39,"type":"SAVE","number":1,"data":"","rate":5,"icon":"S"},
+  {"id":39,"type":"SAVE","number":1,"data":"","rate":5,"icon":"S","replace":"COIN","replace_number":1000,"replace_icon":"C"},
   {"id":40,"type":"REAL","number":1,"data":"1","rate":50000,"icon":"h","replace":"COIN","replace_number":100,"replace_icon":"C"},
   {"id":41,"type":"REAL","number":1,"data":"2","rate":50000,"icon":"i","replace":"COIN","replace_number":100,"replace_icon":"C"},
   {"id":42,"type":"REAL","number":1,"data":"3","rate":50000,"icon":"j","replace":"COIN","replace_number":100,"replace_icon":"C"},

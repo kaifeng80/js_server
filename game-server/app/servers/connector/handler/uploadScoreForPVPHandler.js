@@ -5,6 +5,7 @@ var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
 var util = require('../../../util/util');
+var rival_vs_title_json = require('../../../../config/rival_vs_title');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
@@ -20,6 +21,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         var rivals = msg.rivals;
         var score_add = 0;
         var money_add = 0;
+        var buffer_data = 1;
         for(var v in rivals){
             if(rivals[v].rank > my_rank){
                 score_add += Math.floor(rivals[v].strength/10);
@@ -31,6 +33,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         rank_info.racer = msg.racer;
         rank_info.racer_lv = msg.racer_lv;
         rank_info.strength = msg.strength;
+
         //  score is provide by client, which is the final result(include all loser's score).
         rank_info.score += score_add;
         if(rank_info.championship_id == championship_id){
@@ -39,6 +42,18 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         else{
             rank_info.score_weekly = score_add;
         }
+        //  calc degree
+        var old_degree = rank_info.degree ? rank_info.degree : 1;
+        var degree = old_degree;
+        for(var v in rival_vs_title_json){
+            if(rival_vs_title_json[v].score <= rank_info.score){
+                degree = rival_vs_title_json[v].grade;
+                rank_info.degree_title = rival_vs_title_json[v].title;
+                buffer_data = rival_vs_title_json[v].buff_data;
+            }
+        }
+        money_add = Math.floor(money_add * (buffer_data + 100)/100);
+        rank_info.degree = degree;
         rank_info.total_race += 1;
         if("true" == msg.win_flag){
             rank_info.total_win += 1;

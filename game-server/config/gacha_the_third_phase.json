@@ -37,5 +37,5 @@
   {"id":36,"type":"COIN","number":20000,"data":"","rate":50,"icon":"C"},
   {"id":37,"type":"COIN","number":50000,"data":"","rate":15,"icon":"C"},
   {"id":38,"type":"COIN","number":100000,"data":"","rate":5,"icon":"C"},
-  {"id":39,"type":"SAVE","number":1,"data":"","rate":5,"icon":"S"}
+  {"id":39,"type":"SAVE","number":1,"data":"","rate":5,"icon":"S","replace":"COIN","replace_number":1000,"replace_icon":"C"}
 ]

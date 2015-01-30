@@ -64,6 +64,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     var rank_info = JSON.parse(rank_info_array[i]);
                     score_rank_array.push({driver_id:rank_info.racer,
                         nickname:rank_info.nickname,
+                        degree_title:rank_info.degree_title,
                         area:rank_info.area,
                         rank:i + 1,
                         score:rank_info.score})
@@ -75,6 +76,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     var rank_info = JSON.parse(rank_info_array_weekly[i]);
                     score_rank_array_weekly.push({driver_id:rank_info.racer,
                         nickname:rank_info.nickname,
+                        degree_title:rank_info.degree_title,
                         area:rank_info.area,
                         rank:i + 1,
                         score:rank_info.score})

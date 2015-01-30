@@ -6,15 +6,16 @@ var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
 var util = require('../../../util/util');
 var async = require('async');
-var rival_vs = require('../../../../config/rival_vs');
+var rival_vs_json = require('../../../../config/rival_vs');
+var rival_vs_title_json = require('../../../../config/rival_vs_title');
 
 var get_rival = function(strength){
-    for(var v in rival_vs){
-        if(strength == rival_vs[v].level){
-            return rival_vs[v];
+    for(var v in rival_vs_json){
+        if(strength == rival_vs_json[v].level){
+            return rival_vs_json[v];
         }
     }
-    return rival_vs[0];
+    return rival_vs_json[0];
 };
 
 var copy_rival_info = function(player_info_somebody,strength){
@@ -102,6 +103,11 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.driver = rank_info.racer;
                 player_info_somebody.driver_lv = rank_info.racer_lv;
                 player_info_somebody.total_win = rank_info.total_win;
+                for(var v in rival_vs_title_json){
+                    if(rival_vs_title_json[v].score <= rank_info.score){
+                        rank_info.degree_title = rival_vs_title_json[v].title;
+                    }
+                }
                 player_info_array.push(player_info_somebody);
                 callback(null,player_info_array);
             });

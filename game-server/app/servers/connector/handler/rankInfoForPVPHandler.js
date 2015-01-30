@@ -91,6 +91,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     server_msg = activity.server_msg;
                     var version_fix_flag = rank_pvp_wrapper.compare_version(version);
                     pvp_switch = activity.switch;
+                    //  emergency treatment by 2015/1/30
+                    if(device_guid == "00000000000000000000000000000000"){
+                        pvp_switch = 0;
+                    }
                     var degree;
                     var degree_title;
                     var buff_desc;

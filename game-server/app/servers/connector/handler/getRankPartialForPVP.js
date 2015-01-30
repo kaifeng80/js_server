@@ -24,6 +24,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
             }
         }
         pvp_switch = activity.switch;
+        //  emergency treatment by 2015/1/30
+        if(device_guid == "00000000000000000000000000000000"){
+            pvp_switch = 0;
+        }
         async.parallel([
                 function (callback) {
                     rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id, function (reply) {

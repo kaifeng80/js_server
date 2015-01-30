@@ -22,6 +22,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             }
         }
         pvp_switch = activity.switch;
+        //  emergency treatment by 2015/1/30
+        if(device_guid == "00000000000000000000000000000000"){
+            pvp_switch = 0;
+        }
         pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,function(rank_info){
             if(rank_info){
                 rank_info = JSON.parse(rank_info);
@@ -45,13 +49,16 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             rank_info.strength = msg.strength;
 
             //  score is provide by client, which is the final result(include all loser's score).
-            rank_info.score += score_add;
-            if(rank_info.championship_id == championship_id){
-                rank_info.score_weekly += score_add;
-            }
-            else{
-                rank_info.score_weekly = score_add;
-                rank_info.championship_id = championship_id;
+            //  emergency treatment by 2015/1/30
+            if(device_guid != "00000000000000000000000000000000"){
+                rank_info.score += score_add;
+                if(rank_info.championship_id == championship_id){
+                    rank_info.score_weekly += score_add;
+                }
+                else{
+                    rank_info.score_weekly = score_add;
+                    rank_info.championship_id = championship_id;
+                }
             }
             //  calc degree
             var old_degree = rank_info.degree ? rank_info.degree : 1;

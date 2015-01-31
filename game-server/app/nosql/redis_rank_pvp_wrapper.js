@@ -74,7 +74,7 @@ redis_rank_pvp_wrapper.get_rank_info_batch = function(device_guid_array,cb){
  * @param phone
  * @param cb
  */
-redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number){
+redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number,cb){
     redis_rank_pvp_wrapper.get_rank_info(device_guid,function(rank_info){
         if(rank_info){
             rank_info = JSON.parse(rank_info);
@@ -82,6 +82,7 @@ redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number
             rank_info.phone_number = phone_number;
             redis_rank_pvp_wrapper.set_rank_info(device_guid,rank_info);
         }
+        cb(rank_info);
     });
 };
 

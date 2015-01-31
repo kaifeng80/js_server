@@ -48,16 +48,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         for(var v in rival_vs_title_json){
             if(rival_vs_title_json[v].score <= rank_info.score){
                 degree = rival_vs_title_json[v].grade;
-                rank_info.degree_title = rival_vs_title_json[v].title;
-                rank_info.buff_data = rival_vs_title_json[v].buff_data;
-                rank_info.buff_desc = rival_vs_title_json[v].buff_desc;
                 buffer_data = rival_vs_title_json[v].buff_data;
             }
         }
-        var degree_next = degree < rival_vs_title_json.length ? degree  + 1: rival_vs_title_json.length;
-        rank_info.score_next = rival_vs_title_json[degree_next - 1].score;
         money_add = Math.floor(money_add * (buffer_data + 100)/100);
-        rank_info.degree = degree;
         rank_info.total_race += 1;
         if("true" == msg.win_flag){
             rank_info.total_win += 1;

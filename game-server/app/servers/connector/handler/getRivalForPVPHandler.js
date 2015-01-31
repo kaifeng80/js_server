@@ -105,9 +105,14 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.total_win = rank_info.total_win;
                 for(var v in rival_vs_title_json){
                     if(rival_vs_title_json[v].score <= rank_info.score){
-                        rank_info.degree_title = rival_vs_title_json[v].title;
+                        player_info_somebody.degree_title = rival_vs_title_json[v].title;
+                        player_info_somebody.degree = rival_vs_title_json[v].grade;
+                        player_info_somebody.buff_desc = rival_vs_title_json[v].buff_desc;
+                        player_info_somebody.buff_data = rival_vs_title_json[v].buff_data;
                     }
                 }
+                var degree_next = player_info_somebody.degree < rival_vs_title_json.length ? player_info_somebody.degree + 1 : rival_vs_title_json.length;
+                player_info_somebody.score_next = rival_vs_title_json[degree_next - 1].score;
                 player_info_array.push(player_info_somebody);
                 callback(null,player_info_array);
             });

@@ -6,6 +6,7 @@ var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
 var util = require('../../../util/util');
 var async = require('async');
+var rival_vs_title_json = require('../../../../config/rival_vs_title');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg, session, next) {
     var device_guid = msg.deviceid;
@@ -58,13 +59,23 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
             var mine_score_rank_weekly = result[3];
             var score_rank_array = [];
             var score_rank_array_weekly = [];
+            var degree;
+            var degree_title;
             for(var i = 0; i < rank_info_array.length; ++i){
                 if(rank_info_array[i])
                 {
                     var rank_info = JSON.parse(rank_info_array[i]);
+                    if(rank_info){
+                        for (var v in rival_vs_title_json) {
+                            if (rival_vs_title_json[v].score <= rank_info.score) {
+                                degree_title = rival_vs_title_json[v].title;
+                                degree = rival_vs_title_json[v].grade;
+                            }
+                        }
+                    }
                     score_rank_array.push({driver_id:rank_info.racer,
                         nickname:rank_info.nickname,
-                        degree_title:rank_info.degree_title,
+                        degree_title:degree_title,
                         area:rank_info.area,
                         rank:i + 1,
                         score:rank_info.score})
@@ -74,9 +85,17 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                 if(rank_info_array_weekly[i])
                 {
                     var rank_info = JSON.parse(rank_info_array_weekly[i]);
+                    if(rank_info){
+                        for (var v in rival_vs_title_json) {
+                            if (rival_vs_title_json[v].score <= rank_info.score) {
+                                degree_title = rival_vs_title_json[v].title;
+                                degree = rival_vs_title_json[v].grade;
+                            }
+                        }
+                    }
                     score_rank_array_weekly.push({driver_id:rank_info.racer,
                         nickname:rank_info.nickname,
-                        degree_title:rank_info.degree_title,
+                        degree_title:degree_title,
                         area:rank_info.area,
                         rank:i + 1,
                         score:rank_info.score})

@@ -14,6 +14,7 @@ var h_rank_pvp = 'h_rank_pvp';
 var z_rank_pvp_score = 'z_rank_pvp_score';
 var z_rank_pvp_strength = 'z_rank_pvp_strength';
 var h_award_pvp = 'h_award_pvp';
+var h_rank_pvp_upload = 'h_rank_pvp_upload';
 
 /**
  * add rank info at first enter pvp
@@ -144,6 +145,15 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
     }
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp + ":" + championship_id,device_guid, JSON.stringify(rank_info),function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            release();
+        });
+    });
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_pvp_upload,Date.now(), JSON.stringify(rank_info),function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

@@ -201,7 +201,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
         var stage_array = activity.stage;
         pvp_switch = activity.switch;
         //  emergency treatment by 2015/1/30
-        if(device_guid == "00000000000000000000000000000000"){
+        if(device_guid == "00000000000000000000000000000000" || device_guid == "ce0a2b074590d212085e2f810071a803"){
             pvp_switch = 0;
         }
         async.waterfall([

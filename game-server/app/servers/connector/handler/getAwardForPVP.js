@@ -9,7 +9,8 @@ var util = require('../../../util/util');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_AWARD_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
     var rank_pvp_wrapper = pomelo.app.get('rank_pvp_wrapper');
     var award_info;
     rank_pvp_wrapper.get_award(device_guid,function(reply){

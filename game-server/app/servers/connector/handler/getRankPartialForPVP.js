@@ -11,9 +11,9 @@ var rival_vs_title_json = require('../../../../config/rival_vs_title');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
     var championship_id = util.getWeek(new Date());
-    var pvp_switch = 1;
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
@@ -23,7 +23,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                 activity = activity_json[v];
             }
         }
-        pvp_switch = activity.switch;
+        var pvp_switch = activity.switch;
+        var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
         async.parallel([
                 function (callback) {
                     rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id, function (reply) {
@@ -109,6 +110,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         }
                         score_rank_array.push({
                             driver_id: rank_info.racer,
+                            car_id: rank_info.car,
                             nickname: rank_info.nickname,
                             degree_title: degree_title,
                             area: rank_info.area,
@@ -130,6 +132,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         }
                         score_rank_array_weekly.push({
                             driver_id: rank_info.racer,
+                            car_id: rank_info.car,
                             nickname: rank_info.nickname,
                             degree_title: degree_title,
                             area: rank_info.area,
@@ -151,6 +154,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         }
                         score_rank_array_activity.push({
                             driver_id: rank_info.racer,
+                            car_id: rank_info.car,
                             nickname: rank_info.nickname,
                             degree_title: degree_title,
                             area: rank_info.area,
@@ -269,7 +273,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                             mine_score_rank: mine_score_rank != null ? parseInt(mine_score_rank) + 1 : mine_score_rank,
                             mine_score_rank_weekly: mine_score_rank_weekly != null ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly,
                             mine_score_rank_activity: mine_score_rank_activity != null ? parseInt(mine_score_rank_activity) + 1 : mine_score_rank_activity,
-                            pvp_switch: pvp_switch
+                            pvp_switch: pvp_switch,
+                            maintaining_msg:maintaining_msg
                         });
                     });
             }

@@ -50,8 +50,8 @@ rank_pvp_wrapper.prototype.set_rank_info = function(channel,device_guid,rank_inf
     redis_rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,cb);
 };
 
-rank_pvp_wrapper.prototype.get_rank_info = function(device_guid,cb){
-    redis_rank_pvp_wrapper.get_rank_info(device_guid,cb);
+rank_pvp_wrapper.prototype.get_rank_info = function(device_guid,device_emui,cb){
+    redis_rank_pvp_wrapper.get_rank_info(device_guid,device_emui,cb);
 };
 
 rank_pvp_wrapper.prototype.get_rank_info_batch = function(device_guid_array,cb){
@@ -169,6 +169,33 @@ rank_pvp_wrapper.prototype.in_activity = function(channel){
         }
     }
     return 0;
+};
+
+rank_pvp_wrapper.prototype.total_rank_switch = function(){
+    for(var v in rank_for_pvp_json){
+        if("total_rank_switch" == v){
+            return rank_for_pvp_json[v];
+        }
+    }
+    return 0;
+};
+
+rank_pvp_wrapper.prototype.maintaining_msg = function(){
+    for(var v in rank_for_pvp_json){
+        if("maintaining_msg" == v){
+            return rank_for_pvp_json[v];
+        }
+    }
+    return "";
+};
+
+rank_pvp_wrapper.prototype.block_msg = function(){
+    for(var v in rank_for_pvp_json){
+        if("block_msg" == v){
+            return rank_for_pvp_json[v];
+        }
+    }
+    return "";
 };
 
 rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){

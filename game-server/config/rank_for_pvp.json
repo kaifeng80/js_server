@@ -3,5 +3,8 @@
   "require_version":"2.3.0",
   "activity":[
     {"channel":"000013","duration":["2015/2/6","2015/2/20"]}
-  ]
+  ],
+  "total_rank_switch":0,
+  "maintaining_msg":"PVP维护中!",
+  "block_msg":"数据有问题，请清理数据或者重装游戏再试!"
 }

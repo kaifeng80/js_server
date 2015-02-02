@@ -11,15 +11,17 @@ var async = require('async');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
     var type = msg.type;
     var expend_tracks = 0;
-    var pvp_switch = 1;
     var server_msg;
     var is_exist = 0;
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
     var acitivty_switch = rank_pvp_wrapper.in_activity(channel);
+    var total_rank_switch = rank_pvp_wrapper.total_rank_switch();
+    var block_msg = rank_pvp_wrapper.block_msg();
     async.waterfall([
             function (callback) {
                 switch (type) {
@@ -53,7 +55,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     }
                     case "get":
                     {
-                        rank_pvp_wrapper.get_rank_info(device_guid, function (rank_info) {
+                        rank_pvp_wrapper.get_rank_info(device_guid, device_emui,function (rank_info) {
                             if (rank_info) {
                                 is_exist = 1;
                                 rank_info = JSON.parse(rank_info);
@@ -92,7 +94,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     expend_tracks = activity.expend_tracks;
                     server_msg = activity.server_msg;
                     var version_fix_flag = rank_pvp_wrapper.compare_version(version);
-                    pvp_switch = activity.switch;
+                    var pvp_switch = activity.switch;
+                    var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
                     var degree;
                     var degree_title;
                     var buff_desc;
@@ -129,6 +132,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 type: type,
                                 expend_tracks: expend_tracks,
                                 server_msg: server_msg,
+                                block_msg:block_msg,
                                 rank_info: rank_info,
                                 degree: degree,
                                 degree_title: degree_title,
@@ -138,8 +142,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 score_next: score_next,
                                 is_exist: is_exist,
                                 pvp_switch: pvp_switch,
+                                maintaining_msg:maintaining_msg,
                                 version_low:version_fix_flag ? 0 : 1,
                                 acitivty_switch:acitivty_switch,
+                                total_rank_switch:total_rank_switch,
                                 url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
                             });
                         });
@@ -152,6 +158,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             type: type,
                             expend_tracks: expend_tracks,
                             server_msg: server_msg,
+                            block_msg:block_msg,
                             rank_info: rank_info,
                             degree: degree,
                             degree_title: degree_title,
@@ -160,8 +167,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             score_next: score_next,
                             is_exist: is_exist,
                             pvp_switch: pvp_switch,
+                            maintaining_msg:maintaining_msg,
                             version_low:version_fix_flag ? 0 : 1,
                             acitivty_switch:acitivty_switch,
+                            total_rank_switch:total_rank_switch,
                             url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
                         });
                     }

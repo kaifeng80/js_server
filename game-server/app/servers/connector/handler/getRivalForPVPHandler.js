@@ -138,7 +138,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 is_repeat = false;
                 ++cur_loop_count;
             }while(is_repeat && cur_loop_count < max_loop_count);
-            rank_pvp_wrapper.get_rank_info(players[random_val],function(reply){
+            rank_pvp_wrapper.get_rank_info(players[random_val],players[random_val],function(reply){
                 var rank_info = {};
                 if(reply){
                     rank_info = JSON.parse(reply);
@@ -179,14 +179,14 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
     var strength = parseInt(msg.strength);
     var random_val = Math.floor(Math.random()*100);
     var max_count_to_be_choose = 100;
     var strength_min = strength;
     var strength_max = strength;
     var player_info_array = [];
-    var pvp_switch = 1;
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
@@ -199,7 +199,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
         }
         //  calc stage
         var stage_array = activity.stage;
-        pvp_switch = activity.switch;
+        var pvp_switch = activity.switch;
+        var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
         async.waterfall([
                 function (callback) {
                     //  player 1
@@ -233,16 +234,26 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                 }
                 var stage_distance = Math.floor(strength / 6 * 100);
                 random_val = Math.floor(Math.random()* stage_array.length);
-                next(null, {
-                    code: 0,
-                    msg_id : msg.msg_id,
-                    flowid : msg.flowid,
-                    time:Math.floor(Date.now()/1000),
-                    stage:stage_array[random_val],
-                    stage_distance:stage_distance,
-                    player_info_array:player_info_array,
-                    pvp_switch:pvp_switch,
-                    version_low:version_fix_flag ? 0 : 1
+                rank_pvp_wrapper.get_rank_info(device_guid,device_emui,function(reply){
+                    var rank_info = {};
+                    var total_race = 0;
+                    if(reply){
+                        rank_info = JSON.parse(reply);
+                        total_race = rank_info.total_race;
+                    }
+                    next(null, {
+                        code: 0,
+                        msg_id : msg.msg_id,
+                        flowid : msg.flowid,
+                        time:Math.floor(Date.now()/1000),
+                        stage:stage_array[random_val],
+                        stage_distance:stage_distance,
+                        player_info_array:player_info_array,
+                        pvp_switch:pvp_switch,
+                        maintaining_msg:maintaining_msg,
+                        version_low:version_fix_flag ? 0 : 1,
+                        total_race:total_race
+                    });
                 });
             });
     });

@@ -10,9 +10,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_ADD_SCORE_FOR_DEBUG_PVP, function(msg, s
     var channel = msg.channel;
     var version = msg.version;
     var add_score = parseInt(msg.add_score);
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
     var rank_pvp_wrapper = pomelo.app.get('rank_pvp_wrapper');
-    rank_pvp_wrapper.get_rank_info(device_guid,function(rank_info){
+    rank_pvp_wrapper.get_rank_info(device_guid,device_emui,function(rank_info){
         if(rank_info){
             rank_info = JSON.parse(rank_info);
         }

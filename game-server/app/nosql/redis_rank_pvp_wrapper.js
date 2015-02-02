@@ -60,14 +60,34 @@ redis_rank_pvp_wrapper.set_rank_info = function(channel,device_guid,rank_info,cb
  * @param device_guid
  * @param cb
  */
-redis_rank_pvp_wrapper.get_rank_info = function(device_guid,cb){
+redis_rank_pvp_wrapper.get_rank_info = function(device_guid,device_emui,cb){
+    //  use device_guid first, if not exist,try device_emui
     redis_pools.execute('pool_1',function(client, release) {
         client.hget(h_rank_pvp, device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
             }
-            cb(reply);
+            if(!reply){
+                redis_pools.execute('pool_1',function(client, release) {
+                    client.hget(h_rank_pvp, device_emui, function (err, reply) {
+                        if (err) {
+                            //  some thing log
+                            rank_for_pvp_logger.error(err);
+                        }
+                        if(reply){
+                            //  copy data from device_emui to device_guid
+                            var rank_info = JSON.parse(reply);
+                            rank_info.device_guid = device_guid;
+                            redis_rank_pvp_wrapper.dump_rank_pvp(rank_info);
+                        }
+                        cb(reply);
+                        release();
+                    });
+                });
+            }else{
+                cb(reply);
+            }
             release();
         });
     });
@@ -400,4 +420,17 @@ redis_rank_pvp_wrapper.get_player_by_strength = function(min,max,count,cb){
             release();
         });
     });
+};
+
+/**
+ * dump rank info from device emui to device guid
+ */
+redis_rank_pvp_wrapper.dump_rank_pvp = function(rank_info){
+    var channel = rank_info.channel;
+    var device_guid = rank_info.device_guid;
+    var strength = rank_info.strength;
+    var championship_id = util.getWeek(new Date());
+    redis_rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(){});
+    redis_rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);
+    redis_rank_pvp_wrapper.update_strength_rank(device_guid,strength);
 };

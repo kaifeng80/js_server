@@ -10,19 +10,22 @@ var rival_vs_title_json = require('../../../../config/rival_vs_title');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.deviceid;
+    var device_guid = msg.player_guid;
+    var device_emui = msg.deviceid;
+    var total_race = msg.total_race;
     var championship_id = util.getWeek(new Date());
-    var pvp_switch = 1;
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
+    var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
     activity_wrapper.get(channel,version,function(activity_json) {
         for (var v in activity_json) {
             if (consts.TYPE_ACTIVITY.TYPE_PVP == parseInt(activity_json[v].type)) {
                 activity = activity_json[v];
             }
         }
-        pvp_switch = activity.switch;
-        pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,function(rank_info){
+        var pvp_switch = activity.switch;
+        var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
+        pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,device_emui,function(rank_info){
             if(rank_info){
                 rank_info = JSON.parse(rank_info);
             }
@@ -69,6 +72,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 }
             }
             money_add = Math.floor(money_add * (buffer_data + 100)/100);
+            if(total_race == rank_info.total_race){
+                //  to be continue ...
+            }
             rank_info.total_race += 1;
             if("true" == msg.win_flag){
                 rank_info.total_win += 1;
@@ -86,7 +92,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 time:Math.floor(Date.now()/1000),
                 score:rank_info.score,
                 money:money_add,
-                pvp_switch:pvp_switch
+                pvp_switch:pvp_switch,
+                maintaining_msg:maintaining_msg
             });
         });
     });

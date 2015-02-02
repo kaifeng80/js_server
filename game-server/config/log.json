@@ -38,7 +38,7 @@
     }
   ],
   "levels": {
-	"http-logger" : "ERROR",
+	"http-logger" : "DEBUG",
 	"rank-logger" : "DEBUG",
 	"rank-for-pvp-logger" : "DEBUG",
     "relative-logger" : "DEBUG",

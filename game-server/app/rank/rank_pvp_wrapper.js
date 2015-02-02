@@ -130,6 +130,10 @@ rank_pvp_wrapper.prototype.compare_version = function(client_version){
     return true;
 };
 
+rank_pvp_wrapper.prototype.record_cheat_info = function(device_guid,rank_info){
+    redis_rank_pvp_wrapper.record_cheat_info(device_guid,rank_info);
+};
+
 rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){
     var rank_pvp_wrapper = pomelo.app.get('rank_pvp_wrapper');
     this.get_all_rank_info_weekly(championship_id,function(reply){

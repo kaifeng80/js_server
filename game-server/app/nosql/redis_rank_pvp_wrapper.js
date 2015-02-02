@@ -15,6 +15,7 @@ var z_rank_pvp_score = 'z_rank_pvp_score';
 var z_rank_pvp_strength = 'z_rank_pvp_strength';
 var h_award_pvp = 'h_award_pvp';
 var h_rank_pvp_upload = 'h_rank_pvp_upload';
+var h_rank_pvp_cheat = 'h_rank_pvp_cheat';
 
 /**
  * add rank info at first enter pvp
@@ -350,6 +351,18 @@ redis_rank_pvp_wrapper.get_player_by_strength = function(min,max,count,cb){
                 rank_for_pvp_logger.error(err);
             }
             cb(reply);
+            release();
+        });
+    });
+};
+
+redis_rank_pvp_wrapper.record_cheat_info = function(device_guid,rank_info){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_pvp_cheat,Date.now(), JSON.stringify(rank_info),function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
             release();
         });
     });

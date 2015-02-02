@@ -47,6 +47,20 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             rank_info.racer = msg.racer;
             rank_info.racer_lv = msg.racer_lv;
             rank_info.strength = msg.strength;
+            //  emergency treatment by 2015/2/2
+            if(!rank_info.upload_last_time){
+                rank_info.upload_last_time = Date.now();
+            }else{
+                var cur_time = Date.now();
+                var interval_time = cur_time - rank_info.upload_last_time;
+                if(interval_time < 45*1000){
+                    //  if the time is too short, do return any data,and record this
+                    pomelo.app.get("rank_pvp_wrapper").record_cheat_info(device_guid,rank_info);
+                    return;
+                }else{
+                    rank_info.upload_last_time = cur_time;
+                }
+            }
 
             //  score is provide by client, which is the final result(include all loser's score).
             //  emergency treatment by 2015/1/30

@@ -79,6 +79,10 @@ redis_rank_pvp_wrapper.get_rank_info = function(device_guid,device_emui,cb){
                             //  copy data from device_emui to device_guid
                             var rank_info = JSON.parse(reply);
                             rank_info.device_guid = device_guid;
+                            //  clear data
+                            rank_info.phone_number = "";
+                            rank_info.nickname = "跑男车手";
+                            rank_info.area = "滨海市";
                             redis_rank_pvp_wrapper.dump_rank_pvp(rank_info);
                         }
                         cb(reply);
@@ -429,10 +433,6 @@ redis_rank_pvp_wrapper.dump_rank_pvp = function(rank_info){
     var channel = rank_info.channel;
     var device_guid = rank_info.device_guid;
     var strength = rank_info.strength;
-    //  clear data
-    rank_info.phone_number = "";
-    rank_info.nickname = "跑男车手";
-    rank_info.area = "滨海市";
     var championship_id = util.getWeek(new Date());
     redis_rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(){});
     redis_rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);

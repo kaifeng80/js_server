@@ -10,7 +10,7 @@ var rival_vs_title_json = require('../../../../config/rival_vs_title');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.player_guid;
+    var device_guid = msg.player_guid ? msg.player_guid : msg.deviceid;
     var device_emui = msg.deviceid;
     var total_race = msg.total_race;
     var championship_id = util.getWeek(new Date());

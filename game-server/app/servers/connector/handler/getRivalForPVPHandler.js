@@ -179,7 +179,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.player_guid;
+    var device_guid = msg.player_guid ? msg.player_guid : msg.deviceid;
     var device_emui = msg.deviceid;
     var strength = parseInt(msg.strength);
     var random_val = Math.floor(Math.random()*100);

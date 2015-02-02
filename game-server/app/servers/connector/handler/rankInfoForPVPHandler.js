@@ -11,7 +11,7 @@ var async = require('async');
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
-    var device_guid = msg.player_guid;
+    var device_guid = msg.player_guid ? msg.player_guid : msg.deviceid;
     var device_emui = msg.deviceid;
     var type = msg.type;
     var expend_tracks = 0;

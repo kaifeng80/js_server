@@ -144,8 +144,8 @@ redis_rank_pvp_wrapper.get_rank_info_activity_batch = function(channel,device_gu
  * @param phone
  * @param cb
  */
-redis_rank_pvp_wrapper.update_rank_info = function(device_guid,channel,area,phone_number,nickname,cb){
-    redis_rank_pvp_wrapper.get_rank_info(device_guid,function(rank_info){
+redis_rank_pvp_wrapper.update_rank_info = function(device_guid,device_emui,channel,area,phone_number,nickname,cb){
+    redis_rank_pvp_wrapper.get_rank_info(device_guid,device_emui,function(rank_info){
         if(rank_info){
             rank_info = JSON.parse(rank_info);
             rank_info.area = area;
@@ -429,6 +429,10 @@ redis_rank_pvp_wrapper.dump_rank_pvp = function(rank_info){
     var channel = rank_info.channel;
     var device_guid = rank_info.device_guid;
     var strength = rank_info.strength;
+    //  clear data
+    rank_info.phone_number = "";
+    rank_info.nickname = "跑男车手";
+    rank_info.area = "滨海市";
     var championship_id = util.getWeek(new Date());
     redis_rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(){});
     redis_rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);

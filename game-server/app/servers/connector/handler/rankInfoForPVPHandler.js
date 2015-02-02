@@ -72,7 +72,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     }
                     case "update":
                     {
-                        rank_pvp_wrapper.update_rank_info(device_guid,channel, msg.area, msg.phone_number, msg.nickname,function (rank_info) {
+                        rank_pvp_wrapper.update_rank_info(device_guid,device_emui,channel, msg.area, msg.phone_number, msg.nickname,function (rank_info) {
                             if(rank_info){
                                 is_exist = 1;
                             }

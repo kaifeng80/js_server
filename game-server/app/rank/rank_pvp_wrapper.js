@@ -176,6 +176,15 @@ rank_pvp_wrapper.prototype.in_activity = function(channel){
     return 0;
 };
 
+rank_pvp_wrapper.prototype.activity_switch = function(){
+    for(var v in rank_for_pvp_json){
+        if("activity_switch" == v){
+            return rank_for_pvp_json[v];
+        }
+    }
+    return 0;
+};
+
 rank_pvp_wrapper.prototype.total_rank_switch = function(){
     for(var v in rank_for_pvp_json){
         if("total_rank_switch" == v){

@@ -4,6 +4,7 @@
   "activity":[
     {"channel":"000013","duration":["2015/2/6","2015/2/20"]}
   ],
+  "activity_switch":1,
   "total_rank_switch":1,
   "maintaining_msg":"PVP维护中!",
   "block_msg":"数据有问题，请清理数据或者重装游戏再试!"

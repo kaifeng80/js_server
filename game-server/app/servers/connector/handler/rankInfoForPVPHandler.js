@@ -19,7 +19,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var is_exist = 0;
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
-    var acitivty_switch = rank_pvp_wrapper.in_activity(channel);
+    var acitivty_switch = rank_pvp_wrapper.activity_switch(channel);
     var total_rank_switch = rank_pvp_wrapper.total_rank_switch();
     var block_msg = rank_pvp_wrapper.block_msg();
     async.waterfall([

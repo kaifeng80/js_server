@@ -185,6 +185,15 @@ rank_pvp_wrapper.prototype.activity_switch = function(){
     return 0;
 };
 
+rank_pvp_wrapper.prototype.get_url = function(){
+    for(var v in rank_for_pvp_json){
+        if("url" == v){
+            return rank_for_pvp_json[v];
+        }
+    }
+    return "";
+};
+
 rank_pvp_wrapper.prototype.total_rank_switch = function(){
     for(var v in rank_for_pvp_json){
         if("total_rank_switch" == v){

@@ -20,6 +20,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
     var acitivty_switch = rank_pvp_wrapper.activity_switch(channel);
+    var url = rank_pvp_wrapper.get_url();
     var total_rank_switch = rank_pvp_wrapper.total_rank_switch();
     var block_msg = rank_pvp_wrapper.block_msg();
     async.waterfall([
@@ -149,7 +150,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 version_low:version_fix_flag ? 0 : 1,
                                 acitivty_switch:acitivty_switch,
                                 total_rank_switch:total_rank_switch,
-                                url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
+                                url:url
                             });
                         });
                     }else{
@@ -174,7 +175,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             version_low:version_fix_flag ? 0 : 1,
                             acitivty_switch:acitivty_switch,
                             total_rank_switch:total_rank_switch,
-                            url:"http://update.racegame.appget.cn/resImmortalRacer/ui_vs/ui_vs_mm_banner.png"
+                            url:url
                         });
                     }
                 });

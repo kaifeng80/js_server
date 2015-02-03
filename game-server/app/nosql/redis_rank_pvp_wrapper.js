@@ -81,9 +81,9 @@ redis_rank_pvp_wrapper.get_rank_info = function(device_guid,device_emui,cb){
                             //  copy data from device_emui to device_guid
                             var rank_info = JSON.parse(reply);
                             //  clear data
-                            rank_info.phone_number = "";
-                            rank_info.nickname = "跑男车手";
-                            rank_info.area = "滨海市";
+                            //rank_info.phone_number = "";
+                            //rank_info.nickname = "跑男车手";
+                            //rank_info.area = "滨海市";
                             redis_rank_pvp_wrapper.set_rank_info(rank_info.channel,device_emui,rank_info,function(){});
                             rank_info.device_guid = device_guid;
                             redis_rank_pvp_wrapper.dump_rank_pvp(rank_info);

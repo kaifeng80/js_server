@@ -436,6 +436,9 @@ redis_rank_pvp_wrapper.dump_rank_pvp = function(rank_info){
     var device_guid = rank_info.device_guid;
     var strength = rank_info.strength;
     var championship_id = util.getWeek(new Date());
+    if(championship_id != rank_info.championship_id){
+        rank_info.score_weekly = 0;
+    }
     redis_rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(){});
     redis_rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);
     redis_rank_pvp_wrapper.update_strength_rank(device_guid,strength);

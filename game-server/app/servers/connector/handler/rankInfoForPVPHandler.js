@@ -95,6 +95,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     server_msg = activity.server_msg;
                     var version_fix_flag = rank_pvp_wrapper.compare_version(version);
                     var pvp_switch = activity.switch;
+                    if(rank_pvp_wrapper.in_black_list(device_emui)){
+                        pvp_switch = 0;
+                    }
                     var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
                     var degree;
                     var degree_title;

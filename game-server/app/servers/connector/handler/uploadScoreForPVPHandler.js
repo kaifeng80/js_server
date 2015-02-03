@@ -24,8 +24,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             }
         }
         var pvp_switch = activity.switch;
+        if(rank_pvp_wrapper.in_black_list(device_emui)){
+            pvp_switch = 0;
+        }
         var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
-        pomelo.app.get("rank_pvp_wrapper").get_rank_info(device_guid,device_emui,function(rank_info){
+        rank_pvp_wrapper.get_rank_info(device_guid,device_emui,function(rank_info){
             if(rank_info){
                 rank_info = JSON.parse(rank_info);
             }
@@ -46,7 +49,20 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             rank_info.racer = msg.racer;
             rank_info.racer_lv = msg.racer_lv;
             rank_info.strength = msg.strength;
-
+            //  emergency treatment by 2015/2/2
+            if(!rank_info.upload_last_time){
+                rank_info.upload_last_time = Date.now();
+            }else{
+                var cur_time = Date.now();
+                var interval_time = cur_time - rank_info.upload_last_time;
+                if(interval_time < 45 * 1000){
+                    //  if the time is too short, do return any data,and record this
+                    rank_pvp_wrapper.record_cheat_info(device_guid,rank_info);
+                    return;
+                }else{
+                    rank_info.upload_last_time = cur_time;
+                }
+            }
             //  score is provide by client, which is the final result(include all loser's score).
             rank_info.score += score_add;
             if(rank_info.championship_id == championship_id){
@@ -57,7 +73,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.championship_id = championship_id;
             }
 
-            if(pomelo.app.get("rank_pvp_wrapper").in_activity(channel)){
+            if(rank_pvp_wrapper.in_activity(channel)){
                 //  version compatibility, 2.3.0 have not the value of score_activity
                 if(!rank_info.score_activity){ rank_info.score_activity = 0;}
                 rank_info.score_activity += score_add;
@@ -80,11 +96,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.total_win += 1;
             }
             //  save it
-            pomelo.app.get("rank_pvp_wrapper").set_rank_info(channel,device_guid,rank_info,function(reply){});
+            rank_pvp_wrapper.set_rank_info(channel,device_guid,rank_info,function(reply){});
             //  update score/score weekly rank
-            pomelo.app.get("rank_pvp_wrapper").update_score_rank(channel,device_guid,championship_id,rank_info);
+            rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);
             //  update strength rank
-            pomelo.app.get("rank_pvp_wrapper").update_strength_rank(device_guid,rank_info.strength);
+            rank_pvp_wrapper.update_strength_rank(device_guid,rank_info.strength);
             next(null, {
                 code: 0,
                 msg_id : msg.msg_id,

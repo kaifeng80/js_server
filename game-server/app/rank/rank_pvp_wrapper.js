@@ -6,6 +6,7 @@ var cluster = require('cluster');
 var pomelo = require('pomelo');
 var async = require('async');
 var util = require('../util/util');
+var pvp_black_list_json = require('../../config/pvp_black_list.json');
 var rank_for_pvp_json = require('../../config/rank_for_pvp.json');
 var rival_vs_award_json = require('../../config/rival_vs_award');
 
@@ -126,6 +127,10 @@ rank_pvp_wrapper.prototype.del_award = function(device_guid){
     redis_rank_pvp_wrapper.del_award(device_guid);
 };
 
+rank_pvp_wrapper.prototype.record_cheat_info = function(device_guid,rank_info){
+    redis_rank_pvp_wrapper.record_cheat_info(device_guid,rank_info);
+};
+
 rank_pvp_wrapper.prototype.compare_version = function(client_version){
     var require_version_array = this.require_version.split('.');
     if(3 != require_version_array.length){
@@ -196,6 +201,20 @@ rank_pvp_wrapper.prototype.block_msg = function(){
         }
     }
     return "";
+};
+
+/**
+ * compatibility 2.3.0,it only uses device_emui
+ * @param device_emui
+ * @returns {number}
+ */
+rank_pvp_wrapper.prototype.in_black_list = function(device_emui){
+    for(var i = 0; i < pvp_black_list_json.length; ++i){
+        if(device_emui == pvp_black_list_json[i]){
+            return 1;
+        }
+    }
+    return 0;
 };
 
 rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){

@@ -200,6 +200,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
         //  calc stage
         var stage_array = activity.stage;
         var pvp_switch = activity.switch;
+        if(rank_pvp_wrapper.in_black_list(device_emui)){
+            pvp_switch = 0;
+        }
         var maintaining_msg = rank_pvp_wrapper.maintaining_msg();
         async.waterfall([
                 function (callback) {

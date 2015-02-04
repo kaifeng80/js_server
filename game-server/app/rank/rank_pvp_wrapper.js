@@ -176,10 +176,22 @@ rank_pvp_wrapper.prototype.in_activity = function(channel){
     return 0;
 };
 
-rank_pvp_wrapper.prototype.activity_switch = function(){
+rank_pvp_wrapper.prototype.activity_switch = function(channel){
+    var find = 0;
     for(var v in rank_for_pvp_json){
-        if("activity_switch" == v){
-            return rank_for_pvp_json[v];
+        if("activity" == v){
+            for(var i = 0; i < rank_for_pvp_json[v].length; ++i){
+                if(channel == rank_for_pvp_json[v][i].channel){
+                    find = 1;
+                }
+            }
+        }
+    }
+    if(find){
+        for(var v in rank_for_pvp_json){
+            if("activity_switch" == v){
+                return rank_for_pvp_json[v];
+            }
         }
     }
     return 0;

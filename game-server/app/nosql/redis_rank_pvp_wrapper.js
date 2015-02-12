@@ -15,6 +15,7 @@ var z_rank_pvp_score = 'z_rank_pvp_score';
 var z_rank_pvp_strength = 'z_rank_pvp_strength';
 var h_award_pvp = 'h_award_pvp';
 var h_rank_pvp_cheat = 'h_rank_pvp_cheat';
+var h_rank_pvp_cheat2 = 'h_rank_pvp_cheat2';
 var h_rank_pvp_upload = 'h_rank_pvp_upload';
 
 /**
@@ -208,6 +209,10 @@ redis_rank_pvp_wrapper.update_score_rank = function(channel,device_guid,champion
                     release();
                 });
             });
+            //  if the channel is different from store in file, record it!
+            if(channel != rank_info.channel){
+                redis_rank_pvp_wrapper.record_cheat2_info(channel,rank_info);
+            }
         }
     }
     redis_pools.execute('pool_1',function(client, release) {
@@ -458,6 +463,18 @@ redis_rank_pvp_wrapper.dump_rank_pvp = function(rank_info){
 redis_rank_pvp_wrapper.record_cheat_info = function(device_guid,rank_info){
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp_cheat,Date.now(), JSON.stringify(rank_info),function (err, reply) {
+            if (err) {
+                //  some thing log
+                rank_for_pvp_logger.error(err);
+            }
+            release();
+        });
+    });
+};
+
+redis_rank_pvp_wrapper.record_cheat2_info = function(channel,rank_info){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_rank_pvp_cheat2,Date.now() + ':' + channel, JSON.stringify(rank_info),function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

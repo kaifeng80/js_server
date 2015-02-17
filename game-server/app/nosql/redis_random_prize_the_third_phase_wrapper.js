@@ -1,6 +1,7 @@
 
 var redis_pools = require("../nosql/redis_pools");
 var h_random_prize_the_third_phase = 'h_random_prize_the_third_phase';
+var l_random_prize_the_third_phase_award = 'l_random_prize_the_third_phase_award';
 
 var random_prize_the_third_phase_wrapper = module.exports;
 
@@ -13,6 +14,35 @@ random_prize_the_third_phase_wrapper.set = function(device_guid,free_flag){
                 //  some thing log
                 console.error(err);
             }
+            release();
+        });
+    });
+};
+
+random_prize_the_third_phase_wrapper.add_award = function(award_info){
+    var date = new Date();
+    var date_string = "_" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+    redis_pools.execute('pool_1',function(client, release){
+        client.lpush(l_random_prize_the_third_phase_award + date_string ,JSON.stringify(award_info),function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+};
+
+random_prize_the_third_phase_wrapper.get_all_award = function(cb){
+    var date = new Date();
+    var date_string = "_" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+    redis_pools.execute('pool_1',function(client, release){
+        client.lrange(l_random_prize_the_third_phase_award + date_string,0,-1,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
             release();
         });
     });

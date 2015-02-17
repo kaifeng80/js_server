@@ -175,6 +175,11 @@ redis_rank_pvp_wrapper.get_score_rank_weekly = function(device_guid,championship
     });
 };
 
+/**
+ * get the top 10 by score weekly
+ * @param championship_id
+ * @param cb
+ */
 redis_rank_pvp_wrapper.get_score_rank_partial_weekly = function(championship_id,cb){
     redis_pools.execute('pool_1',function(client, release) {
         client.zrevrange(z_rank_pvp_score + ":" + championship_id,0,9,function (err, reply) {

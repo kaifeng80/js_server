@@ -8,6 +8,7 @@ var util = require('../../../util/util');
 var async = require('async');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg, session, next) {
+    var device_guid = msg.deviceid;
     var type = parseInt(msg.type);
     var championship_id = util.getWeek(new Date());
     var rank_pvp_wrapper = pomelo.app.get("rank_pvp_wrapper");
@@ -18,9 +19,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     {
                         rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id, function (reply) {
                             //  reply is rank as a json array
-                            rank_pvp_wrapper.get_rank_info_batch(reply, function (reply) {
-                                callback(null, reply);
-                            });
+                            if(0 != reply.length){
+                                rank_pvp_wrapper.get_rank_info_batch(reply, function (reply) {
+                                    callback(null, reply);
+                                });
+                            }else{
+                                callback(null, []);
+                            }
                         });
                         break;
                     }
@@ -36,7 +41,26 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     }
                 }
             },
-            function (rank_info_array, callback) {
+            //  get score rank /score rank weekly
+            function (rank_info_array,callback) {
+                switch (type) {
+                    case consts.TYPE_SCORE_RANK_PVP.TYPE_SCORE_RANK_PVP_WEEKLY:
+                    {
+                        rank_pvp_wrapper.get_score_rank_weekly(device_guid,championship_id,function (reply) {
+                            callback(null, rank_info_array,reply);
+                        });
+                        break;
+                    }
+                    case consts.TYPE_SCORE_RANK_PVP.TYPE_SCORE_RANK_PVP_ALL:
+                    {
+                        rank_pvp_wrapper.get_score_rank(device_guid,function (reply) {
+                            callback(null, rank_info_array,reply);
+                        });
+                        break;
+                    }
+                }
+            },
+            function (rank_info_array, mine_score_rank,callback) {
                 var score_rank_array = [];
                 for(var i = 0; i < rank_info_array.length; ++i){
                     if(rank_info_array[i])
@@ -49,11 +73,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                             score:rank_info.score})
                     }
                 }
-                callback(score_rank_array,null);
+                callback(score_rank_array,mine_score_rank,null);
             }
         ],
         // optional callback
-        function (score_rank_array,err) {
+        function (score_rank_array,mine_score_rank,err) {
             if (err) {
                 console.error(err);
             }
@@ -63,7 +87,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                 flowid : msg.flowid,
                 time:Math.floor(Date.now()/1000),
                 type:type,
-                score_rank_array:score_rank_array
+                score_rank_array:score_rank_array,
+                mine_score_rank:mine_score_rank != null ? parseInt(mine_score_rank) + 1: mine_score_rank
             });
         }
     );

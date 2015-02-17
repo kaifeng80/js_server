@@ -178,12 +178,21 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                 }
             ],
             function (err, player_info_array) {
+                //  get stage distance
+                var max_strength = 0;
+                for(var i = 0; i < player_info_array.length; ++i){
+                    if(max_strength < player_info_array[i].strength){
+                        max_strength = player_info_array[i].strength;
+                    }
+                }
+                var stage_distance = Math.floor(max_strength / 6 * 100);
                 next(null, {
                     code: 0,
                     msg_id : msg.msg_id,
                     flowid : msg.flowid,
                     time:Math.floor(Date.now()/1000),
                     stage:stage_array[random_val],
+                    stage_distance:stage_distance,
                     player_info_array:player_info_array
                 });
             });

@@ -20,10 +20,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         var rivals = msg.rivals;
         var score_add = 0;
         var money_add = 0;
-        for(var i = 0; i < rivals.length; ++i){
-            if(rivals[i].rank < my_rank){
-                score_add += Math.floor(rivals[i].strength/10);
-                money_add += Math.floor(rivals[i].strength/3);
+        for(var v in rivals){
+            if(rivals[v].rank > my_rank){
+                score_add += Math.floor(rivals[v].strength/10);
+                money_add += Math.floor(rivals[v].strength/3);
             }
         }
         rank_info.car = msg.car;
@@ -34,10 +34,10 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
         //  score is provide by client, which is the final result(include all loser's score).
         rank_info.score += score_add;
         if(rank_info.championship_id == championship_id){
-            rank_info.score_weekly += msg.score;
+            rank_info.score_weekly += score_add;
         }
         else{
-            rank_info.score_weekly = msg.score;
+            rank_info.score_weekly = score_add;
         }
         rank_info.total_race += 1;
         if("true" == msg.win_flag){
@@ -54,7 +54,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             msg_id : msg.msg_id,
             flowid : msg.flowid,
             time:Math.floor(Date.now()/1000),
-            score:score_add,
+            score:rank_info.score,
             money:money_add
         });
     });

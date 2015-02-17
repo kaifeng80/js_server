@@ -101,6 +101,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.car_lv = rank_info.car_lv;
                 player_info_somebody.driver = rank_info.racer;
                 player_info_somebody.driver_lv = rank_info.racer_lv;
+                player_info_somebody.total_win = rank_info.total_win;
                 player_info_array.push(player_info_somebody);
                 callback(null,player_info_array);
             });

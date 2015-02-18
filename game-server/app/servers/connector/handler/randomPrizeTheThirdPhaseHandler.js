@@ -8,6 +8,54 @@ var gacha_the_third_phase_json = require('../../../../config/gacha_the_third_pha
 var gacha_the_third_phase_real_limit_json = require('../../../../config/gacha_the_third_phase_real_limit.json');
 var async = require('async');
 
+/**
+ * if the gacha result include the item which type is "SAVE"
+ * @param gacha_result
+ */
+var query_item = function(prize,gacha_result,gacha_array){
+    if(prize.type != "SAVE"){
+        return false;
+    }
+    //  find from gacha_array first
+    for(var m = 0; m < gacha_array.length; ++m){
+        if(gacha_array[m].type == "SAVE"){
+            return true;
+        }
+    }
+    //  then find from gacha_result
+    for(var i = 0; i < gacha_result.length; ++i){
+        if(gacha_result[i]){
+            for(var j = 0; j < gacha_result[j].length; ++j){
+                if(gacha_result[i][j].type == "SAVE"){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+};
+
+var copy_prize =  function(prize){
+  var new_prize = new Object();
+    new_prize.id = prize.id;
+    new_prize.type = prize.type;
+    new_prize.number = prize.number;
+    new_prize.data = prize.data;
+    new_prize.rate = prize.rate;
+    new_prize.icon = prize.icon;
+    new_prize.replace_flag = prize.replace_flag;
+    if(prize.replace){
+        new_prize.replace = prize.replace;
+    }
+    if(prize.replace_number){
+        new_prize.replace_number = prize.replace_number;
+    }
+    if(prize.replace_icon){
+        new_prize.replace_icon = prize.replace_icon;
+    }
+    return new_prize;
+};
+
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(msg, session, next) {
     var channel = msg.channel;
     var version = msg.version;
@@ -45,7 +93,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                 free_flag = 0;
             }
             var prize;
-            var replace_flag = 0;
             var start = 0;
             async.whilst(
                 function () { return start < count; },
@@ -55,13 +102,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                             function(callback){
                                 for(var j = 0; j < activity.gacha_random_num; ++j)
                                 {
-                                    replace_flag = 0;
                                     //  free random prize come out the item type "SAVE"
                                     if(1 == free_flag_this_time){
                                         for(var v in gacha_the_third_phase_json){
                                             if("SAVE" == gacha_the_third_phase_json[v].type){
                                                 gacha_the_third_phase_json[v].replace_flag = 0;
-                                                gacha_array.push(gacha_the_third_phase_json[v]);
+                                                var new_prize = copy_prize(gacha_the_third_phase_json[v]);
+                                                gacha_array.push(new_prize);
                                                 free_flag_this_time = 0;
                                                 j++;
                                                 callback(null);
@@ -79,6 +126,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                 use_replace = true;
                                             }
                                         }
+                                        //  date is 2015/2/18~2015/2/25, use json table gacha_the_third_phase_json_replace
                                         if(use_replace){
                                             prize = random_prize_the_third_phase_wrapper.random_replace();
                                             //  the award is entity, record it!
@@ -110,20 +158,29 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                     }
                                                     else{
                                                         //  tell client use replace data
-                                                        replace_flag = 1;
-                                                        prize.replace_flag = replace_flag;
+                                                        prize.replace_flag = 1;
+                                                        var new_prize = copy_prize(prize);
+                                                        gacha_array.push(new_prize);
                                                     }
                                                     callback(null);
                                                 });
                                             }
                                             else{
+                                                prize.replace_flag = 0;
+                                                var new_prize = copy_prize(prize);
+                                                gacha_array.push(new_prize);
                                                 callback(null);
                                             }
-                                            gacha_array.push(prize);
                                         }else{
                                             prize = random_prize_the_third_phase_wrapper.random();
-                                            prize.replace_flag = 0;
-                                            gacha_array.push(prize);
+                                            var find = query_item(prize,gacha_result,gacha_array);
+                                            if(find){
+                                                prize.replace_flag = 1;
+                                            }else{
+                                                prize.replace_flag = 0;
+                                            }
+                                            var new_prize = copy_prize(prize);
+                                            gacha_array.push(new_prize);
                                             //  no need replace at this condition
                                             callback(null);
                                         }
@@ -133,8 +190,14 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                             function(callback){
                                 for(var j = 0; j < activity.gacha2_random_num; ++j){
                                     prize = random_prize_the_third_phase_wrapper.random2();
-                                    prize.replace_flag = 0;
-                                    gacha_array.push(prize);
+                                    var find = query_item(prize,gacha_result,gacha_array);
+                                    if(find){
+                                        prize.replace_flag = 1;
+                                    }else{
+                                        prize.replace_flag = 0;
+                                    }
+                                    var new_prize = copy_prize(prize);
+                                    gacha_array.push(new_prize);
                                 }
                                 gacha_result.push(gacha_array);
                                 callback(null);
@@ -156,17 +219,12 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                         console.error(err);
                     }
                     random_prize_the_third_phase_wrapper.set(device_guid,free_flag);
-                    if(0){
-                        console.log("j%",gacha_result);
-                        console.log(gacha_result[0].length);
-                    }
                     next(null, {
                         code: 0,
                         msg_id : msg.msg_id,
                         flowid : msg.flowid,
                         time:Math.floor(Date.now()/1000),
-                        gacha_result : gacha_result,
-                        replace_flag : replace_flag
+                        gacha_result : gacha_result
                     });
                 }
             );

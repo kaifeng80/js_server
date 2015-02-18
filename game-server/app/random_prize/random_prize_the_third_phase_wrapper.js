@@ -47,6 +47,7 @@ random_prize_the_third_phase_wrapper.prototype.random = function(){
     }
     for(i = 0; i < gacha_the_third_phase_json.length; ++i){
         if(i == index){
+            gacha_the_third_phase_json[i].replace_flag = 0;
             return gacha_the_third_phase_json[i];
         }
     }
@@ -65,6 +66,7 @@ random_prize_the_third_phase_wrapper.prototype.random_replace = function(){
     for(i = 0; i < gacha_the_third_phase_json_replace.length; ++i){
         if(i == index){
             //  the award is entity, record it!
+            gacha_the_third_phase_json_replace[i].replace_flag = 0;
             return gacha_the_third_phase_json_replace[i];
         }
     }
@@ -82,6 +84,7 @@ random_prize_the_third_phase_wrapper.prototype.random2 = function(){
     }
     for(i = 0; i < gacha_the_third_phase_json_2.length; ++i){
         if(i == index){
+            gacha_the_third_phase_json_2[i].replace_flag = 0;
             return gacha_the_third_phase_json_2[i];
         }
     }

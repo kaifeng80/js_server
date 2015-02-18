@@ -157,15 +157,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                         random_prize_the_third_phase_wrapper.add_award(award_info);
                                                         //  win the prize
                                                         prize.replace_flag = 0;
-                                                        var new_prize = copy_prize(prize);
-                                                        gacha_array.push(new_prize);
                                                     }
                                                     else{
                                                         //  tell client use replace data
                                                         prize.replace_flag = 1;
-                                                        var new_prize = copy_prize(prize);
-                                                        gacha_array.push(new_prize);
                                                     }
+                                                    var new_prize = copy_prize(prize);
+                                                    gacha_array.push(new_prize);
                                                     callback(null);
                                                 });
                                             }
@@ -222,7 +220,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                     if(err){
                         console.error(err);
                     }
-                    if(1){
+                    if(0){
                         var gacha_count = 0;
                         for(var i = 0; i < gacha_result.length; ++i){
                             if(gacha_result[i]){

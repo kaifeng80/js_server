@@ -154,7 +154,9 @@ rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){
                             award_info.championship_id = championship_id;
                             award_info.rank = rank;
                             award_info.rank_award = rank_award;
-                            rank_pvp_wrapper.set_award(device_guid,award_info);
+                            if(999999 != rank){
+                                rank_pvp_wrapper.set_award(device_guid,award_info);
+                            }
                             callback(null);
                         }
                     ],

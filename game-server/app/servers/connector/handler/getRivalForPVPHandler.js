@@ -140,6 +140,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                     copy_rival_info(player_info_somebody,random_val);
                     player_info_somebody.device_guid = rank_info.device_guid;
                     player_info_somebody.name = rank_info.nickname;
+                    player_info_somebody.strength = rank_info.strength;
                     player_info_somebody.from = rank_info.area;
                     player_info_somebody.car = rank_info.car?rank_info.car:28;
                     player_info_somebody.car_lv = rank_info.car_lv;

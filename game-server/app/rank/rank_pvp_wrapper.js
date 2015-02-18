@@ -56,8 +56,8 @@ rank_pvp_wrapper.prototype.get_rank_info_batch = function(device_guid_array,cb){
     redis_rank_pvp_wrapper.get_rank_info_batch(device_guid_array,cb);
 };
 
-rank_pvp_wrapper.prototype.update_rank_info = function(device_guid,area,phone_number,cb){
-    redis_rank_pvp_wrapper.update_rank_info(device_guid,area,phone_number,cb);
+rank_pvp_wrapper.prototype.update_rank_info = function(device_guid,area,phone_number,nickname,cb){
+    redis_rank_pvp_wrapper.update_rank_info(device_guid,area,phone_number,nickname,cb);
 };
 
 rank_pvp_wrapper.prototype.update_score_rank = function(device_guid,championship_id,rank_info){

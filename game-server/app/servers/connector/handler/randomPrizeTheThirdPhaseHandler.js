@@ -25,7 +25,7 @@ var query_item = function(prize,gacha_result,gacha_array){
     //  then find from gacha_result
     for(var i = 0; i < gacha_result.length; ++i){
         if(gacha_result[i]){
-            for(var j = 0; j < gacha_result[j].length; ++j){
+            for(var j = 0; j < gacha_result[i].length; ++j){
                 if(gacha_result[i][j].type == "SAVE"){
                     return true;
                 }
@@ -217,6 +217,15 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                     //  whilst end,do nothing
                     if(err){
                         console.error(err);
+                    }
+                    if(1){
+                        var gacha_count = 0;
+                        for(var i = 0; i < gacha_result.length; ++i){
+                            if(gacha_result[i]){
+                                gacha_count += gacha_result[i].length;
+                            }
+                        }
+                        console.log(gacha_count);
                     }
                     random_prize_the_third_phase_wrapper.set(device_guid,free_flag);
                     next(null, {

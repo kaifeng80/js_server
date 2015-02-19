@@ -101,8 +101,27 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                         score_next = rival_vs_title_json[degree_next - 1].score;
                     }
                     //  mask word
-                    pomelo.app.get('mask_word_wrapper').analysis(rank_info.nickname,function(nickname_new){
-                        rank_info.nickname_new = nickname_new;
+                    if(rank_info){
+                        pomelo.app.get('mask_word_wrapper').analysis(rank_info.nickname,function(nickname_new){
+                            rank_info.nickname_new = nickname_new;
+                            next(null, {
+                                code: 0,
+                                msg_id: msg.msg_id,
+                                flowid: msg.flowid,
+                                time: Math.floor(Date.now() / 1000),
+                                type: type,
+                                expend_tracks: expend_tracks,
+                                server_msg: server_msg,
+                                rank_info: rank_info,
+                                degree: degree,
+                                degree_title: degree_title,
+                                buff_desc: buff_desc,
+                                buff_data: buff_data,
+                                score_next: score_next,
+                                is_exist: is_exist
+                            });
+                        });
+                    }else{
                         next(null, {
                             code: 0,
                             msg_id: msg.msg_id,
@@ -119,7 +138,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             score_next: score_next,
                             is_exist: is_exist
                         });
-                    });
+                    }
                 });
                 callback(null);
             }

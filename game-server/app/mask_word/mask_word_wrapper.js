@@ -61,6 +61,9 @@ mask_word_wrapper.prototype.analysis = function(sentence,cb){
             }
         );
     }
+    else{
+        cb(sentence);
+    }
 };
 
 module.exports = mask_word_wrapper;

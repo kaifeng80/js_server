@@ -96,7 +96,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                             }
                                                         }
                                                     }
-
                                                 }
                                                 //  the entity item is no more today
                                                 if(cur_entity_num < max_entity_num){
@@ -109,13 +108,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                     //  tell client use replace data
                                                     replace_flag = 1;
                                                 }
-                                                gacha_array.push(prize);
                                                 callback(null);
                                             });
                                         }
                                         else{
                                             callback(null);
                                         }
+                                        gacha_array.push(prize);
                                     }else{
                                         prize = random_prize_the_third_phase_wrapper.random();
                                         gacha_array.push(prize);
@@ -163,89 +162,6 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                     });
                 }
             );
-
-            /*
-            for(var i = 0; i < count; ++i){
-                var gacha_array = new Array();
-                for(var j = 0; j < activity.gacha_random_num; ++j){
-                    //  free random prize come out the item type "SAVE"
-                    if(1 == free_flag_this_time){
-                        for(var v in gacha_the_third_phase_json){
-                            if("SAVE" == gacha_the_third_phase_json[v].type){
-                                gacha_array.push(v);
-                                free_flag_this_time = 0;
-                                j++;
-                                break;
-                            }
-                        }
-                    }
-                    var date = new Date();
-                    var entity_award_time = activity.entity_award_time;
-                    var date_string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +  date.getDate();
-                    var use_replace = false;
-                    for(var i = 0; i < entity_award_time.length; ++i){
-                        if(date_string == entity_award_time[i]){
-                            use_replace = true;
-                            break;
-                        }
-                    }
-                    if(use_replace){
-                        prize = random_prize_the_third_phase_wrapper.random_replace();
-                        //  the award is entity, record it!
-                        if("REAL" == prize.type){
-                            var cur_entity_num = 0;
-                            var max_entity_num = 0;
-                            for(var v in gacha_the_third_phase_real_limit_json){
-                                if(gacha_the_third_phase_real_limit_json[v].data  == prize.data){
-                                    max_entity_num = gacha_the_third_phase_real_limit_json[v].limit;
-                                    break;
-                                }
-                            }
-                            //  get all award information, and judge the entity is enough
-                            random_prize_the_third_phase_wrapper.get_all_award(function(all_award_info){
-                                for(var i = 0; i < all_award_info.length; ++i){
-                                    if(all_award_info[i].data  == prize.data){
-                                        ++cur_entity_num;
-                                    }
-                                }
-                            });
-                            //  the entity item is no more today
-                            if(cur_entity_num < max_entity_num){
-                                random_prize_the_third_phase_wrapper.add_award(prize);
-                            }
-                            else{
-                                //  tell client use replace data
-                                replace_flag = 1;
-                            }
-                        }
-                    }else{
-                        prize = random_prize_the_third_phase_wrapper.random();
-                    }
-                    if(!prize){
-                        continue;
-                    }
-                    gacha_array.push(prize);
-                }
-                for(var j = 0; j < activity.gacha2_random_num; ++j){
-                    prize = random_prize_the_third_phase_wrapper.random2();
-                    if(!prize){
-                        continue;
-                    }
-                    gacha_array.push(prize);
-                }
-                gacha_result.push(gacha_array);
-            }
-
-            random_prize_the_third_phase_wrapper.set(device_guid,free_flag);
-            next(null, {
-                code: 0,
-                msg_id : msg.msg_id,
-                flowid : msg.flowid,
-                time:Math.floor(Date.now()/1000),
-                gacha_result : gacha_result,
-                replace_flag : replace_flag
-            });
-             */
         });
     });
 });

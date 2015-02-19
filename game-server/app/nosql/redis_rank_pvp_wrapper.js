@@ -94,7 +94,7 @@ redis_rank_pvp_wrapper.update_rank_info = function(device_guid,area,phone_number
  */
 redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,rank_info){
     redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score, rank_info.score_weekly,device_guid, function (err, reply) {
+        client.zadd(z_rank_pvp_score, rank_info.score,device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
@@ -103,7 +103,7 @@ redis_rank_pvp_wrapper.update_score_rank = function(device_guid,championship_id,
         });
     });
     redis_pools.execute('pool_1',function(client, release) {
-        client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score,device_guid, function (err, reply) {
+        client.zadd(z_rank_pvp_score + ":" + championship_id, rank_info.score_weekly,device_guid, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);

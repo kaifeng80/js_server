@@ -53,10 +53,13 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
             if (err) {
                 console.error(err);
             }
-            var rank_info_array = result[0];
-            var rank_info_array_weekly = result[1];
-            var mine_score_rank = result[2];
-            var mine_score_rank_weekly = result[3];
+            if(0){
+                console.log("%j",result[1]);
+            }
+            var rank_info_array_weekly = result[0];
+            var rank_info_array = result[1];
+            var mine_score_rank_weekly = result[2];
+            var mine_score_rank = result[3];
             var score_rank_array = [];
             var score_rank_array_weekly = [];
             var degree;

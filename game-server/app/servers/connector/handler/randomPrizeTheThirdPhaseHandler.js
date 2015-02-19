@@ -62,64 +62,67 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_THIRD_PHASE, function(m
                                                 gacha_array.push(v);
                                                 free_flag_this_time = 0;
                                                 j++;
+                                                callback(null);
                                                 break;
                                             }
                                         }
                                     }
-                                    var date = new Date();
-                                    var entity_award_time = activity.entity_award_time;
-                                    var date_string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +  date.getDate();
-                                    var use_replace = false;
-                                    for(var i = 0; i < entity_award_time.length; ++i){
-                                        if(date_string == entity_award_time[i]){
-                                            use_replace = true;
-                                        }
-                                    }
-                                    if(use_replace){
-                                        prize = random_prize_the_third_phase_wrapper.random_replace();
-                                        //  the award is entity, record it!
-                                        if("REAL" == prize.type){
-                                            var cur_entity_num = 0;
-                                            var max_entity_num = 0;
-                                            for(var v in gacha_the_third_phase_real_limit_json){
-                                                if(gacha_the_third_phase_real_limit_json[v].data  == prize.data){
-                                                    max_entity_num = gacha_the_third_phase_real_limit_json[v].limit;
-                                                }
+                                    else{
+                                        var date = new Date();
+                                        var entity_award_time = activity.entity_award_time;
+                                        var date_string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +  date.getDate();
+                                        var use_replace = false;
+                                        for(var i = 0; i < entity_award_time.length; ++i){
+                                            if(date_string == entity_award_time[i]){
+                                                use_replace = true;
                                             }
-                                            //  get all award information, and judge the entity is enough
-                                            random_prize_the_third_phase_wrapper.get_all_award(function(all_award_info){
-                                                for(var i = 0; i < all_award_info.length; ++i){
-                                                    if(all_award_info[i]){
-                                                        if(JSON.parse(all_award_info[i]).prize){
-                                                            if(JSON.parse(all_award_info[i]).prize.data  == prize.data){
-                                                                ++cur_entity_num;
+                                        }
+                                        if(use_replace){
+                                            prize = random_prize_the_third_phase_wrapper.random_replace();
+                                            //  the award is entity, record it!
+                                            if("REAL" == prize.type){
+                                                var cur_entity_num = 0;
+                                                var max_entity_num = 0;
+                                                for(var v in gacha_the_third_phase_real_limit_json){
+                                                    if(gacha_the_third_phase_real_limit_json[v].data  == prize.data){
+                                                        max_entity_num = gacha_the_third_phase_real_limit_json[v].limit;
+                                                    }
+                                                }
+                                                //  get all award information, and judge the entity is enough
+                                                random_prize_the_third_phase_wrapper.get_all_award(function(all_award_info){
+                                                    for(var i = 0; i < all_award_info.length; ++i){
+                                                        if(all_award_info[i]){
+                                                            if(JSON.parse(all_award_info[i]).prize){
+                                                                if(JSON.parse(all_award_info[i]).prize.data  == prize.data){
+                                                                    ++cur_entity_num;
+                                                                }
                                                             }
                                                         }
                                                     }
-                                                }
-                                                //  the entity item is no more today
-                                                if(cur_entity_num < max_entity_num){
-                                                    var award_info = new Object();
-                                                    award_info.device_guid = device_guid;
-                                                    award_info.prize = prize;
-                                                    random_prize_the_third_phase_wrapper.add_award(award_info);
-                                                }
-                                                else{
-                                                    //  tell client use replace data
-                                                    replace_flag = 1;
-                                                }
+                                                    //  the entity item is no more today
+                                                    if(cur_entity_num < max_entity_num){
+                                                        var award_info = new Object();
+                                                        award_info.device_guid = device_guid;
+                                                        award_info.prize = prize;
+                                                        random_prize_the_third_phase_wrapper.add_award(award_info);
+                                                    }
+                                                    else{
+                                                        //  tell client use replace data
+                                                        replace_flag = 1;
+                                                    }
+                                                    callback(null);
+                                                });
+                                            }
+                                            else{
                                                 callback(null);
-                                            });
-                                        }
-                                        else{
+                                            }
+                                            gacha_array.push(prize);
+                                        }else{
+                                            prize = random_prize_the_third_phase_wrapper.random();
+                                            gacha_array.push(prize);
+                                            //  no need replace at this condition
                                             callback(null);
                                         }
-                                        gacha_array.push(prize);
-                                    }else{
-                                        prize = random_prize_the_third_phase_wrapper.random();
-                                        gacha_array.push(prize);
-                                        //  no need replace at this condition
-                                        callback(null);
                                     }
                                 }
                             },

@@ -150,6 +150,9 @@ http_connectors.prototype.dispatchMessage = function(data,url,req,res){
     if(msg.version){
         if("1.2.9" == msg.version){
             msg.version = "1.2.8";
+        }else if("1.0.0" == msg.version){
+            //  for wandoujia
+            msg.version = "2.2.0";
         }
     }
     var statistics_wrapper = pomelo.app.get('statistics_wrapper');

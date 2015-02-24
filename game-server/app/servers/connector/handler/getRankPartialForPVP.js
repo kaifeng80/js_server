@@ -101,7 +101,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         degree_title:degree_title,
                         area:rank_info.area,
                         rank:i + 1,
-                        score:rank_info.score})
+                        score:rank_info.score_weekly})
                 }
             }
             next(null, {

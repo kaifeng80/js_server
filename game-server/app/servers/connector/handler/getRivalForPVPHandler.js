@@ -160,6 +160,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
     var strength_min = strength;
     var strength_max = strength;
     var player_info_array = [];
+    var pvp_switch = 1;
     var activity = {};
     var activity_wrapper = pomelo.app.get('activity_wrapper');
     activity_wrapper.get(channel,version,function(activity_json) {
@@ -170,6 +171,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
         }
         //  calc stage
         var stage_array = activity.stage;
+        pvp_switch = activity.switch;
         random_val = Math.floor(Math.random()* stage_array.length);
         async.waterfall([
                 function (callback) {
@@ -210,7 +212,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RIVAL_FOR_PVP, function(msg, session
                     time:Math.floor(Date.now()/1000),
                     stage:stage_array[random_val],
                     stage_distance:stage_distance,
-                    player_info_array:player_info_array
+                    player_info_array:player_info_array,
+                    pvp_switch:pvp_switch
                 });
             });
     });

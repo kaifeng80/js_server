@@ -14,6 +14,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
     var device_guid = msg.deviceid;
     var type = msg.type;
     var expend_tracks = 0;
+    var pvp_switch = 1;
     var server_msg;
     var is_exist = false;
     var championship_id = util.getWeek(new Date());
@@ -82,6 +83,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     }
                     expend_tracks = activity.expend_tracks;
                     server_msg = activity.server_msg;
+                    pvp_switch = activity.switch;
                     var degree;
                     var degree_title;
                     var buff_desc;
@@ -136,7 +138,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                             buff_desc: buff_desc,
                             buff_data: buff_data,
                             score_next: score_next,
-                            is_exist: is_exist
+                            is_exist: is_exist,
+                            pvp_switch: pvp_switch
                         });
                     }
                 });

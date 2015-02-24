@@ -116,6 +116,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
                 player_info_somebody.driver = rank_info.racer;
                 player_info_somebody.driver_lv = rank_info.racer_lv;
                 player_info_somebody.total_win = rank_info.total_win;
+                player_info_somebody.is_robot = 0;
                 get_extra_info(player_info_somebody,rank_info);
                 player_info_array.push(player_info_somebody);
                 callback(null,player_info_array);
@@ -143,6 +144,7 @@ var get_player_info = function(device_guid,strength_min,strength_max,max_count_t
             }while(is_repeat && cur_loop_count < max_loop_count);
             var player_info_somebody = new Object();
             copy_rival_info(player_info_somebody,random_val);
+            player_info_somebody.is_robot = 1;
             player_info_array.push(player_info_somebody);
             get_extra_info(player_info_somebody,player_info_somebody.score);
             callback(null,player_info_array);

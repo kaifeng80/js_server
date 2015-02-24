@@ -120,7 +120,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                                 buff_desc: buff_desc,
                                 buff_data: buff_data,
                                 score_next: score_next,
-                                is_exist: is_exist
+                                is_exist: is_exist,
+                                pvp_switch: pvp_switch
                             });
                         });
                     }else{

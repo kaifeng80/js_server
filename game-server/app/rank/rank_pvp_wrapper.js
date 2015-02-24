@@ -123,14 +123,14 @@ rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){
                 }
             }
         }
-        var count = 1;
+        var count = 0;
         async.whilst(
             function () { return count < device_version_channel_list.length; },
             function (callback) {
                 async.waterfall([
                         function(callback){
                             //  1  get rank info
-                            rank_pvp_wrapper.get_score_rank_weekly(device_version_channel_list[count - 1].device_guid,championship_id,function(reply){
+                            rank_pvp_wrapper.get_score_rank_weekly(device_version_channel_list[count].device_guid,championship_id,function(reply){
                                 //  reply is null, that means user join in the the activity,but not upload score,it dangerous!
                                 var rank = reply != null ? parseInt(reply) + 1: 999999;
                                 var award = rival_vs_award_json;
@@ -142,7 +142,7 @@ rank_pvp_wrapper.prototype.calc_rival_pvp_award = function(championship_id){
                                     var range_high = parseInt(range_array[1]);
                                     if(rank >= range_low && rank < range_high){
                                         rank_award = award[w];
-                                        callback(null,device_version_channel_list[count - 1].device_guid,championship_id,rank,rank_award);
+                                        callback(null,device_version_channel_list[count].device_guid,championship_id,rank,rank_award);
                                         break;
                                     }
                                 }

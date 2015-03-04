@@ -150,9 +150,12 @@ http_connectors.prototype.dispatchMessage = function(data,url,req,res){
     if(msg.version){
         if("1.2.9" == msg.version){
             msg.version = "1.2.8";
-        }else if("1.0.0" == msg.version || "0.9.0" == msg.version || "1.0.1" == msg.version){
+        }else if("1.0.0" == msg.version || "0.9.0" == msg.version){
             //  version mapping for wandoujia
             msg.version = "2.2.0";
+        }else if("1.0.1" == msg.version){
+            //  version mapping for wandoujia
+            msg.version = "2.2.1";
         }
     }
     var statistics_wrapper = pomelo.app.get('statistics_wrapper');

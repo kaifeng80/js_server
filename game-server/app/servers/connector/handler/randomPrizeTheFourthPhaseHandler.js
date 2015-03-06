@@ -4,6 +4,7 @@
 var handlerMgr = require("./../handlerMgr");
 var consts = require("../../../util/consts");
 var pomelo = require('pomelo');
+var rival_vs_exchange_car_json = require('../../../../config/rival_vs_exchange_car');
 
 handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_FOURTH_PHASE, function(msg, session, next) {
     var channel = msg.channel;
@@ -29,6 +30,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANDOM_PRIZE_THE_FOURTH_PHASE, function(
         msg_id : msg.msg_id,
         flowid : msg.flowid,
         time:Math.floor(Date.now()/1000),
-        gacha_result : gacha_result
+        gacha_result : gacha_result,
+        exchange_car_info:rival_vs_exchange_car_json
     });
 });

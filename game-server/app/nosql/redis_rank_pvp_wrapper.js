@@ -215,6 +215,7 @@ redis_rank_pvp_wrapper.update_score_rank = function(channel,device_guid,champion
             }
         }
     }
+    /*
     redis_pools.execute('pool_1',function(client, release) {
         client.hset(h_rank_pvp_upload,Date.now(), JSON.stringify(rank_info),function (err, reply) {
             if (err) {
@@ -224,6 +225,7 @@ redis_rank_pvp_wrapper.update_score_rank = function(channel,device_guid,champion
             release();
         });
     });
+    */
 };
 
 /**

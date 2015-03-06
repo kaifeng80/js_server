@@ -7,6 +7,7 @@ var z_rank_running_man = 'z_rank_running_man';
 var z_level_running_man = 'z_level_running_man';
 var h_rank_running_man = 'h_rank_running_man';
 var h_award_running_man = 'h_award_running_man';
+var h_final_award_flag_running_man = 'h_final_award_flag_running_man';
 
 var redis_rank_running_man_wrapper = module.exports;
 
@@ -279,6 +280,31 @@ redis_rank_running_man_wrapper.del_award = function(device_guid){
                 //  some thing log
                 console.error(err);
             }
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.set_final_award_flag = function(device_guid){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hset(h_final_award_flag_running_man,device_guid, 1,function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            release();
+        });
+    });
+};
+
+redis_rank_running_man_wrapper.get_final_award_flag = function(device_guid,cb){
+    redis_pools.execute('pool_1',function(client, release) {
+        client.hget(h_final_award_flag_running_man,device_guid,function (err, reply) {
+            if (err) {
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
             release();
         });
     });

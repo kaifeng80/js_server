@@ -88,6 +88,14 @@ rank_running_man_wrapper.prototype.update_rank_info = function(championship_id,d
     redis_rank_running_man_wrapper.update_rank_info(championship_id,device_guid,rank_info,cb);
 };
 
+rank_running_man_wrapper.prototype.set_final_award_flag = function(device_guid){
+    redis_rank_running_man_wrapper.set_final_award_flag(device_guid);
+};
+
+rank_running_man_wrapper.prototype.get_final_award_flag = function(device_guid,cb){
+    redis_rank_running_man_wrapper.get_final_award_flag(device_guid,cb);
+};
+
 rank_running_man_wrapper.prototype.get_rival_seoul = function(activity,level,rivals){
     var rival_offset = parseInt(activity.rival_offset);
     var rival_seoul_array = new Array();
@@ -340,6 +348,41 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_award = function(championshi
                 }
             }
         );
+    });
+};
+
+rank_running_man_wrapper.prototype.calc_rival_seoul_final_award = function(channel,version,device_guid,cb){
+    var activity_wrapper = pomelo.app.get('activity_wrapper');
+    var rank_running_man_wrapper = pomelo.app.get('rank_running_man_wrapper');
+    var activity = {};
+    var championship_id = util.getWeek(new Date());
+    activity_wrapper.get(channel,version,function(activity_json) {
+        for (var w in activity_json) {
+            if (consts.TYPE_ACTIVITY.RIVAL_SEOUL == parseInt(activity_json[w].type)) {
+                activity = activity_json[w];
+                rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){
+                    var rank = reply[0] != null ? parseInt(reply[0]) + 1: null;
+                    var rank_award = null;
+                    if(rank){
+                        var award = activity.award;
+                        for(var w in award){
+                            var range = w;
+                            var range_array = range.split('-');
+                            var range_low = parseInt(range_array[0]);
+                            var range_high = parseInt(range_array[1]);
+                            if(rank >= range_low && rank < range_high){
+                                rank_award = award[w];
+                                cb(rank_award);
+                                rank_running_man_wrapper.set_final_award_flag(device_guid);
+                            }
+                        }
+                    }
+                    else{
+                        cb(null);
+                    }
+                });
+            }
+        }
     });
 };
 module.exports = rank_running_man_wrapper;

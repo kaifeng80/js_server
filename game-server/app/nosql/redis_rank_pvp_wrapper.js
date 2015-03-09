@@ -133,9 +133,9 @@ redis_rank_pvp_wrapper.get_rank_info_weekly_batch = function(championship_id,dev
     });
 };
 
-redis_rank_pvp_wrapper.get_rank_info_activity_batch = function(channel,device_guid_array,cb){
+redis_rank_pvp_wrapper.get_rank_info_activity_batch = function(championship_id,device_guid_array,cb){
     redis_pools.execute('pool_1',function(client, release) {
-        client.hmget(h_rank_pvp + ":" + channel, device_guid_array, function (err, reply) {
+        client.hmget(h_rank_pvp + ":" + championship_id, device_guid_array, function (err, reply) {
             if (err) {
                 //  some thing log
                 rank_for_pvp_logger.error(err);
@@ -313,15 +313,20 @@ redis_rank_pvp_wrapper.get_score_rank_partial_weekly = function(championship_id,
     });
 };
 
-redis_rank_pvp_wrapper.get_score_rank_partial_activity = function(channel,cb){
-    redis_pools.execute('pool_1',function(client, release) {
-        client.zrevrange(z_rank_pvp_score + ":" + channel,0,9,function (err, reply) {
-            if (err) {
-                //  some thing log
-                rank_for_pvp_logger.error(err);
-            }
-            cb(reply);
-            release();
+redis_rank_pvp_wrapper.get_score_rank_partial_activity = function(device_guid,championship_id,cb){
+    redis_rank_pvp_wrapper.get_score_rank_weekly(device_guid,championship_id,function(mine_score_rank_weekly){
+        var score_rank_weekly = (mine_score_rank_weekly != null) ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly;
+        var rank_range_low = (score_rank_weekly - 10) > 0 ? score_rank_weekly - 10 : 0;
+        var rank_range_high = score_rank_weekly + 10;
+        redis_pools.execute('pool_1',function(client, release) {
+            client.zrevrange(z_rank_pvp_score + ":" + championship_id,rank_range_low,rank_range_high,function (err, reply) {
+                if (err) {
+                    //  some thing log
+                    rank_for_pvp_logger.error(err);
+                }
+                cb(reply);
+                release();
+            });
         });
     });
 };

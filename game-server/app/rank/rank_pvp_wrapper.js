@@ -63,8 +63,8 @@ rank_pvp_wrapper.prototype.get_rank_info_weekly_batch = function(championship_id
     redis_rank_pvp_wrapper.get_rank_info_weekly_batch(championship_id,device_guid_array,cb);
 };
 
-rank_pvp_wrapper.prototype.get_rank_info_activity_batch = function(channel,device_guid_array,cb){
-    redis_rank_pvp_wrapper.get_rank_info_activity_batch(channel,device_guid_array,cb);
+rank_pvp_wrapper.prototype.get_rank_info_activity_batch = function(championship_id,device_guid_array,cb){
+    redis_rank_pvp_wrapper.get_rank_info_activity_batch(championship_id,device_guid_array,cb);
 };
 
 rank_pvp_wrapper.prototype.update_rank_info = function(device_guid,device_emui,channel,area,phone_number,nickname,cb){
@@ -95,8 +95,8 @@ rank_pvp_wrapper.prototype.get_score_rank_partial_weekly = function(championship
     redis_rank_pvp_wrapper.get_score_rank_partial_weekly(championship_id,cb);
 };
 
-rank_pvp_wrapper.prototype.get_score_rank_partial_activity = function(channel,cb){
-    redis_rank_pvp_wrapper.get_score_rank_partial_activity(channel,cb);
+rank_pvp_wrapper.prototype.get_score_rank_partial_activity = function(device_guid,championship_id,cb){
+    redis_rank_pvp_wrapper.get_score_rank_partial_activity(device_guid,championship_id,cb);
 };
 
 rank_pvp_wrapper.prototype.get_all_rank_info_weekly = function(championship_id,cb){

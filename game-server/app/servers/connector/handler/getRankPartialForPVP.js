@@ -54,10 +54,11 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                     });
                 },
                 function (callback) {
-                    rank_pvp_wrapper.get_score_rank_partial_activity(channel,function (reply) {
+                    //  update 2015/3/9, the activity is rank score weekly,from (my rank - 10) to (my rank  + 10)
+                    rank_pvp_wrapper.get_score_rank_partial_activity(device_guid,championship_id,function (reply) {
                         //  reply is rank as a json array
                         if (0 != reply.length) {
-                            rank_pvp_wrapper.get_rank_info_activity_batch(channel,reply, function (reply) {
+                            rank_pvp_wrapper.get_rank_info_activity_batch(championship_id,reply, function (reply) {
                                 callback(null, reply);
                             });
                         } else {
@@ -275,7 +276,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                             score_rank_array_activity: score_rank_array_activity,
                             mine_score_rank: mine_score_rank != null ? parseInt(mine_score_rank) + 1 : mine_score_rank,
                             mine_score_rank_weekly: mine_score_rank_weekly != null ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly,
-                            mine_score_rank_activity: mine_score_rank_activity != null ? parseInt(mine_score_rank_activity) + 1 : mine_score_rank_activity,
+                            mine_score_rank_activity: mine_score_rank_weekly != null ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly,
                             pvp_switch: pvp_switch,
                             maintaining_msg:maintaining_msg
                         });

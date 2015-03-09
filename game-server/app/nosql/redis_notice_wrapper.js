@@ -58,3 +58,16 @@ redis_notice_wrapper.get_notice = function(channel,version,cb){
         });
     });
 };
+
+redis_notice_wrapper.get_all_notice = function(cb){
+    redis_pools.execute('pool_1',function(client, release){
+        client.hgetall(h_notice,function (err, reply){
+            if(err){
+                //  some thing log
+                console.error(err);
+            }
+            cb(reply);
+            release();
+        });
+    });
+};

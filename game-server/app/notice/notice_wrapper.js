@@ -33,4 +33,9 @@ notice_wrapper.prototype.get = function(channel,version,cb){
     });
 };
 
+notice_wrapper.prototype.get_all = function(cb){
+    redis_notice_wrapper.get_all_notice(function(reply){
+        cb(reply);
+    });
+};
 module.exports = notice_wrapper;

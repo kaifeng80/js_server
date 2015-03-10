@@ -362,8 +362,10 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_final_award = function(chann
                 activity = activity_json[w];
                 rank_running_man_wrapper.get_rank(championship_id,device_guid,function(reply){
                     var rank = reply[0] != null ? parseInt(reply[0]) + 1: null;
-                    var rank_award = null;
+                    var award_info = {};
                     if(rank){
+                        award_info.championship_id = championship_id;
+                        award_info.rank = rank;
                         var award = activity.award;
                         for(var w in award){
                             var range = w;
@@ -371,8 +373,8 @@ rank_running_man_wrapper.prototype.calc_rival_seoul_final_award = function(chann
                             var range_low = parseInt(range_array[0]);
                             var range_high = parseInt(range_array[1]);
                             if(rank >= range_low && rank < range_high){
-                                rank_award = award[w];
-                                cb(rank_award);
+                                award_info.rank_award = award[w];
+                                cb(award_info);
                                 rank_running_man_wrapper.set_final_award_flag(device_guid);
                             }
                         }

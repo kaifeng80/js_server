@@ -176,16 +176,43 @@ class JSServerSimulation extends Simulation {
     		}
     	}
 
+	object get_rival_for_pvp {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->23);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "2.4.0");
+    			cmd += ("deviceid" -> "d90f444e433c54c72bf68cc8d220be2a");
+    			cmd += ("device_emui" -> "d90f444e433c54c72bf68cc8d220be2a");
+    			cmd += ("strength" -> 300);
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
+	object get_rank_partial_for_pvp {
+    		def msg( deviceid : Int ) : String = {
+    			var cmd = Map[Any,Any]();
+    			cmd += ("msg_id"->26);
+    			cmd += ("flowid" -> 88888888);
+    			cmd += ("channel" -> "000023");
+    			cmd += ("version" -> "2.4.0");
+    			cmd += ("deviceid" -> "d90f444e433c54c72bf68cc8d220be2a");
+    			cmd += ("device_emui" -> "d90f444e433c54c72bf68cc8d220be2a");
+    			return Json.build(cmd).toString;
+    		}
+    	}
+
 	val httpProtocol = http
 		//.baseURL("http://192.168.1.74:20000")
-		.baseURL("http://117.121.32.94:20000")
-		//.baseURL("http://192.168.22.66:20000")
+		//.baseURL("http://117.121.32.94:20000")
+		.baseURL("http://192.168.20.135:20000")
 		//.baseURL("http://192.168.1.74:20000")
 		//.baseURL("http://211.151.21.53:20000")
 		.inferHtmlResources()
 
 		val scn = scenario("Scenario name")
-		.during(2 minutes) {
+		.during(600 minutes) {
             exec(
                 http("get_time")
                     .post("/")
@@ -194,6 +221,7 @@ class JSServerSimulation extends Simulation {
                     .check(status.is(200))
 				)
 			.pause(1 seconds)
+/*
 			.exec(
                 http("get_activity")
                     .post("/")
@@ -258,8 +286,26 @@ class JSServerSimulation extends Simulation {
                     .check(status.is(200))
 				)
 			.pause(1 seconds)
+*/
+			.exec(
+                http("get_rival_for_pvp")
+                    .post("/")
+                    .formParam("token", "1234567788")
+                    .formParam("msg",get_rival_for_pvp.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(1 seconds)
+			.exec(
+                http("get_rank_partial_for_pvp")
+                    .post("/")
+                    .formParam("token", "1234567788")
+
+                    .formParam("msg",get_rank_partial_for_pvp.msg(random.nextInt(seed)))
+                    .check(status.is(200))
+				)
+			.pause(1 seconds)
 		}
 	//setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
 	//setUp(scn.inject(rampUsers(1000000) over (9000 seconds))).protocols(httpProtocol)   //  8 cpu
-	setUp(scn.inject(rampUsers(100) over (0 seconds))).protocols(httpProtocol)        //  2 cpu
+	setUp(scn.inject(rampUsers(200) over (1 seconds))).protocols(httpProtocol)        //  2 cpu
 }

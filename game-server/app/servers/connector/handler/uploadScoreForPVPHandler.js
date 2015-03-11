@@ -72,7 +72,8 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
                 rank_info.score_weekly = score_add;
                 rank_info.championship_id = championship_id;
             }
-
+            //  update 2015/3/11 set score_activity's value is score_weekly
+            rank_info.score_activity = rank_info.score_weekly;
             if(rank_pvp_wrapper.in_activity(channel)){
                 //  version compatibility, 2.3.0 have not the value of score_activity
                 if(!rank_info.score_activity){ rank_info.score_activity = 0;}

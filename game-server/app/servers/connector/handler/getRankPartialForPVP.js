@@ -59,7 +59,42 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                         //  reply is rank as a json array
                         if (0 != reply.length) {
                             rank_pvp_wrapper.get_rank_info_activity_batch(championship_id,reply, function (reply) {
-                                callback(null, reply);
+                                var rank_info_array = reply;
+                                //  get week rank
+                                var count = 0;
+                                async.whilst(
+                                    function () { return count < rank_info_array.length; },
+                                    function (callback_whilst) {
+                                        async.waterfall([
+                                                function(callback_whilst){
+                                                    rank_pvp_wrapper.get_score_rank_weekly(JSON.parse(rank_info_array[count]).device_guid,championship_id,function(cur_rank){
+                                                        callback_whilst(null,cur_rank);
+                                                    })
+                                                },
+                                                function(cur_rank,callback_whilst){
+                                                    var rank_info_tmp = JSON.parse(rank_info_array[count]);
+                                                    rank_info_tmp.rank = cur_rank;
+                                                    rank_info_array[count] = JSON.stringify(rank_info_tmp);
+                                                    callback_whilst(null);
+                                                }
+                                            ],
+                                            // optional callback
+                                            function(err){
+                                                if(err){
+                                                    console.error(err);
+                                                }
+                                                ++count;
+                                                callback_whilst(null);
+                                            });
+                                    },
+                                    function (err) {
+                                        //  whilst end,do nothing
+                                        if(err){
+                                            console.error(err);
+                                        }
+                                        callback(null, rank_info_array);
+                                    }
+                                );
                             });
                         } else {
                             callback(null, []);
@@ -162,7 +197,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_GET_RANK_PARTIAL_FOR_PVP, function (msg,
                             nickname: rank_info.nickname,
                             degree_title: degree_title,
                             area: rank_info.area,
-                            rank: i + 1,
+                            rank: rank_info.rank + 1,
                             score: rank_info.score_weekly
                         })
                     }

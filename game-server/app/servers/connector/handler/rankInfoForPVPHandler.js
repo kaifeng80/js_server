@@ -124,6 +124,7 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_RANK_INFO_FOR_PVP, function (msg, sessio
                     if(rank_info){
                         if(rank_info.championship_id != championship_id){
                             rank_info.score_weekly = 0;
+                            rank_info.score_activity = 0;
                             rank_info.championship_id = championship_id;
                         }
                         pomelo.app.get('mask_word_wrapper').analysis(rank_info.nickname,function(nickname_new){

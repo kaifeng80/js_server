@@ -317,7 +317,7 @@ redis_rank_pvp_wrapper.get_score_rank_partial_activity = function(device_guid,ch
     redis_rank_pvp_wrapper.get_score_rank_weekly(device_guid,championship_id,function(mine_score_rank_weekly){
         var score_rank_weekly = (mine_score_rank_weekly != null) ? parseInt(mine_score_rank_weekly) + 1 : mine_score_rank_weekly;
         var rank_range_low = (score_rank_weekly - 10) > 0 ? score_rank_weekly - 10 : 0;
-        var rank_range_high = score_rank_weekly + 10;
+        var rank_range_high = score_rank_weekly != null ? (score_rank_weekly + 10) : 9;
         redis_pools.execute('pool_1',function(client, release) {
             client.zrevrange(z_rank_pvp_score + ":" + championship_id,rank_range_low,rank_range_high,function (err, reply) {
                 if (err) {

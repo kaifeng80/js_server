@@ -101,7 +101,9 @@ handlerMgr.handler(consts.TYPE_MSG.TYPE_UPLOAD_SCORE_FOR_PVP, function(msg, sess
             //  update score/score weekly rank
             rank_pvp_wrapper.update_score_rank(channel,device_guid,championship_id,rank_info);
             //  update strength rank
-            rank_pvp_wrapper.update_strength_rank(device_guid,rank_info.strength);
+            if(rank_info.car_lv != 0){
+                rank_pvp_wrapper.update_strength_rank(device_guid,rank_info.strength);
+            }
             next(null, {
                 code: 0,
                 msg_id : msg.msg_id,
